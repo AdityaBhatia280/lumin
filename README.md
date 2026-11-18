@@ -1,19 +1,17 @@
-﻿# Project Lumin
+﻿# Project Lumin preview
 
-Responsive informational website for the student-led initiative in Frisco, Texas.
+Run `node server.cjs` and open [the desktop preview](http://127.0.0.1:3000/). The preview uses static HTML, CSS, browser JavaScript, and Node. It requires no build step or dependency install.
 
-## Preview and deployment
-Run `node server.cjs` and open http://127.0.0.1:3000. Partners is at /partners.html.
-Deploy index.html, partners.html, styles.css, app.js, assets-config.js, and assets/ to a static host. No build or dependencies are required.
+To open it on a physical phone on the same Wi-Fi, start a separate preview with `$env:LUMEN_HOST='0.0.0.0'; $env:LUMEN_PORT='3001'; node server.cjs`, then open `http://<computer-Wi-Fi-IPv4>:3001/`. LAN access depends on the computer's firewall and network configuration.
 
-## Configuration before launch
-- The interest form verifies and saves name, email, category, and save time in browser localStorage. It never sends information to Project Lumin. Connect a real form endpoint or contact destination before using it to receive inquiries. Update the form disclosure, submission handler, and success text together. No newsletter service is connected or shown.
-- The five supplied section visuals are configured in assets-config.js under images with descriptive alt text. All eight supplied PNGs are in assets/. Brand variants are listed under brand; the lockup is used in both page headers and footers, and the icon is the favicon. The wordmark is retained for future use. CSS hides transparent logo padding without modifying the originals.
-- Partner grid entries are in the same configuration under partners. Add only names, logos, and confirmed relationships supplied by Project Lumin; each entry requires name, logo, and relationship. Optional url must use HTTPS. The grid is hidden while empty.
-- The supplied official lockup replaces the previous header and footer logos.
-- No social accounts, partners, achievements, team details, or contact addresses are invented.
-- Google Fonts is optional; system fonts provide a fallback.
+## Update the preview
 
-## Verification
-JavaScript syntax validated. Static content, routes, sources, and removal of tracker/location code checked. Browser visual verification is unavailable in this session.
+- `site-content.js` holds the title subtitle, updates, impact section, mission, draft goals, partners, project pages and galleries, Youth Ambassador Program, Digital Hub, contact email, and photo references and credits.
+- `app.js` renders the pages, including the homepage photo wall arrangement.
+- `styles.css` holds the layout, color, and motion. `index.html` contains the shared navigation.
+- `assets/preview-*.jpg` are illustrative photographs. Source and credit records are stored in `site-content.js`.
+- `network-data.js` retains the earlier imports for use when a project has an explicitly related location. The former standalone Network and Chapters URLs redirect to Our Work. Partner pages link directly to the organizations' websites.
 
+The separate homepage impact section presents current focus areas and planned collaborations. Future participation and outreach figures can be added as they are documented. The contact buttons open a message to the existing Project Lumin email address.
+
+Browser checks covered desktop, tablet, and phone layouts, including 320px and 1440px widths, together with the update links, mobile navigation, keyboard access, legacy redirects, and contact link.
