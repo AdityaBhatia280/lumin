@@ -17,9 +17,11 @@ const button = (text, url, style = 'primary') => `<a class="button ${style}" hre
 const textLink = (text, url) => `<a class="text-link" href="${esc(url)}">${esc(text)} ${arrow}</a>`;
 const email = data.settings?.email || 'projectluminfrisco@gmail.com';
 const instagram = data.settings?.instagram || '';
+const linkedin = data.settings?.linkedin || '';
 const mail = (subject = '') => 'mailto:' + email + (subject ? '?subject=' + encodeURIComponent(subject) : '');
 const section = (body, cls = '', id = '') => `<section class="section ${cls}"${id ? ` id="${id}"` : ''}><div class="wrap">${body}</div></section>`;
 const heading = (eyebrow, title, lead = '', action = '') => `<div class="section-head" data-reveal><div>${eyebrow ? `<p class="eyebrow">${esc(eyebrow)}</p>` : ''}<h2>${title}</h2>${lead ? `<p class="lead">${esc(lead)}</p>` : ''}</div>${action}</div>`;
+const linkedinIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.5"/><path class="dot" d="M7.2 10h2.2v7H7.2zM8.3 6.6a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM11 10h2.1v1c.4-.7 1.2-1.2 2.4-1.2 2.1 0 2.6 1.4 2.6 3.2v4h-2.2v-3.6c0-.9-.2-1.7-1.2-1.7s-1.5.7-1.5 1.7V17H11z"/></svg>';
 const instagramIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" class="dot"/></svg>';
 
 /* ---------- Photos: pinned spots first, everything else shuffled across the site ---------- */
@@ -228,7 +230,8 @@ function contact() {
     section(`<div class="contact-grid">
       <a class="contact-card" href="${esc(mail())}" data-reveal><span class="contact-icon" aria-hidden="true">✉</span><span class="contact-label">Email</span><strong>${esc(email)}</strong></a>
       ${instagram ? `<a class="contact-card" href="${esc(instagram)}" target="_blank" rel="noopener" data-reveal style="--d:1"><span class="contact-icon">${instagramIcon}</span><span class="contact-label">Instagram</span><strong>Follow us</strong></a>` : ''}
-      <div class="contact-card" data-reveal style="--d:2"><span class="contact-icon" aria-hidden="true">☀</span><span class="contact-label">Based in</span><strong>Frisco, Texas</strong></div>
+      ${linkedin ? `<a class="contact-card" href="${esc(linkedin)}" target="_blank" rel="noopener" data-reveal style="--d:2"><span class="contact-icon">${linkedinIcon}</span><span class="contact-label">LinkedIn</span><strong>Connect with us</strong></a>` : ''}
+      <div class="contact-card" data-reveal style="--d:3"><span class="contact-icon" aria-hidden="true">☀</span><span class="contact-label">Based in</span><strong>Frisco, Texas</strong></div>
     </div>`, 'contact-section');
 }
 
@@ -254,7 +257,7 @@ addEventListener('scroll', onScroll, {passive: true}); onScroll();
 document.querySelector('#footer').innerHTML = `<div class="wrap"><div class="footer-main">
   <div class="footer-brand"><a class="brand" href="/"><img src="/assets/brand/lumin-lockup-white.png" alt="Project Lumin home" width="592" height="240" loading="lazy"></a>
     <p>Empowering young people to safely enjoy the outdoors.</p>
-    <div class="footer-contact">${textLink(email, mail())}${instagram ? `<a class="social" href="${esc(instagram)}" target="_blank" rel="noopener" aria-label="Project Lumin on Instagram">${instagramIcon}</a>` : ''}</div></div>
+    <div class="footer-contact">${textLink(email, mail())}${instagram ? `<a class="social" href="${esc(instagram)}" target="_blank" rel="noopener" aria-label="Project Lumin on Instagram">${instagramIcon}</a>` : ''}${linkedin ? `<a class="social" href="${esc(linkedin)}" target="_blank" rel="noopener" aria-label="Project Lumin on LinkedIn">${linkedinIcon}</a>` : ''}</div></div>
   <nav aria-label="Footer navigation">${[['/', 'Home'], ...Object.entries(pages).map(([u, [l]]) => [u, l])].map(([u, l]) => `<a href="${u}">${l}</a>`).join('')}</nav></div>
   <div class="footer-end"><span>© ${new Date().getFullYear()} Project Lumin</span><span>Frisco, Texas</span></div></div>`;
 
