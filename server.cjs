@@ -39,30 +39,30 @@ function writeData(value) {
 
 async function api(req, res, route) {
   if (!isLocal(req)) return json(res, 403, {error: 'The admin panel only works on the computer running the server.'});
+  // Same protocol as the live admin in /api, but saves straight to this folder and needs no password.
   try {
-    if (route === '/api/data' && req.method === 'GET') return json(res, 200, readData());
+    if (route === '/api/session') return json(res, 200, {mode: 'local', configured: true, loggedIn: true});
+    if (route === '/api/login' || route === '/api/logout') return json(res, 200, {ok: true});
+    if (route === '/api/data' && req.method === 'GET') return json(res, 200, {data: readData()});
     if (route === '/api/data' && req.method === 'POST') {
-      const value = JSON.parse((await readBody(req, 5e6)).toString('utf8'));
-      if (!value || !Array.isArray(value.photos) || !Array.isArray(value.partners) || !Array.isArray(value.posts) || typeof value.slots !== 'object') throw new Error('Data is missing required sections');
-      writeData(value);
+      const {data, deletes = []} = JSON.parse((await readBody(req, 5e6)).toString('utf8'));
+      if (!data || !Array.isArray(data.photos) || !Array.isArray(data.partners) || !Array.isArray(data.posts) || typeof data.slots !== 'object') throw new Error('Data is missing required sections');
+      for (const p of deletes) {
+        const file = path.resolve(root, String(p));
+        if (path.dirname(file) === uploadDir) fs.rmSync(file, {force: true});
+      }
+      writeData(data);
       return json(res, 200, {ok: true});
     }
     if (route === '/api/upload' && req.method === 'POST') {
-      const ext = imageTypes[(req.headers['content-type'] || '').split(';')[0]];
+      const {name = 'photo', type, data} = JSON.parse((await readBody(req, 25e6)).toString('utf8'));
+      const ext = imageTypes[type];
       if (!ext) throw new Error('Only JPG, PNG, WebP, GIF or SVG images can be uploaded');
-      const body = await readBody(req, 25e6);
-      const base = String(new URL(req.url, 'http://x').searchParams.get('name') || 'photo').replace(/\.[^.]*$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'photo';
+      const base = String(name).replace(/\.[^.]*$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'photo';
       const file = `${Date.now().toString(36)}-${crypto.randomBytes(3).toString('hex')}-${base}${ext}`;
       fs.mkdirSync(uploadDir, {recursive: true});
-      fs.writeFileSync(path.join(uploadDir, file), body);
+      fs.writeFileSync(path.join(uploadDir, file), Buffer.from(data, 'base64'));
       return json(res, 200, {src: '/assets/uploads/' + file});
-    }
-    if (route === '/api/delete-file' && req.method === 'POST') {
-      const {src} = JSON.parse((await readBody(req, 1e4)).toString('utf8'));
-      const file = path.resolve(root, '.' + String(src));
-      if (!String(src).startsWith('/assets/uploads/') || path.dirname(file) !== uploadDir) throw new Error('Only uploaded files can be deleted');
-      fs.rmSync(file, {force: true});
-      return json(res, 200, {ok: true});
     }
     json(res, 404, {error: 'Unknown endpoint'});
   } catch (error) {

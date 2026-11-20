@@ -12,6 +12,8 @@
   <style>
     :root { --navy: #16326d; --navy-deep: #0d2150; --gold: #f4a730; --cream: #fff9f3; --sand: #fdeed6; --sky: #edf2fa; --ink: #142449; --muted: #5a6582; --rule: #e7e3dc; --red: #b42318; }
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body.logged-out .tabs { display: none; }
     body { margin: 0; background: var(--cream); color: var(--ink); font: 15px/1.5 "DM Sans", Arial, sans-serif; }
     h1, h2, h3 { font-family: Outfit, sans-serif; color: var(--navy); margin: 0; letter-spacing: -.02em; }
     button, input, textarea, select { font: inherit; color: inherit; }
@@ -20,7 +22,18 @@
     img { display: block; max-width: 100%; }
     .top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 1rem; padding: 12px 24px; background: var(--navy); color: #fff; }
     .top h1 { color: #fff; font-size: 1.2rem; }
-    .top h1 span { color: var(--gold); }
+    .top-logo { height: 34px; width: auto; }
+    .top h1 { padding-left: 12px; border-left: 1px solid #ffffff40; }
+    .status.dirty { color: var(--gold); font-weight: 700; }
+    .link-btn { border: 0; background: none; color: #c6d2ea; font-weight: 700; padding: 8px; }
+    #publish:disabled { opacity: .5; }
+    .login { max-width: 420px; margin: 60px auto; padding: 32px; border-radius: 22px; background: #fff; border: 1px solid var(--rule); box-shadow: 0 20px 50px -20px #16326d55; }
+    .login img { height: 70px; width: auto; margin-bottom: 18px; }
+    .login p { color: var(--muted); }
+    .login form { display: grid; gap: 12px; margin-top: 18px; }
+    .login input { padding: 12px 14px; border: 1.5px solid var(--rule); border-radius: 12px; background: var(--cream); font-size: 1rem; }
+    .login .error { color: var(--red); font-weight: 600; min-height: 1.4em; margin: 0; }
+    .note-live { padding: 12px 16px; margin-bottom: 18px; border-radius: 12px; background: var(--sand); color: var(--navy); font-size: .92rem; }
     .status { margin-left: auto; font-size: .9rem; color: #c6d2ea; }
     .status.saving { color: var(--gold); }
     .status.error { color: #ffb4a8; }
@@ -75,6 +88,7 @@
     .field input, .field textarea { width: 100%; padding: 10px 12px; border: 1.5px solid var(--rule); border-radius: 10px; background: var(--cream); font-weight: 400; font-size: .95rem; color: var(--ink); }
     .field textarea { min-height: 90px; resize: vertical; }
     .field textarea.body { min-height: 200px; }
+    .field input[type="checkbox"] { width: 18px; height: 18px; padding: 0; accent-color: var(--navy); }
     .field small { font-weight: 400; color: var(--muted); }
     .mark { display: grid; place-items: center; flex-shrink: 0; width: 56px; height: 56px; border-radius: 15px; background: var(--navy); color: #fff; font: 800 .95rem Outfit, sans-serif; overflow: hidden; }
     .mark img { width: 100%; height: 100%; object-fit: contain; background: #fff; padding: 6px; }
@@ -96,6 +110,9 @@
     .remote-warning { padding: 30px; margin: 40px auto; max-width: 640px; border-radius: 18px; background: #fff; border: 1px solid var(--rule); }
     @media (max-width: 700px) {
       .top, .tabs, main { padding-inline: 14px; }
+      .top { flex-wrap: wrap; gap: .6rem; }
+      .top h1, .top a { display: none; }
+      .status { order: 3; width: 100%; margin: 0; }
       .fields { grid-template-columns: 1fr; }
       .row { grid-template-columns: 72px 1fr; }
       .row .thumb, .row .random-tile { width: 72px; }
@@ -103,8 +120,8 @@
     }
   </style>
 </head>
-<body>
-  <header class="top"><h1>Project <span>Lumin</span> · Admin</h1><span class="status" id="status" role="status">Loading…</span><a href="/" target="_blank" rel="noopener">View site ↗</a></header>
+<body class="logged-out">
+  <header class="top"><img class="top-logo" src="/assets/brand/lumin-lockup-white.png" alt="Project Lumin"><h1>Admin</h1><span class="status" id="status" role="status">Loading…</span><button class="btn primary" id="publish" hidden>Publish changes</button><a href="/" target="_blank" rel="noopener">View site ↗</a><button class="link-btn" id="logout" hidden>Log out</button></header>
   <nav class="tabs" role="tablist" aria-label="Admin sections">
     <button role="tab" data-tab="photos" aria-selected="true">Photos<span class="count" id="count-photos"></span></button>
     <button role="tab" data-tab="spots" aria-selected="false">Photo spots</button>
