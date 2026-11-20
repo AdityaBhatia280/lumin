@@ -1,17 +1,21 @@
-﻿# Project Lumin preview
+# Project Lumin website
 
-Run `node server.cjs` and open [the desktop preview](http://127.0.0.1:3000/). The preview uses static HTML, CSS, browser JavaScript, and Node. It requires no build step or dependency install.
+Run `node server.cjs`, then open http://127.0.0.1:3000/ for the site and **http://127.0.0.1:3000/admin** for the admin panel.
+Phone preview on the same Wi-Fi: `$env:LUMEN_HOST='0.0.0.0'; $env:LUMEN_PORT='3001'; node server.cjs`, then open `http://<computer-IP>:3001/`.
 
-To open it on a physical phone on the same Wi-Fi, start a separate preview with `$env:LUMEN_HOST='0.0.0.0'; $env:LUMEN_PORT='3001'; node server.cjs`, then open `http://<computer-Wi-Fi-IPv4>:3001/`. LAN access depends on the computer's firewall and network configuration.
+## Admin panel (`/admin`)
+Only opens on the computer running the server. Every change saves automatically into the project.
+- **Photos** – drop in as many photos as you like (they're resized automatically). They get shuffled across the whole site; untick "In moving wall" to keep one off the homepage wall.
+- **Photo spots** – every place a photo appears. Pin a specific photo or leave it on Random.
+- **Blog** – add, edit, reorder and delete posts. The top three show on the homepage.
+- **Partners** – add partners, upload logos, set the order (biggest first) and choose up to 3 featured partners for the homepage.
+- **Settings** – contact email and Instagram link.
 
-## Update the preview
+To publish admin changes to the live site, commit and push to GitHub (`data/site-data.js` and `assets/uploads/`).
 
-- `site-content.js` holds the title subtitle, updates, impact section, mission, draft goals, partners, project pages and galleries, Youth Ambassador Program, Digital Hub, contact email, and photo references and credits.
-- `app.js` renders the pages, including the homepage photo wall arrangement.
-- `styles.css` holds the layout, color, and motion. `index.html` contains the shared navigation.
-- `assets/preview-*.jpg` are illustrative photographs. Source and credit records are stored in `site-content.js`.
-- `network-data.js` retains the earlier imports for use when a project has an explicitly related location. The former standalone Network and Chapters URLs redirect to Our Work. Partner pages link directly to the organizations' websites.
-
-The separate homepage impact section presents current focus areas and planned collaborations. Future participation and outreach figures can be added as they are documented. The contact buttons open a message to the existing Project Lumin email address.
-
-Browser checks covered desktop, tablet, and phone layouts, including 320px and 1440px widths, together with the update links, mobile navigation, keyboard access, legacy redirects, and contact link.
+## Files
+- `data/site-data.js` – photos, photo spots, partners, blog posts, email and Instagram (written by the admin panel).
+- `site-content.js` – site text: mission, focus areas, who we serve.
+- `network-data.js` – schools and communities shown on the Impact page map and directory.
+- `app.js` renders the pages, `styles.css` holds the design (brand colors: navy #16326d, gold #f4a730, off-white #fff9f3).
+- `vercel.json` / `_redirects` – routing for Vercel or Netlify hosting. The admin panel isn't deployed.

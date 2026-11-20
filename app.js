@@ -1,245 +1,377 @@
 ﻿'use strict';
 
 const content = window.LUMEN_CONTENT;
-const network = window.LUMEN_NETWORK;
+const data = window.LUMIN_DATA || {settings: {}, photos: [], slots: {}, partners: [], posts: []};
+const network = window.LUMEN_NETWORK || [];
 const main = document.querySelector('main');
-const route = location.pathname.replace(/\/$/, '') || '/';
-const pages = {
-  '/about': 'About', '/our-work': 'Our Work', '/partnerships': 'Partnerships',
-  '/youth-ambassadors': 'Youth Ambassadors', '/digital-hub': 'Digital Hub', '/contact': 'Contact'
-};
-const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-const button = (text, url, style = 'primary') => `<a class="button ${style}" href="${esc(url)}">${esc(text)} <span aria-hidden="true">↗</span></a>`;
-const textLink = (text, url) => `<a class="text-link" href="${esc(url)}">${esc(text)} <span aria-hidden="true">↗</span></a>`;
-const badge = text => `<span class="badge">${esc(text)}</span>`;
-const photo = (item, eager = false) => `<img src="${esc(item.src)}" alt="${esc(item.alt)}" ${eager ? '' : 'loading="lazy"'} decoding="async">`;
-const mail = (subject = '') => 'mailto:' + content.email + (subject ? '?subject=' + encodeURIComponent(subject) : '');
-const section = (body, options = '') => `<section class="section ${options}"><div class="wrap">${body}</div></section>`;
-const intro = (label, heading, description, extra = '') => `<section class="page-intro"><div class="wrap" data-enter><p class="eyebrow">${esc(label)}</p><h1>${esc(heading)}</h1><p class="lead">${esc(description)}</p>${extra}</div></section>`;
 
-function goals() {
-  return section(`<div class="goals-layout"><div class="goal-copy"><p class="eyebrow">Our approach</p><h2>Three goals for<br>safer days outside.</h2>
-    <div class="goal-list">${content.goals.map((g, i) => `<details id="${esc(g.id)}" name="goals" ${i === 0 ? 'open' : ''}><summary><span class="goal-number">0${i + 1}</span><span>${esc(g.title)}</span><span class="goal-toggle" aria-hidden="true"></span></summary><div>${g.status ? badge(g.status) : ''}<p>${esc(g.text)}</p></div></details>`).join('')}</div>
-    </div><div class="goal-image" data-reveal>${photo(content.media.goals)}</div></div>`, 'goals-section');
+// Retired pages forward to where their content lives now.
+const moved = {'/our-work': '/blog', '/youth-ambassadors': '/', '/digital-hub': '/', '/network': '/impact', '/chapters': '/impact', '/partners': '/partnerships', '/partners.html': '/partnerships'};
+let route = location.pathname.replace(/\/$/, '') || '/';
+if (route.startsWith('/our-work/')) route = '/our-work';
+if (moved[route]) location.replace(moved[route] + location.hash);
+
+const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[ch]));
+const arrow = '<span class="arrow" aria-hidden="true">↗</span>';
+const button = (text, url, style = 'primary') => `<a class="button ${style}" href="${esc(url)}">${esc(text)} ${arrow}</a>`;
+const textLink = (text, url) => `<a class="text-link" href="${esc(url)}">${esc(text)} ${arrow}</a>`;
+const email = data.settings?.email || 'projectluminfrisco@gmail.com';
+const instagram = data.settings?.instagram || '';
+const mail = (subject = '') => 'mailto:' + email + (subject ? '?subject=' + encodeURIComponent(subject) : '');
+const section = (body, cls = '', id = '') => `<section class="section ${cls}"${id ? ` id="${id}"` : ''}><div class="wrap">${body}</div></section>`;
+const heading = (eyebrow, title, lead = '', action = '') => `<div class="section-head" data-reveal><div>${eyebrow ? `<p class="eyebrow">${esc(eyebrow)}</p>` : ''}<h2>${title}</h2>${lead ? `<p class="lead">${esc(lead)}</p>` : ''}</div>${action}</div>`;
+const instagramIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" class="dot"/></svg>';
+
+/* ---------- Photos: pinned spots first, everything else shuffled across the site ---------- */
+function shuffle(list) {
+  const out = list.slice();
+  for (let i = out.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [out[i], out[j]] = [out[j], out[i]]; }
+  return out;
+}
+const photos = (data.photos || []).filter(p => p && p.src);
+const photoById = new Map(photos.map(p => [p.id, p]));
+const pinnedIds = new Set([...Object.values(data.slots || {}), ...(data.posts || []).map(p => p.photo)].filter(id => photoById.has(id)));
+let pool = shuffle(photos.filter(p => !pinnedIds.has(p.id)));
+if (!pool.length) pool = shuffle(photos);
+let poolIndex = 0;
+const picked = new Map();
+function pick(key, pinnedId) {
+  if (pinnedId && photoById.has(pinnedId)) return photoById.get(pinnedId);
+  if (!picked.has(key)) picked.set(key, pool.length ? pool[poolIndex++ % pool.length] : null);
+  return picked.get(key);
+}
+const spot = key => pick('spot:' + key, data.slots?.[key]);
+const postPhoto = post => pick('post:' + post.id, post.photo);
+const img = (p, cls = '', eager = false) => p
+  ? `<img class="${cls}" src="${esc(p.src)}" alt="${esc(p.alt || '')}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`
+  : `<span class="photo-empty ${cls}" aria-hidden="true"></span>`;
+
+/* ---------- Shared pieces ---------- */
+const initials = name => name.replace(/^the\s+/i, '').split(/[\s-]+/).filter(Boolean).map(w => /^[A-Z0-9]{2,5}$/.test(w) ? w : w[0]).join('').toUpperCase().slice(0, 3);
+function partnerMark(p, i, size = '') {
+  if (p.logo) return `<span class="partner-mark has-logo ${size}"><img src="${esc(p.logo)}" alt="" loading="lazy"></span>`;
+  return `<span class="partner-mark tone-${i % 4} ${size}" aria-hidden="true"><b>${esc(initials(p.name))}</b></span>`;
+}
+const partners = data.partners || [];
+const featured = partners.filter(p => p.featured).slice(0, 3);
+const others = partners.filter(p => !featured.includes(p));
+
+function featuredCards() {
+  return `<div class="featured-partners">${featured.map((p, i) => `<article class="featured-partner" data-reveal style="--d:${i}">
+    ${partnerMark(p, i, 'large')}
+    <h3>${esc(p.name)}</h3>${p.description ? `<p>${esc(p.description)}</p>` : ''}
+    ${p.url ? `<a class="card-link" href="${esc(p.url)}" target="_blank" rel="noopener">Visit website ${arrow}</a>` : ''}
+  </article>`).join('')}</div>`;
 }
 
-function entryCard(entry) {
-  const visual = entry.photo
-    ? `<div class="entry-photo">${photo(entry.photo)}<span>${esc(entry.photo.caption)} · ${esc(entry.photo.credit)}</span></div>`
-    : `<div class="entry-fallback" aria-hidden="true"><span>✳</span><strong>${esc(entry.name)}</strong></div>`;
-  return `<article class="entry-card">${visual}<div class="entry-copy">
-    <h3><button type="button" class="entry-link" data-entry="${esc(entry.id)}">${esc(entry.name)}<span aria-hidden="true">↗</span></button></h3>
-    <p>${esc(entry.location || 'Location unpublished')} · ${esc(entry.type)}</p></div></article>`;
+const blogPosts = (data.posts || []).filter(p => p.title);
+const formatDate = d => { if (!d) return ''; const t = new Date(d + 'T12:00:00'); return isNaN(t) ? d : t.toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'}); };
+function postCard(post, i = 0) {
+  return `<article class="post-card" data-reveal style="--d:${i % 3}">
+    <div class="post-photo">${img(postPhoto(post))}</div>
+    <div class="post-copy"><p class="post-meta">${post.tag ? `<span class="tag">${esc(post.tag)}</span>` : ''}${post.date ? `<time datetime="${esc(post.date)}">${esc(formatDate(post.date))}</time>` : ''}</p>
+      <h3><a href="/blog/${esc(post.id)}">${esc(post.title)}</a></h3><p>${esc(post.summary)}</p>
+      <span class="card-link" aria-hidden="true">Read post ${arrow}</span></div>
+  </article>`;
 }
 
-function projectCard(project) {
-  return `<article class="panel project-card">${project.media.length ? `<div class="project-photo">${photo(project.media[0])}</div>` : ''}
-    <div class="panel-inner">${project.status ? badge(project.status) : ''}<h3>${esc(project.title)}</h3><p>${esc(project.summary)}</p>
-    ${textLink('Read project details', '/our-work/' + project.id)}</div></article>`;
+const located = network.filter(e => Array.isArray(e.coordinates));
+const countries = new Set(network.map(e => e.geography).filter(Boolean));
+const stats = [
+  {value: network.length, label: 'Schools & communities in our network'},
+  {value: countries.size, label: 'Countries reached'},
+  {value: partners.length, label: 'Partner organizations'},
+  {value: content.focusAreas.length, label: 'Focus areas'}
+];
+const statGrid = (cls = '') => `<div class="stat-grid ${cls}">${stats.map((s, i) => `<div class="stat" data-reveal style="--d:${i}"><strong data-count="${s.value}">${s.value}</strong><span>${esc(s.label)}</span></div>`).join('')}</div>`;
+
+function pageIntro(eyebrow, title, lead, photoKey, extra = '') {
+  return `<section class="page-intro"><div class="wrap intro-grid">
+    <div class="intro-copy" data-enter><p class="eyebrow">${esc(eyebrow)}</p><h1>${title}</h1><p class="lead">${esc(lead)}</p>${extra}</div>
+    <div class="intro-photo" data-enter style="--d:1">${img(spot(photoKey), '', true)}<span class="logo-badge" aria-hidden="true"><img src="/assets/brand/lumin-icon.png" alt=""></span></div>
+  </div></section>`;
 }
 
-function partnerCards(full = false) {
-  return `<div class="partner-grid">${content.partners.map((p, i) => `<article class="panel partner-card">
-    ${p.photo ? `<div class="project-photo">${photo(p.photo)}</div>` : ''}
-    <div class="panel-inner">${p.logo ? `<img class="partner-logo" src="${esc(p.logo)}" alt="">` : `<span class="partner-symbol" aria-hidden="true">${i ? '◎' : '✳'}</span>`}
-    <h3>${esc(p.name)}</h3><p>${esc(p.text)}</p>${full && p.url ? `<div class="partner-links">${textLink('Visit website', p.url)}</div>` : ''}</div></article>`).join('')}</div>`;
-}
-
-function communityPartners() {
-  return `<h2 class="spaced">Community partners</h2>
-    <ul class="community-partners">${content.communityPartners.map(partner => `<li>
-      <span class="community-mark" aria-hidden="true">${partner.logo ? `<img src="${esc(partner.logo)}" alt="" loading="lazy">` : esc(partner.initials)}</span>
-      <strong>${esc(partner.name)}</strong></li>`).join('')}</ul>`;
-}
-
-function ambassadorPreview() {
-  const a = content.ambassador;
-  return section(`<div class="feature-split"><div class="feature-photo" data-reveal>${photo(content.media.ambassadors)}</div>
-    <div><p class="eyebrow">Get involved</p>${badge(a.status)}<h2>${esc(a.title)}</h2><p class="lead">${esc(a.summary)}</p>
-    ${textLink('See the program', '/youth-ambassadors')}</div></div>`, 'ambassador-section');
-}
-
-function closeSection() {
-  return section(`<div class="close-layout"><div><p class="eyebrow">Contact</p><h2>Let’s work together.</h2><p class="lead">Get in touch about bringing sun-safety education to your school or community.</p></div>${button('Work with us', '/contact')}</div>`, 'close-section');
-}
-
-function updatesSection() {
-  return section(`<div class="section-top" id="updates"><div><h2>Latest updates</h2><p class="lead">What Project Lumin is preparing and where to follow along.</p></div>${button('See our work', '/our-work', 'secondary')}</div>
-    <div class="updates-grid">${content.updates.map(update => `<article class="update-card">
-      <div class="update-image">${photo(content.media[update.image])}</div>
-      <div class="update-copy">${update.status ? badge(update.status) : ''}<h3><a href="${esc(update.url)}">${esc(update.title)}<span aria-hidden="true">↗</span></a></h3><p>${esc(update.summary)}</p></div>
-    </article>`).join('')}</div>`, 'updates-section');
-}
-
-function impactSection() {
-  const impact = content.impact;
-  return section(`<div id="impact"><h2>Our impact</h2><p class="lead">${esc(impact.summary)}</p>
-    <div class="impact-grid">${impact.measures.map(measure => `<a class="impact-stat" href="${esc(measure.href)}"><strong>${esc(measure.value)}</strong><span>${esc(measure.label)}</span><span class="impact-arrow" aria-hidden="true">↗</span></a>`).join('')}</div>
-    <p class="impact-note">${esc(impact.note)}</p></div>`, 'impact-section');
+/* ---------- Home ---------- */
+function photoWall() {
+  let wallPhotos = photos.filter(p => p.wall !== false);
+  if (!wallPhotos.length) wallPhotos = photos;
+  if (!wallPhotos.length) return '';
+  const perColumn = Math.min(12, Math.max(6, Math.ceil(wallPhotos.length / 5)));
+  const list = [];
+  while (list.length < perColumn * 5) {
+    const round = shuffle(wallPhotos);
+    if (list.length && round.length > 1 && round[0] === list.at(-1)) round.push(round.shift());
+    list.push(...round);
+  }
+  return `<div class="photo-wall" aria-hidden="true">${[0, 1, 2, 3, 4].map(c => {
+    const tiles = list.slice(c * perColumn, (c + 1) * perColumn).map(p => `<img src="${esc(p.src)}" alt="" decoding="async">`).join('');
+    return `<div class="photo-column"><div class="photo-track"><div class="photo-sequence">${tiles}</div><div class="photo-sequence">${tiles}</div></div></div>`;
+  }).join('')}</div>`;
 }
 
 function home() {
-  const media = content.media;
-  const wall = [
-    [media.hero[2], media.lawn, media.ambassadors],
-    [media.workshop, media.hero[0], media.goals],
-    [media.lawn, media.hero[1], media.workshop],
-    [media.ambassadors, media.goals, media.hero[2]],
-    [media.hero[0], media.workshop, media.hero[1]]
-  ];
-  return `<section class="hero photo-hero" id="about" data-enter>
-    <div class="photo-wall" aria-hidden="true">${wall.map((column, i) => {
-      const adjacent = wall[(i + 2) % wall.length];
-      const cycle = [...column, ...adjacent, ...column.slice().reverse(), adjacent[1], adjacent[2], adjacent[0]];
-      const tiles = cycle.map(item => `<img src="${esc(item.src)}" alt="" decoding="async">`).join('');
-      return `<div class="photo-column"><div class="photo-track"><div class="photo-sequence">${tiles}</div><div class="photo-sequence">${tiles}</div></div></div>`;
-    }).join('')}</div>
+  return `<section class="hero photo-hero">
+    ${photoWall()}
     <div class="hero-bloom"></div>
-    <div class="hero-sparks" aria-hidden="true"><div></div><div></div></div>
-    <div class="hero-center wrap"><h1>Project <span>Lumin</span></h1>
-      <p>${esc(content.heroLine)}</p>
-      <div class="actions">${button('Explore our work', '/our-work')}${button('Scroll to updates', '#updates', 'secondary')}</div>
+    <canvas class="hero-sky" aria-hidden="true"></canvas>
+    <div class="hero-center wrap" data-enter>
+      <h1>Project <span>Lumin</span></h1>
+      <p class="hero-line">${esc(content.heroLine)}</p>
+      <div class="actions">${button('Read the blog', '/blog')}${button('See our impact', '/impact', 'secondary')}</div>
     </div>
+    <a class="scroll-cue" href="#blog" aria-label="Scroll to the blog"><span></span></a>
   </section>
-  ${updatesSection()}
-  ${impactSection()}
-  <div id="goals" class="anchor"></div>${goals()}
-  ${section(`<div class="section-top"><div><h2>Partnerships</h2></div>${textLink('See partnerships', '/partnerships')}</div>${partnerCards()}`, 'partner-section')}
-  ${ambassadorPreview()}
-  ${section(`<div class="hub-preview"><div><p class="eyebrow">Digital Hub</p><h2>Sun-safety resources.</h2><p class="lead">A home for learning resources, with tools and trackers coming soon.</p></div>${button('Visit the Digital Hub', '/digital-hub', 'secondary')}</div>`, 'hub-section')}
-  <div id="involved" class="anchor"></div>${closeSection()}`;
+
+  ${section(heading('Blog', 'Latest from Project Lumin', '', button('All posts', '/blog', 'secondary')) +
+    `<div class="post-grid">${blogPosts.slice(0, 3).map(postCard).join('')}</div>`, 'blog-section', 'blog')}
+
+  ${section(heading('Focus areas', 'Three ways we protect<br>young people under the sun.', content.approach) +
+    `<div class="focus-grid">${content.focusAreas.map((f, i) => `<a class="focus-card" href="/about#${f.id}" data-reveal style="--d:${i}">
+      <div class="focus-photo">${img(spot('focus-' + f.id))}<span class="focus-number">${f.number}</span></div>
+      <div class="focus-copy"><h3>${esc(f.title)}</h3><p>${esc(f.short)}</p>
+      <ul>${f.points.map(([t]) => `<li>${esc(t)}</li>`).join('')}</ul><span class="card-link">Learn more ${arrow}</span></div>
+    </a>`).join('')}</div>`, 'focus-section', 'focus')}
+
+  <section class="impact-band"><div class="wrap">
+    <div class="impact-band-head" data-reveal><div><p class="eyebrow">Impact</p><h2>A movement that keeps growing.</h2></div>${button('See our impact', '/impact')}</div>
+    ${statGrid('on-dark')}
+  </div></section>
+
+  ${section(heading('Partnerships', 'Working alongside<br>great organizations.', '', '') + featuredCards() +
+    (others.length ? `<a class="more-partners" href="/partnerships" data-reveal>
+      <div class="more-copy"><strong>+${others.length}</strong><span>more partners<br>across our network</span></div>
+      <div class="marquee" aria-hidden="true"><div class="marquee-track">${[...others, ...others].map((p, i) => `<span class="marquee-item">${partnerMark(p, i, 'small')}${esc(p.name)}</span>`).join('')}</div></div>
+      <span class="button primary">View all partners ${arrow}</span>
+    </a>` : ''), 'partner-section', 'partners')}`;
 }
 
+/* ---------- Blog ---------- */
+function blog() {
+  return `<section class="page-intro compact"><div class="wrap"><div class="intro-copy" data-enter><p class="eyebrow">Blog</p><h1>News & stories</h1>
+    <p class="lead">What Project Lumin is building, where we are going, and who we are working with.</p></div></div></section>` +
+    section(blogPosts.length ? `<div class="post-grid">${blogPosts.map(postCard).join('')}</div>` : '<p class="lead">New posts are on the way.</p>', 'blog-section');
+}
+
+function blogPost(post) {
+  if (!post) return `<section class="page-intro compact"><div class="wrap"><h1>Post not found</h1><p class="lead">This post may have moved.</p>${button('Back to the blog', '/blog')}</div></section>`;
+  document.title = `${post.title} | Project Lumin`;
+  const more = blogPosts.filter(p => p !== post).slice(0, 3);
+  return `<article class="post-page"><div class="wrap post-wrap" data-enter>
+      <a class="back-link" href="/blog">← All posts</a>
+      <p class="post-meta">${post.tag ? `<span class="tag">${esc(post.tag)}</span>` : ''}${post.date ? `<time datetime="${esc(post.date)}">${esc(formatDate(post.date))}</time>` : ''}</p>
+      <h1>${esc(post.title)}</h1><p class="lead">${esc(post.summary)}</p>
+    </div>
+    <div class="wrap post-hero" data-enter style="--d:1">${img(postPhoto(post), '', true)}</div>
+    <div class="wrap post-wrap post-body">${String(post.body || '').split(/\n\s*\n/).filter(Boolean).map(par => `<p>${esc(par)}</p>`).join('')}</div>
+  </article>` + (more.length ? section(heading('Keep reading', 'More from the blog') + `<div class="post-grid">${more.map(postCard).join('')}</div>`, 'blog-section') : '');
+}
+
+/* ---------- Impact ---------- */
+function impact() {
+  const typeCounts = Object.entries(network.reduce((acc, e) => ({...acc, [e.type || 'Unspecified']: (acc[e.type || 'Unspecified'] || 0) + 1}), {})).sort((a, b) => b[1] - a[1]);
+  const countryCounts = Object.entries(network.reduce((acc, e) => e.geography ? {...acc, [e.geography]: (acc[e.geography] || 0) + 1} : acc, {})).sort((a, b) => b[1] - a[1]);
+  const maxCountry = countryCounts[0]?.[1] || 1;
+  const typeClass = t => ({'School': 'school', 'Higher education': 'higher', 'Community': 'community'}[t] || 'other');
+  const dots = located.map(e => {
+    const [lat, lon] = e.coordinates;
+    return `<circle class="map-dot ${typeClass(e.type)}" cx="${((lon + 180) * 2).toFixed(1)}" cy="${((84 - lat) * 2).toFixed(1)}" r="4.6" tabindex="0" data-name="${esc(e.name)}" data-place="${esc(e.location || e.geography || '')}" data-type="${esc(e.type)}"><title>${esc(e.name)}</title></circle>`;
+  }).join('');
+  const types = typeCounts.map(([t]) => t);
+  // Lets people search "Texas" as well as "TX".
+  const states = {AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California', CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware', DC: 'Washington DC', FL: 'Florida', GA: 'Georgia', HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana', IA: 'Iowa', KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland', MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi', MO: 'Missouri', MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire', NJ: 'New Jersey', NM: 'New Mexico', NY: 'New York', NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio', OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina', SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont', VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming'};
+  const searchText = e => [e.name, e.location, e.geography, states[(e.location || '').match(/,\s*([A-Z]{2})$/)?.[1]]].filter(Boolean).join(' ').toLowerCase();
+  return pageIntro('Impact', 'Sun safety, <span class="hl">spreading.</span>', 'Project Lumin reaches young people through a growing network of schools, communities, and partner organizations around the world.', 'impact-hero') +
+    section(statGrid(), 'stats-section') +
+    section(heading('Our network', 'Where we reach.', `${located.length} mapped locations across ${countries.size} countries. Hover or tap a dot to see who is there.`) +
+      `<div class="map-card" data-reveal>
+        <div class="map-frame"><svg class="world-map" viewBox="0 0 720 294" role="img" aria-label="World map of ${located.length} schools and communities in the Project Lumin network">
+          <image href="/assets/world-map.svg" width="720" height="294"/>${dots}</svg>
+          <div class="map-tip" hidden></div></div>
+        <div class="map-legend">${['School', 'Higher education', 'Community'].map(t => `<span><i class="${typeClass(t)}"></i>${t}</span>`).join('')}</div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-card" data-reveal><h3>Top countries</h3><ul class="bars">${countryCounts.slice(0, 8).map(([c, n]) => `<li><span>${esc(c)}</span><b style="--w:${(n / maxCountry * 100).toFixed(1)}%"></b><em>${n}</em></li>`).join('')}</ul></div>
+        <div class="chart-card" data-reveal style="--d:1"><h3>Who is in the network</h3><ul class="bars types">${typeCounts.map(([t, n]) => `<li><span>${esc(t)}</span><b class="${typeClass(t)}" style="--w:${(n / typeCounts[0][1] * 100).toFixed(1)}%"></b><em>${n}</em></li>`).join('')}</ul></div>
+      </div>`, 'map-section', 'map') +
+    section(heading('Chapters', 'Schools & communities.', 'Every school and community in our network.') +
+      `<div class="directory-tools" data-reveal><label class="search"><span class="visually-hidden">Search schools and communities</span><input type="search" id="directory-search" placeholder="Search by name or place"></label>
+        <div class="chips" role="group" aria-label="Filter by type"><button type="button" class="chip" aria-pressed="true" data-type="all">All</button>${types.map(t => `<button type="button" class="chip" aria-pressed="false" data-type="${esc(t)}">${esc(t)}</button>`).join('')}</div></div>
+      <p class="directory-count" aria-live="polite"></p>
+      <ul class="directory">${network.slice().sort((a, b) => a.name.localeCompare(b.name)).map(e => `<li data-type="${esc(e.type)}" data-search="${esc(searchText(e))}">
+        <span class="dir-mark ${typeClass(e.type)}" aria-hidden="true">${esc(initials(e.name))}</span><div><strong>${esc(e.name)}</strong><span>${esc(e.location || e.geography || e.type)}</span></div></li>`).join('')}</ul>`, 'directory-section', 'chapters');
+}
+
+/* ---------- Partnerships ---------- */
+function partnershipsPage() {
+  return pageIntro('Partnerships', 'Stronger <span class="hl">together.</span>', 'We work with organizations of every size to bring sun safety to more young people, from global student networks to local nonprofits.', 'partners-hero',
+    `<div class="actions">${button('Become a partner', mail('Partnering with Project Lumin'))}</div>`) +
+    section(heading('Our partners', `${partners.length} organizations and counting.`) + featuredCards() +
+      `<ul class="partner-grid">${others.map((p, i) => `<li class="partner-tile" data-reveal style="--d:${i % 4}">${partnerMark(p, i + 3)}<strong>${esc(p.name)}</strong>${p.description ? `<p>${esc(p.description)}</p>` : ''}${p.url ? `<a class="card-link" href="${esc(p.url)}" target="_blank" rel="noopener">Website ${arrow}</a>` : ''}</li>`).join('')}</ul>`, 'partner-section');
+}
+
+/* ---------- About ---------- */
 function about() {
-  return intro('About', 'Sun safety starts with students.', content.mission) + goals() + closeSection();
+  return pageIntro('About', 'Sun safety starts with <span class="hl">students.</span>', content.oneLiner, 'about-hero', `<div class="actions">${button('Get involved', '/contact')}</div>`) +
+    `<section class="mission-band"><div class="wrap" data-reveal><p class="eyebrow">Our mission</p><blockquote>${esc(content.mission)}</blockquote></div></section>` +
+    section(`<div class="split"><div class="split-photo" data-reveal>${img(spot('about-approach'))}</div>
+      <div data-reveal style="--d:1"><p class="eyebrow">Our approach</p><h2>Enjoy the outdoors. Stay protected.</h2><p class="lead">${esc(content.approach)}</p>
+      <h3 class="small-head">Who we serve</h3><ul class="pill-list">${content.audience.map(a => `<li>${esc(a)}</li>`).join('')}</ul></div></div>`, 'approach-section') +
+    section(heading('What we do', 'Our three focus areas.') + content.focusAreas.map((f, i) => `<article class="pillar" id="${f.id}" data-reveal>
+      <div class="pillar-head"><span class="pillar-number">${f.number}</span><div><h3>${esc(f.title)}</h3><p>${esc(f.text)}</p></div></div>
+      <ul class="pillar-points">${f.points.map(([t, d]) => `<li><strong>${esc(t)}</strong><span>${esc(d)}</span></li>`).join('')}</ul></article>`).join(''), 'pillars-section');
 }
 
-function work() {
-  return intro('Our Work', 'Sun-safety initiatives.', 'Follow Project Lumin’s work in digital awareness, community outreach, and student-led education.') +
-    section(`<h2>Initiatives and updates</h2>${content.projects.length ?
-      `<div class="partner-grid">${content.projects.map(projectCard).join('')}</div>` : '<p>Project updates will appear here as they become available.</p>'}`);
-}
-
-function projectPage(project) {
-  if (!project) return intro('Our Work', 'Project unavailable', 'This project page could not be found.', button('See our work', '/our-work'));
-  const related = project.locations.map(id => network.find(entry => entry.id === id)).filter(Boolean);
-  return intro('Our Work', project.title, project.summary, project.status ? badge(project.status) : '') +
-    section(`<h2>Project overview</h2><p class="lead">${esc(project.body)}</p>
-    ${project.media.length ? `<h2>Project gallery</h2><div class="gallery">${project.media.map((m, i) => `<figure><button type="button" data-gallery="${i}" aria-label="Open image: ${esc(m.alt)}">${photo(m)}</button>${m.credit ? `<figcaption>${esc(m.credit)}</figcaption>` : ''}</figure>`).join('')}</div>` : ''}
-    ${related.length ? `<h2>Related network locations</h2><div class="entry-grid">${related.map(entryCard).join('')}</div>` : ''}
-    ${textLink('See all initiatives', '/our-work')}`);
-}
-
-function partnerships() {
-  return intro('Partnerships', 'Working with schools and communities.', 'Project Lumin is working with Living with Eczema and planning student outreach through the SDG Champions and Neuroscience Nation networks.', button('Work with us', '/contact')) +
-    section(`<h2>Our partners</h2>${partnerCards(true)}${communityPartners()}`, 'partner-section');
-}
-
-function ambassadors() {
-  const a = content.ambassador;
-  const fields = [['Application dates', a.dates], ['Eligibility', a.eligibility], ['Benefits', a.benefits]].filter(([, value]) => value);
-  return intro('Get involved', a.title, a.summary, badge(a.status)) + section(`<div class="feature-split">
-    <div class="feature-photo" data-reveal>${photo(content.media.ambassadors)}</div><div><h2>Bring sun safety to your community.</h2>
-    ${fields.length ? `<dl>${fields.map(([key, val]) => `<dt>${esc(key)}</dt><dd>${esc(val)}</dd>`).join('')}</dl>` : '<p class="lead">Application dates, eligibility, and benefits will be shared when the program opens.</p>'}
-    <div class="actions">${button('Ask about the program', mail(a.title), 'secondary')}${a.applicationUrl && a.status !== 'Coming soon' ? button('Apply to the program', a.applicationUrl) : ''}</div></div></div>`, 'ambassador-section');
-}
-
-function hub() {
-  return intro('Digital Hub', 'Resources for sun-safe habits.', 'Find Project Lumin learning materials and see what’s planned for the Digital Hub.') +
-    section(`<h2>Learning resources</h2>${content.resources.length ? `<ul class="resource-list">${content.resources.map(r => `<li>${textLink(r.title, r.url)}${r.description ? `<p>${esc(r.description)}</p>` : ''}</li>`).join('')}</ul>` : '<div class="panel panel-inner"><p>Project Lumin resources will appear here once they’re ready to share.</p></div>'}
-    <h2 class="spaced">Tools and trackers</h2><div class="partner-grid">${content.tools.map(tool => `<article class="panel panel-inner">${badge('Coming soon')}<h3>${esc(tool)}</h3></article>`).join('')}</div>`, 'hub-section');
-}
-
+/* ---------- Contact ---------- */
 function contact() {
-  return intro('Contact', 'Get in touch with Project Lumin.', 'Email us about partnerships, network activities, or the Youth Ambassador Program.', button('Email Project Lumin', mail())) +
-    section(`<div class="panel panel-inner contact-panel"><h2>Contact email</h2>${textLink(content.email, mail())}<p>Frisco, Texas</p></div>`);
+  return pageIntro('Contact', 'Let’s make sun safety <span class="hl">a habit.</span>', 'Reach out about partnerships, events, starting a chapter, or anything else.', 'contact-hero') +
+    section(`<div class="contact-grid">
+      <a class="contact-card" href="${esc(mail())}" data-reveal><span class="contact-icon" aria-hidden="true">✉</span><span class="contact-label">Email</span><strong>${esc(email)}</strong></a>
+      ${instagram ? `<a class="contact-card" href="${esc(instagram)}" target="_blank" rel="noopener" data-reveal style="--d:1"><span class="contact-icon">${instagramIcon}</span><span class="contact-label">Instagram</span><strong>Follow us</strong></a>` : ''}
+      <div class="contact-card" data-reveal style="--d:2"><span class="contact-icon" aria-hidden="true">☀</span><span class="contact-label">Based in</span><strong>Frisco, Texas</strong></div>
+    </div>`, 'contact-section');
 }
 
-const pageRenderers = {'/about': about, '/our-work': work, '/network': work, '/chapters': work, '/partnerships': partnerships,
-  '/partners': partnerships, '/partners.html': partnerships, '/youth-ambassadors': ambassadors, '/digital-hub': hub, '/contact': contact};
-const project = route.startsWith('/our-work/') ? content.projects.find(p => p.id === route.split('/').at(-1)) : null;
-const currentPage = route.startsWith('/our-work/') || route === '/network' || route === '/chapters' ? '/our-work' : route.startsWith('/partners') ? '/partnerships' : route;
-main.innerHTML = route.startsWith('/our-work/') ? projectPage(project) : (pageRenderers[route] || home)();
-document.title = pages[currentPage] ? `${project?.title || pages[currentPage]} | Project Lumin` : document.title;
+/* ---------- Render ---------- */
+const pages = {'/about': ['About', about], '/blog': ['Blog', blog], '/impact': ['Impact', impact], '/partnerships': ['Partnerships', partnershipsPage], '/contact': ['Contact', contact]};
+const currentPage = route.startsWith('/blog/') ? '/blog' : route;
+if (route.startsWith('/blog/')) main.innerHTML = blogPost(blogPosts.find(p => p.id === route.split('/')[2]));
+else if (pages[route]) { main.innerHTML = pages[route][1](); document.title = `${pages[route][0]} | Project Lumin`; }
+else main.innerHTML = home();
+document.body.dataset.page = currentPage === '/' ? 'home' : currentPage.slice(1);
 
+/* ---------- Header & footer ---------- */
 const nav = document.querySelector('.nav');
 const menu = nav.querySelector('.menu');
-const more = nav.querySelector('.nav-more');
-nav.querySelector(`a[href="${currentPage}"]`)?.setAttribute('aria-current', 'page');
-function setMenu(open) { menu.setAttribute('aria-expanded', String(open)); if (!open) more.open = false; }
+nav.querySelector(`.nav-links a[href="${currentPage}"]`)?.setAttribute('aria-current', 'page');
+const setMenu = open => { menu.setAttribute('aria-expanded', String(open)); document.body.classList.toggle('menu-open', open); };
 menu.addEventListener('click', () => setMenu(menu.getAttribute('aria-expanded') === 'false'));
-document.addEventListener('click', event => { if (!nav.contains(event.target) || event.target.closest('a')) setMenu(false); });
-document.addEventListener('keydown', event => {
-  if (event.key !== 'Escape' || document.querySelector('dialog[open]')) return;
-  if (more.open) { more.open = false; more.querySelector('summary').focus(); }
-  else if (menu.getAttribute('aria-expanded') === 'true') { setMenu(false); menu.focus(); }
-});
+document.addEventListener('click', e => { if (!nav.contains(e.target) || e.target.closest('a')) setMenu(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') { setMenu(false); menu.focus(); } });
+const onScroll = () => document.body.classList.toggle('scrolled', scrollY > 30);
+addEventListener('scroll', onScroll, {passive: true}); onScroll();
 
 document.querySelector('#footer').innerHTML = `<div class="wrap"><div class="footer-main">
-  <div><a class="brand" href="/" aria-label="Project Lumin home"><span>Project <strong>Lumin</strong></span></a><p>Student-led sun safety in Frisco, Texas.</p>${textLink(content.email, mail())}</div>
-  <nav aria-label="Footer navigation">${Object.entries(pages).map(([url, label]) => `<a href="${url}">${label}</a>`).join('')}</nav></div>
-  <div class="footer-end"><span>© ${new Date().getFullYear()} Project Lumin</span></div></div>`;
+  <div class="footer-brand"><a class="brand" href="/"><img src="/assets/brand/lumin-lockup-white.png" alt="Project Lumin home" width="592" height="240" loading="lazy"></a>
+    <p>Empowering young people to safely enjoy the outdoors.</p>
+    <div class="footer-contact">${textLink(email, mail())}${instagram ? `<a class="social" href="${esc(instagram)}" target="_blank" rel="noopener" aria-label="Project Lumin on Instagram">${instagramIcon}</a>` : ''}</div></div>
+  <nav aria-label="Footer navigation">${[['/', 'Home'], ...Object.entries(pages).map(([u, [l]]) => [u, l])].map(([u, l]) => `<a href="${u}">${l}</a>`).join('')}</nav></div>
+  <div class="footer-end"><span>© ${new Date().getFullYear()} Project Lumin</span><span>Frisco, Texas</span></div></div>`;
 
-document.body.insertAdjacentHTML('beforeend', `<dialog id="detail-dialog" aria-labelledby="detail-title"><form method="dialog"><button class="dialog-close" aria-label="Close details" autofocus>×</button></form><div id="detail-body"></div></dialog>`);
-const dialog = document.querySelector('#detail-dialog');
-const detailBody = document.querySelector('#detail-body');
-function showEntry(entry) {
-  detailBody.innerHTML = `<h2 id="detail-title">${esc(entry.name)}</h2>
-    <p>${esc(entry.location || 'Location unpublished')} · ${esc(entry.type)}</p>
-    ${entry.photo ? `<figure class="detail-photo">${photo(entry.photo)}<figcaption>${esc(entry.photo.caption)} · ${esc(entry.photo.credit)}</figcaption></figure>` : ''}
-    ${entry.sources.some(s => s.name !== entry.name) ? `<p>Also listed as ${entry.sources.filter(s => s.name !== entry.name).map(s => esc(s.name)).join(', ')}.</p>` : ''}`;
-  dialog.showModal();
+/* ---------- Motion ---------- */
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if ('IntersectionObserver' in window && !reduceMotion) {
+  document.documentElement.classList.add('motion');
+  const revealer = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('revealed');
+    entry.target.querySelectorAll('[data-count]').forEach(countUp);
+    if (entry.target.matches('[data-count]')) countUp(entry.target);
+    revealer.unobserve(entry.target);
+  }), {threshold: 0.12, rootMargin: '0px 0px -40px 0px'});
+  document.querySelectorAll('[data-reveal], .bars').forEach(el => revealer.observe(el));
+} else document.querySelectorAll('.bars').forEach(el => el.classList.add('revealed'));
+
+function countUp(el) {
+  const target = Number(el.dataset.count);
+  if (!target || el.dataset.counted) return;
+  el.dataset.counted = '1';
+  const start = performance.now(), duration = 1400;
+  const tick = now => {
+    const t = Math.min(1, (now - start) / duration);
+    el.textContent = Math.round(target * (1 - Math.pow(1 - t, 3)));
+    if (t < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 }
 
-main.addEventListener('click', event => {
-  const entryButton = event.target.closest('[data-entry]');
-  if (entryButton) {
-    const entry = network.find(item => item.id === entryButton.dataset.entry);
-    if (entry) showEntry(entry);
-  }
-  const galleryButton = event.target.closest('[data-gallery]');
-  if (galleryButton) {
-    const image = project.media[Number(galleryButton.dataset.gallery)];
-    detailBody.innerHTML = `<h2 id="detail-title">Project gallery</h2><figure class="detail-photo">${photo(image, true)}${image.credit ? `<figcaption>${esc(image.credit)}</figcaption>` : ''}</figure>`;
-    dialog.showModal();
-  }
-});
-
-dialog.addEventListener('click', event => {
-  if (event.target === dialog) {
-    const rect = dialog.getBoundingClientRect();
-    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
-  }
-});
-
+// Drifting sun motes behind the hero title.
 const hero = document.querySelector('.photo-hero');
-if (hero) {
-  if ('IntersectionObserver' in window) {
-    const motionObserver = new IntersectionObserver(([entry]) => {
-      hero.classList.toggle('motion-offscreen', !entry.isIntersecting);
-    });
-    motionObserver.observe(hero);
-
-    const updatesObserver = new IntersectionObserver(entries => {
-      for (const entry of entries) if (entry.isIntersecting) {
-        entry.target.classList.add('updates-arrived');
-        updatesObserver.unobserve(entry.target);
-      }
-    }, {threshold: 0.15});
-    document.querySelectorAll('.update-card').forEach(card => updatesObserver.observe(card));
-  }
-}
-
-if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const observer = new IntersectionObserver(entries => {
-    for (const entry of entries) if (entry.isIntersecting) {
-      entry.target.classList.add('revealed');
-      observer.unobserve(entry.target);
+const sky = document.querySelector('.hero-sky');
+if (hero && sky && !reduceMotion) {
+  const ctx = sky.getContext('2d');
+  let w, h, motes = [], running = true, mouseX = 0.5, mouseY = 0.5;
+  const resize = () => {
+    const r = devicePixelRatio || 1;
+    w = sky.clientWidth; h = sky.clientHeight;
+    sky.width = w * r; sky.height = h * r; ctx.setTransform(r, 0, 0, r, 0, 0);
+    motes = Array.from({length: Math.round(Math.min(90, w * h / 14000))}, () => ({
+      x: Math.random() * w, y: Math.random() * h, r: Math.random() * 2.2 + .6,
+      vx: (Math.random() - .5) * .15, vy: -(Math.random() * .25 + .05), p: Math.random() * Math.PI * 2,
+      gold: Math.random() < .7
+    }));
+  };
+  const draw = () => {
+    if (!running) return;
+    ctx.clearRect(0, 0, w, h);
+    for (const m of motes) {
+      m.x += m.vx + (mouseX - .5) * .25; m.y += m.vy; m.p += .02;
+      if (m.y < -10) { m.y = h + 10; m.x = Math.random() * w; }
+      if (m.x < -10) m.x = w + 10; if (m.x > w + 10) m.x = -10;
+      const a = .35 + Math.sin(m.p) * .3;
+      ctx.beginPath(); ctx.arc(m.x, m.y + (mouseY - .5) * 12 * m.r, m.r, 0, Math.PI * 2);
+      ctx.fillStyle = m.gold ? `rgba(244,167,48,${a})` : `rgba(22,50,109,${a * .55})`;
+      ctx.fill();
     }
-  }, {threshold: 0.15});
-  document.querySelectorAll('[data-reveal]').forEach(element => observer.observe(element));
+    requestAnimationFrame(draw);
+  };
+  resize(); addEventListener('resize', resize);
+  hero.addEventListener('pointermove', e => { mouseX = e.clientX / innerWidth; mouseY = e.clientY / innerHeight; });
+  new IntersectionObserver(([e]) => {
+    hero.classList.toggle('motion-offscreen', !e.isIntersecting);
+    const was = running; running = e.isIntersecting; if (running && !was) draw();
+  }).observe(hero);
+  draw();
 }
-if (location.hash) requestAnimationFrame(() => {
-  const target = document.getElementById(location.hash.slice(1));
-  if (target) { if (target.matches('details')) target.open = true; target.scrollIntoView(); }
-});
+
+/* ---------- Impact page interactions ---------- */
+const mapFrame = document.querySelector('.map-frame');
+if (mapFrame) {
+  const tip = mapFrame.querySelector('.map-tip');
+  const show = dot => {
+    const box = mapFrame.getBoundingClientRect(), d = dot.getBoundingClientRect();
+    tip.innerHTML = `<strong>${esc(dot.dataset.name)}</strong><span>${esc(dot.dataset.place)} · ${esc(dot.dataset.type)}</span>`;
+    tip.hidden = false;
+    const x = d.left - box.left + d.width / 2;
+    tip.style.left = Math.min(Math.max(x, 110), box.width - 110) + 'px';
+    tip.style.top = (d.top - box.top) + 'px';
+    mapFrame.querySelectorAll('.map-dot.active').forEach(el => el.classList.remove('active'));
+    dot.classList.add('active');
+  };
+  mapFrame.addEventListener('pointerover', e => { if (e.target.matches('.map-dot')) show(e.target); });
+  mapFrame.addEventListener('click', e => { if (e.target.matches('.map-dot')) show(e.target); });
+  mapFrame.addEventListener('focusin', e => { if (e.target.matches('.map-dot')) show(e.target); });
+  mapFrame.addEventListener('pointerleave', () => { tip.hidden = true; });
+}
+const directory = document.querySelector('.directory');
+if (directory) {
+  const search = document.querySelector('#directory-search');
+  const chips = document.querySelectorAll('.chip');
+  const count = document.querySelector('.directory-count');
+  let type = 'all';
+  const filter = () => {
+    const q = search.value.trim().toLowerCase();
+    let matches = 0;
+    const limit = expanded || q || type !== 'all' ? Infinity : 24;
+    directory.querySelectorAll('li').forEach(li => {
+      const ok = (type === 'all' || li.dataset.type === type) && (!q || li.dataset.search.includes(q));
+      if (ok) matches++;
+      li.hidden = !ok || matches > limit;
+    });
+    count.textContent = matches > limit ? `Showing ${limit} of ${network.length}` : `Showing ${matches} of ${network.length}`;
+    more.hidden = !(matches > limit);
+  };
+  let expanded = false;
+  directory.insertAdjacentHTML('afterend', `<div class="directory-more"><button type="button" class="button secondary">Show all ${network.length} ${arrow}</button></div>`);
+  const more = directory.nextElementSibling;
+  more.querySelector('button').addEventListener('click', () => { expanded = true; filter(); });
+  search.addEventListener('input', filter);
+  chips.forEach(chip => chip.addEventListener('click', () => {
+    type = chip.dataset.type;
+    chips.forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
+    filter();
+  }));
+  filter();
+}
+
+if (location.hash) requestAnimationFrame(() => document.getElementById(location.hash.slice(1))?.scrollIntoView());

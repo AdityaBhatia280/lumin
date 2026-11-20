@@ -1,10 +1,19 @@
 {
   "redirects": [
-    { "source": "/network", "destination": "/our-work", "permanent": false },
-    { "source": "/chapters", "destination": "/our-work", "permanent": false }
+    { "source": "/our-work", "destination": "/blog", "permanent": false },
+    { "source": "/our-work/:slug", "destination": "/blog", "permanent": false },
+    { "source": "/network", "destination": "/impact", "permanent": false },
+    { "source": "/chapters", "destination": "/impact", "permanent": false },
+    { "source": "/youth-ambassadors", "destination": "/", "permanent": false },
+    { "source": "/digital-hub", "destination": "/", "permanent": false },
+    { "source": "/partners", "destination": "/partnerships", "permanent": false },
+    { "source": "/admin", "destination": "/", "permanent": false }
   ],
   "rewrites": [
-    { "source": "/(about|our-work|partnerships|partners|youth-ambassadors|digital-hub|contact)", "destination": "/index.html" },
-    { "source": "/our-work/:slug", "destination": "/index.html" }
+    { "source": "/(about|blog|impact|partnerships|contact)", "destination": "/index.html" },
+    { "source": "/blog/:slug", "destination": "/index.html" }
+  ],
+  "headers": [
+    { "source": "/data/(.*)", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
   ]
 }

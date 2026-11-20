@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Admin | Project Lumin</title>
+  <link rel="icon" type="image/png" href="/assets/brand/favicon-64.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --navy: #16326d; --navy-deep: #0d2150; --gold: #f4a730; --cream: #fff9f3; --sand: #fdeed6; --sky: #edf2fa; --ink: #142449; --muted: #5a6582; --rule: #e7e3dc; --red: #b42318; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font: 15px/1.5 "DM Sans", Arial, sans-serif; }
+    h1, h2, h3 { font-family: Outfit, sans-serif; color: var(--navy); margin: 0; letter-spacing: -.02em; }
+    button, input, textarea, select { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+    img { display: block; max-width: 100%; }
+    .top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 1rem; padding: 12px 24px; background: var(--navy); color: #fff; }
+    .top h1 { color: #fff; font-size: 1.2rem; }
+    .top h1 span { color: var(--gold); }
+    .status { margin-left: auto; font-size: .9rem; color: #c6d2ea; }
+    .status.saving { color: var(--gold); }
+    .status.error { color: #ffb4a8; }
+    .top a { color: #fff; font-weight: 700; text-decoration: none; padding: 8px 14px; border-radius: 10px; background: #ffffff1a; }
+    .tabs { position: sticky; top: 58px; z-index: 19; display: flex; gap: 4px; overflow-x: auto; padding: 10px 24px 0; background: var(--cream); border-bottom: 1px solid var(--rule); }
+    .tabs button { padding: 12px 18px; border: 0; border-bottom: 3px solid transparent; background: none; font-weight: 700; color: var(--muted); white-space: nowrap; }
+    .tabs button[aria-selected="true"] { color: var(--navy); border-color: var(--gold); }
+    .tabs .count { margin-left: 6px; padding: 1px 8px; border-radius: 20px; background: var(--sky); font-size: .8rem; }
+    main { max-width: 1240px; margin: 0 auto; padding: 28px 24px 80px; }
+    .intro { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 20px; }
+    .intro p { margin: .4rem 0 0; color: var(--muted); max-width: 70ch; }
+    .btn { display: inline-flex; align-items: center; gap: .4rem; min-height: 42px; padding: 0 16px; border-radius: 11px; border: 1.5px solid #16326d33; background: #fff; font-weight: 700; color: var(--navy); }
+    .btn:hover { border-color: var(--navy); }
+    .btn.primary { background: var(--gold); border-color: var(--gold); color: var(--navy-deep); }
+    .btn.danger { color: var(--red); border-color: #b4231833; }
+    .btn.small { min-height: 34px; padding: 0 10px; font-size: .85rem; border-radius: 9px; }
+    .btn:disabled { opacity: .45; cursor: default; }
+    .drop { display: grid; place-items: center; gap: .4rem; padding: 46px 20px; margin-bottom: 22px; border: 2.5px dashed #16326d40; border-radius: 22px; background: #fff; text-align: center; cursor: pointer; transition: background .2s, border-color .2s; }
+    .drop.over { background: var(--sand); border-color: var(--gold); }
+    .drop strong { font: 700 1.35rem Outfit, sans-serif; color: var(--navy); }
+    .drop span { color: var(--muted); }
+    .drop .sun { width: 54px; height: 54px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ffd27a, var(--gold) 60%, #e08a12); margin-bottom: .4rem; }
+    .progress { margin: -8px 0 20px; padding: 14px 18px; border-radius: 14px; background: #fff; border: 1px solid var(--rule); }
+    .progress .bar { height: 8px; margin-top: 8px; border-radius: 8px; background: var(--sky); overflow: hidden; }
+    .progress .bar i { display: block; height: 100%; width: 0; background: var(--gold); transition: width .2s; }
+    .errors { margin-top: 8px; color: var(--red); font-size: .9rem; }
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .toolbar .note { color: var(--muted); font-size: .9rem; margin-right: auto; }
+    .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+    .photo { position: relative; border-radius: 16px; overflow: hidden; background: #fff; border: 1px solid var(--rule); }
+    .photo img { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--sand); }
+    .photo .meta { display: grid; gap: 6px; padding: 10px; }
+    .photo input[type="text"] { width: 100%; padding: 6px 8px; border: 1px solid var(--rule); border-radius: 8px; font-size: .82rem; }
+    .photo label { display: flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 600; }
+    .photo .used { font-size: .75rem; color: var(--muted); }
+    .photo .del { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border: 0; border-radius: 50%; background: #ffffffe6; color: var(--red); font-size: 1.1rem; box-shadow: 0 2px 8px #0003; }
+    .photo .sample { position: absolute; top: 8px; left: 8px; padding: 2px 8px; border-radius: 20px; background: #ffffffe6; font-size: .72rem; font-weight: 700; }
+    .rows { display: grid; gap: 12px; }
+    .row { display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 16px; padding: 12px; border-radius: 16px; background: #fff; border: 1px solid var(--rule); }
+    .row .thumb { width: 96px; aspect-ratio: 1; border-radius: 12px; object-fit: cover; }
+    .random-tile { display: grid; place-items: center; width: 96px; aspect-ratio: 1; border-radius: 12px; border: 2px dashed #16326d40; color: var(--muted); font-size: .78rem; font-weight: 700; text-align: center; background: var(--cream); }
+    .row h3 { font-size: 1.05rem; }
+    .row p { margin: .2rem 0 0; color: var(--muted); font-size: .88rem; }
+    .row .actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: end; }
+    .card { padding: 20px; border-radius: 18px; background: #fff; border: 1px solid var(--rule); }
+    .card + .card { margin-top: 14px; }
+    .card-head { display: flex; align-items: center; gap: 12px; }
+    .card-head h3 { flex: 1; font-size: 1.1rem; }
+    .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+    .fields .wide { grid-column: 1 / -1; }
+    .field { display: grid; gap: 4px; font-weight: 700; font-size: .85rem; color: var(--navy); }
+    .field input, .field textarea { width: 100%; padding: 10px 12px; border: 1.5px solid var(--rule); border-radius: 10px; background: var(--cream); font-weight: 400; font-size: .95rem; color: var(--ink); }
+    .field textarea { min-height: 90px; resize: vertical; }
+    .field textarea.body { min-height: 200px; }
+    .field small { font-weight: 400; color: var(--muted); }
+    .mark { display: grid; place-items: center; flex-shrink: 0; width: 56px; height: 56px; border-radius: 15px; background: var(--navy); color: #fff; font: 800 .95rem Outfit, sans-serif; overflow: hidden; }
+    .mark img { width: 100%; height: 100%; object-fit: contain; background: #fff; padding: 6px; }
+    .rank { font: 800 .85rem Outfit, sans-serif; color: var(--muted); width: 26px; text-align: center; }
+    .badge { padding: 3px 10px; border-radius: 20px; background: var(--gold); color: var(--navy-deep); font-size: .75rem; font-weight: 800; }
+    .post-photo-pick { display: flex; align-items: center; gap: 12px; }
+    .post-photo-pick img, .post-photo-pick .random-tile { width: 72px; }
+    .switch { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: .88rem; color: var(--navy); }
+    .help { padding: 16px 18px; margin-top: 26px; border-radius: 14px; background: var(--sky); color: var(--navy); font-size: .92rem; }
+    dialog { width: min(980px, 100% - 30px); max-height: calc(100% - 40px); padding: 0; border: 0; border-radius: 20px; box-shadow: 0 30px 80px #0d215066; }
+    dialog::backdrop { background: #0d215080; }
+    .dialog-head { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 16px 20px; background: #fff; border-bottom: 1px solid var(--rule); }
+    .picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; padding: 20px; }
+    .picker button { padding: 0; border: 3px solid transparent; border-radius: 14px; overflow: hidden; background: none; }
+    .picker button[aria-pressed="true"] { border-color: var(--gold); }
+    .picker img { aspect-ratio: 1; object-fit: cover; width: 100%; }
+    .picker .random-tile { width: 100%; border-radius: 10px; }
+    .empty { padding: 40px; text-align: center; color: var(--muted); background: #fff; border-radius: 18px; border: 1px dashed var(--rule); }
+    .remote-warning { padding: 30px; margin: 40px auto; max-width: 640px; border-radius: 18px; background: #fff; border: 1px solid var(--rule); }
+    @media (max-width: 700px) {
+      .top, .tabs, main { padding-inline: 14px; }
+      .fields { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 72px 1fr; }
+      .row .thumb, .row .random-tile { width: 72px; }
+      .row .actions { grid-column: 1 / -1; justify-content: start; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top"><h1>Project <span>Lumin</span> · Admin</h1><span class="status" id="status" role="status">Loading…</span><a href="/" target="_blank" rel="noopener">View site ↗</a></header>
+  <nav class="tabs" role="tablist" aria-label="Admin sections">
+    <button role="tab" data-tab="photos" aria-selected="true">Photos<span class="count" id="count-photos"></span></button>
+    <button role="tab" data-tab="spots" aria-selected="false">Photo spots</button>
+    <button role="tab" data-tab="blog" aria-selected="false">Blog<span class="count" id="count-blog"></span></button>
+    <button role="tab" data-tab="partners" aria-selected="false">Partners<span class="count" id="count-partners"></span></button>
+    <button role="tab" data-tab="settings" aria-selected="false">Settings</button>
+  </nav>
+  <main id="panel"></main>
+  <input type="file" id="photo-input" accept="image/*" multiple hidden>
+  <input type="file" id="logo-input" accept="image/*" hidden>
+  <dialog id="picker"><div class="dialog-head"><h2 id="picker-title">Choose a photo</h2><button class="btn" data-action="close-picker">Close</button></div><div class="picker" id="picker-grid"></div></dialog>
+  <script src="/site-content.js"></script>
+  <script src="/admin.js"></script>
+</body>
+</html>
