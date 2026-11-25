@@ -328,3 +328,31 @@ async function fixAllBorders(button) {
   if (fixed) { changed(); render(); setStatus(`Removed borders from ${fixed} photo${fixed > 1 ? 's' : ''}. Press ${verb()} changes to keep them.`, 'dirty'); }
   else setStatus(dirty ? (mode === 'live' ? 'Unpublished changes' : 'Unsaved changes') : 'No borders found. All photos are clean.', dirty ? 'dirty' : '');
 }
+
+/* ---------- Smart crop for the whole library: remove borders, then square-crop around the subject ---------- */
+async function smartCropAll(button) {
+  const list = state.photos.filter(p => !/\.(svg|gif)$/i.test(p.src));
+  let cropped = 0, done = 0, failed = 0;
+  button.disabled = true;
+  try { await loadSmartcrop(); } catch (e) { setStatus(e.message, 'error'); button.disabled = false; return; }
+  for (const p of list) {
+    setStatus(`Smart cropping… ${++done} of ${list.length}`, 'saving');
+    try {
+      const img = await loadImage(view(p.src));
+      const trimmed = findBorders(img) || {x: 0, y: 0, w: img.naturalWidth, h: img.naturalHeight};
+      const square = Math.abs(trimmed.w / trimmed.h - 1) < 0.02;
+      const untouched = trimmed.w === img.naturalWidth && trimmed.h === img.naturalHeight;
+      if (square && untouched) continue; // already a clean square
+      const base = cropCanvas(img, trimmed);
+      const box = square ? {x: 0, y: 0, w: base.width, h: base.height} : await smartBox(base, 1);
+      const blob = await canvasBlob(cropCanvas(base, {x: Math.round(box.x), y: Math.round(box.y), w: Math.round(box.w), h: Math.round(box.h)}));
+      const src = await upload(new File([blob], 'smart-crop.jpg', {type: 'image/jpeg'}), 1800, {trim: false});
+      forgetFile(p.src);
+      p.src = src; cropped++;
+    } catch { failed++; }
+  }
+  button.disabled = false;
+  const extra = failed ? ` (${failed} couldn't be read)` : '';
+  if (cropped) { changed(); render(); setStatus(`Smart cropped ${cropped} photo${cropped > 1 ? 's' : ''}${extra}. Press ${verb()} changes to keep them.`, 'dirty'); }
+  else setStatus('All photos are already square and clean.' + extra);
+}

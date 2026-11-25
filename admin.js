@@ -149,7 +149,8 @@ const views = {
       <label class="drop" id="drop" for="photo-input"><span class="sun" aria-hidden="true"></span><strong>Drop photos here</strong><span>or click to choose. Select as many as you want at once. Big photos are resized automatically.</span></label>
       ${uploadState ? `<div class="progress" role="status">Uploading ${Math.min(uploadState.done + 1, uploadState.total)} of ${uploadState.total}…${uploadState.done === uploadState.total ? ' Done! Remember to press ' + verb() + ' changes.' : ''}<div class="bar"><i style="width:${uploadState.done / uploadState.total * 100}%"></i></div>${uploadState.errors.length ? `<div class="errors">${uploadState.errors.map(esc).join('<br>')}</div>` : ''}</div>` : ''}
       <div class="tool-row"><label class="switch"><input type="checkbox" data-action="auto-trim" ${autoTrimOn() ? 'checked' : ''}> Automatically remove white/black borders from new uploads</label>
-        <button class="btn small primary" data-action="fix-all">✂ Fix borders on all photos</button></div>
+        <button class="btn small primary" data-action="fix-all">✂ Fix borders on all photos</button>
+        <button class="btn small primary" data-action="smart-all" title="Removes borders, then crops every photo to a square around its subject">✦ Smart crop all photos</button></div>
       <div class="toolbar"><span class="note">${state.photos.length} photos · ${onWall} in the moving wall</span>
         <button class="btn small" data-action="wall-all">Put all in moving wall</button>
         ${samples ? `<button class="btn small danger" data-action="remove-samples">Remove ${samples} sample photos</button>` : ''}</div>
@@ -281,6 +282,7 @@ document.addEventListener('click', e => {
   const dir = Number(el.dataset.dir);
   if (action === 'edit-photo') openEditor(id);
   if (action === 'fix-all') fixAllBorders(el);
+  if (action === 'smart-all' && confirm('Smart crop every photo to a square around its subject? You can still undo by not publishing.')) smartCropAll(el);
   if (action === 'delete-photo' && confirm('Delete this photo from the site?')) { deletePhoto(id); render(); }
   if (action === 'remove-samples' && confirm('Remove all the sample photos? Your own uploads stay.')) {
     state.photos.filter(p => p.src.startsWith('/assets/preview-')).forEach(p => deletePhoto(p.id)); render();
