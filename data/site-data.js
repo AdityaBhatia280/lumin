@@ -8,19 +8,19 @@ window.LUMIN_DATA = {
   "photos": [
     {
       "id": "u-mwvpjqhnjm4f",
-      "src": "/assets/uploads/mwvqeave-afaa31-trimmed.jpg",
+      "src": "/assets/uploads/mwvqw3d5-ca1bc5-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjpvyoioc",
-      "src": "/assets/uploads/mwvpjpoh-21c02c-4.webp",
+      "src": "/assets/uploads/mwvqw3zn-b6cb0d-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjp8goukk",
-      "src": "/assets/uploads/mwvpjp0h-a738d5-3.webp",
+      "src": "/assets/uploads/mwvqw4kp-9a8b7b-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
@@ -32,85 +32,85 @@ window.LUMIN_DATA = {
     },
     {
       "id": "u-mwvpjnx0t6cf",
-      "src": "/assets/uploads/mwvpjnn5-97efeb-1.webp",
+      "src": "/assets/uploads/mwvqw5aw-51a5b0-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjn667v2o",
-      "src": "/assets/uploads/mwvqebso-c105a6-trimmed.jpg",
+      "src": "/assets/uploads/mwvqw5w5-93740f-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjmjqcm6a",
-      "src": "/assets/uploads/mwvqecol-6a0a25-trimmed.jpg",
+      "src": "/assets/uploads/mwvqw6pg-17f531-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjlw3jlgr",
-      "src": "/assets/uploads/mwvpjlo9-90fddb-16.webp",
+      "src": "/assets/uploads/mwvqw77y-800b5d-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjl7tmuf8",
-      "src": "/assets/uploads/mwvpjl0u-b28026-15.webp",
+      "src": "/assets/uploads/mwvqw7u2-f1ca58-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjkle0zt1",
-      "src": "/assets/uploads/mwvqedfz-a71c24-trimmed.jpg",
+      "src": "/assets/uploads/mwvqw8b5-999f0d-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjk16prup",
-      "src": "/assets/uploads/mwvqee4d-321008-trimmed.jpg",
+      "src": "/assets/uploads/mwvqw8sr-146622-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjjgumqc2",
-      "src": "/assets/uploads/mwvqeevr-3739fc-trimmed.jpg",
+      "src": "/assets/uploads/mwvqw9bj-d811e5-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjiw0uvmy",
-      "src": "/assets/uploads/mwvqefi2-665dc8-trimmed.jpg",
+      "src": "/assets/uploads/mwvqw9qf-b24e33-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjibgy6fz",
-      "src": "/assets/uploads/mwvqeg6b-9752c0-trimmed.jpg",
+      "src": "/assets/uploads/mwvqwa79-b55c38-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjhpyghnb",
-      "src": "/assets/uploads/mwvqegrj-89ab93-trimmed.jpg",
+      "src": "/assets/uploads/mwvqwao6-9efcfb-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjh6ulqrl",
-      "src": "/assets/uploads/mwvpjgxw-eaf9a8-8.webp",
+      "src": "/assets/uploads/mwvqwb6c-f4d66d-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjggsdg73",
-      "src": "/assets/uploads/mwvqehjx-510257-trimmed.jpg",
+      "src": "/assets/uploads/mwvqwbqj-e6c9b4-smart-crop.jpg",
       "alt": "",
       "wall": true
     },
     {
       "id": "u-mwvpjfrs51dm",
-      "src": "/assets/uploads/mwvqeiew-849c5a-trimmed.jpg",
+      "src": "/assets/uploads/mwvqwc8l-84aef0-smart-crop.jpg",
       "alt": "",
       "wall": true
     }
