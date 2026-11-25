@@ -95,19 +95,22 @@ function pageIntro(eyebrow, title, lead, photoKey, extra = '') {
 }
 
 /* ---------- Home ---------- */
-function photoWall() {
+// Phones get 3 big columns. Desktop gets 5, or 4 while there aren't yet enough photos to fill 5 without repeats.
+const wallColumns = () => matchMedia('(max-width: 860px)').matches ? 3 : (photos.filter(p => p.wall !== false).length >= 24 ? 5 : 4);
+// Every photo is used once before any repeats; when photos run short, repeats are spread as far apart as possible.
+function photoWall(cols = wallColumns()) {
   let wallPhotos = photos.filter(p => p.wall !== false);
   if (!wallPhotos.length) wallPhotos = photos;
   if (!wallPhotos.length) return '';
-  const perColumn = Math.min(12, Math.max(6, Math.ceil(wallPhotos.length / 5)));
-  const list = [];
-  while (list.length < perColumn * 5) {
-    const round = shuffle(wallPhotos);
-    if (list.length && round.length > 1 && round[0] === list.at(-1)) round.push(round.shift());
-    list.push(...round);
+  const tile = innerWidth * (cols === 3 ? 1.4 : 1.04) / cols;                            // tiles are square, so this is roughly their height
+  const perColumn = Math.max(4, Math.ceil(Math.max(720, innerHeight) * 1.25 / tile) + 1); // fills the screen, so one column never shows a photo twice at once
+  const order = shuffle(wallPhotos), n = order.length;
+  const columns = Array.from({length: cols}, () => []);
+  for (let i = 0; i < cols * perColumn; i++) {
+    columns[i % cols].push(order[(i + Math.floor(i / n)) % n]);    // each pass through the list shifts by one, so a repeat lands in a different column
   }
-  return `<div class="photo-wall" aria-hidden="true">${[0, 1, 2, 3, 4].map(c => {
-    const tiles = list.slice(c * perColumn, (c + 1) * perColumn).map(p => `<img src="${esc(p.src)}" alt="" decoding="async">`).join('');
+  return `<div class="photo-wall cols-${cols}" aria-hidden="true">${columns.map(list => {
+    const tiles = list.map(p => `<img src="${esc(p.src)}" alt="" decoding="async">`).join('');
     return `<div class="photo-column"><div class="photo-track"><div class="photo-sequence">${tiles}</div><div class="photo-sequence">${tiles}</div></div></div>`;
   }).join('')}</div>`;
 }
@@ -287,6 +290,12 @@ function countUp(el) {
   };
   requestAnimationFrame(tick);
 }
+
+// Rebuild the photo wall when the screen switches between the phone and desktop layouts.
+matchMedia('(max-width: 860px)').addEventListener?.('change', () => {
+  const wall = document.querySelector('.photo-wall');
+  if (wall) wall.outerHTML = photoWall();
+});
 
 // Drifting sun motes behind the hero title.
 const hero = document.querySelector('.photo-hero');
