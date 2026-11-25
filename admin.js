@@ -72,13 +72,15 @@ addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 's'
 addEventListener('beforeunload', e => { if (dirty || saving) e.preventDefault(); });
 
 /* ---------- Image processing & upload ---------- */
-async function shrink(file, maxSide = 1800) {
+async function shrink(file, maxSide = 1800, {trim = false} = {}) {
   if (file.type === 'image/svg+xml' || file.type === 'image/gif') return file;
   const bitmap = await createImageBitmap(file, {imageOrientation: 'from-image'}).catch(() => null);
   if (!bitmap) throw new Error(`Couldn't read ${file.name}. If it's an iPhone HEIC photo, export it as JPG first.`);
-  const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
-  const canvas = Object.assign(document.createElement('canvas'), {width: Math.round(bitmap.width * scale), height: Math.round(bitmap.height * scale)});
-  canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  // Optionally cut off plain white/black bars around the picture (see findBorders in admin-editor.js).
+  const box = trim && findBorders(bitmap) || {x: 0, y: 0, w: bitmap.width, h: bitmap.height};
+  const scale = Math.min(1, maxSide / Math.max(box.w, box.h));
+  const canvas = Object.assign(document.createElement('canvas'), {width: Math.round(box.w * scale), height: Math.round(box.h * scale)});
+  canvas.getContext('2d').drawImage(bitmap, box.x, box.y, box.w, box.h, 0, 0, canvas.width, canvas.height);
   const keepAlpha = file.type === 'image/png' || file.type === 'image/webp';
   return new Promise(resolve => canvas.toBlob(resolve, keepAlpha ? 'image/webp' : 'image/jpeg', .85));
 }
@@ -88,8 +90,8 @@ const toBase64 = blob => new Promise((resolve, reject) => {
   r.onerror = reject;
   r.readAsDataURL(blob);
 });
-async function upload(file, maxSide) {
-  const blob = await shrink(file, maxSide);
+async function upload(file, maxSide, options) {
+  const blob = await shrink(file, maxSide, options);
   if (blob.size > 3e6) throw new Error(`${file.name} is too big (over 3 MB).`);
   const out = await api('/api/upload', {method: 'POST', body: JSON.stringify({name: file.name, type: blob.type, data: await toBase64(blob)})});
   if (out.pending) pendingUploads.push(out.pending);
@@ -104,7 +106,7 @@ async function uploadPhotos(files) {
   render();
   for (const file of files) {
     try {
-      const src = await upload(file);
+      const src = await upload(file, 1800, {trim: autoTrimOn()});
       state.photos.unshift({id: uid('u'), src, alt: '', wall: true});
       changed();
     } catch (e) { uploadState.errors.push(e.message); }
@@ -146,6 +148,8 @@ const views = {
     return `<div class="intro"><div><h2>Photos</h2><p>Dump every photo you have here. They get shuffled across the whole site automatically: the moving wall on the homepage, blog posts, focus areas, and every page photo. Pick specific photos for specific places in <b>Photo spots</b>.</p></div></div>
       <label class="drop" id="drop" for="photo-input"><span class="sun" aria-hidden="true"></span><strong>Drop photos here</strong><span>or click to choose. Select as many as you want at once. Big photos are resized automatically.</span></label>
       ${uploadState ? `<div class="progress" role="status">Uploading ${Math.min(uploadState.done + 1, uploadState.total)} of ${uploadState.total}…${uploadState.done === uploadState.total ? ' Done! Remember to press ' + verb() + ' changes.' : ''}<div class="bar"><i style="width:${uploadState.done / uploadState.total * 100}%"></i></div>${uploadState.errors.length ? `<div class="errors">${uploadState.errors.map(esc).join('<br>')}</div>` : ''}</div>` : ''}
+      <div class="tool-row"><label class="switch"><input type="checkbox" data-action="auto-trim" ${autoTrimOn() ? 'checked' : ''}> Automatically remove white/black borders from new uploads</label>
+        <button class="btn small primary" data-action="fix-all">✂ Fix borders on all photos</button></div>
       <div class="toolbar"><span class="note">${state.photos.length} photos · ${onWall} in the moving wall</span>
         <button class="btn small" data-action="wall-all">Put all in moving wall</button>
         ${samples ? `<button class="btn small danger" data-action="remove-samples">Remove ${samples} sample photos</button>` : ''}</div>
@@ -153,6 +157,7 @@ const views = {
         const used = usage(p.id);
         return `<figure class="photo" style="margin:0"><img src="${esc(view(p.src))}" alt="" loading="lazy">
           ${p.src.startsWith('/assets/preview-') ? '<span class="sample">Sample</span>' : ''}
+          <button class="edit" data-action="edit-photo" data-id="${p.id}" title="Crop, rotate, adjust">✎ Edit</button>
           <button class="del" data-action="delete-photo" data-id="${p.id}" aria-label="Delete photo" title="Delete photo">✕</button>
           <figcaption class="meta"><label><input type="checkbox" data-action="toggle-wall" data-id="${p.id}" ${p.wall !== false ? 'checked' : ''}> In moving wall</label>
           <input type="text" placeholder="Describe photo (optional)" value="${esc(p.alt)}" data-field="alt" data-id="${p.id}" aria-label="Photo description">
@@ -274,6 +279,8 @@ document.addEventListener('click', e => {
   if (!el || el.tagName === 'INPUT' || !state) return;
   const {action, id, target} = el.dataset;
   const dir = Number(el.dataset.dir);
+  if (action === 'edit-photo') openEditor(id);
+  if (action === 'fix-all') fixAllBorders(el);
   if (action === 'delete-photo' && confirm('Delete this photo from the site?')) { deletePhoto(id); render(); }
   if (action === 'remove-samples' && confirm('Remove all the sample photos? Your own uploads stay.')) {
     state.photos.filter(p => p.src.startsWith('/assets/preview-')).forEach(p => deletePhoto(p.id)); render();
@@ -308,6 +315,7 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('change', e => {
   const {action, id} = e.target.dataset;
+  if (action === 'auto-trim') setAutoTrim(e.target.checked);
   if (action === 'toggle-wall') { photoById(id).wall = e.target.checked; changed(); render(); }
   if (action === 'toggle-featured') { state.partners.find(p => p.id === id).featured = e.target.checked; changed(); render(); }
 });
