@@ -7,45 +7,111 @@ window.LUMIN_DATA = {
   },
   "photos": [
     {
-      "id": "p-learning",
-      "src": "/assets/preview-learning.jpg",
-      "alt": "Two students studying on the grass outdoors",
+      "id": "u-mwvpjqhnjm4f",
+      "src": "/assets/uploads/mwvpjqan-5e0195-5.webp",
+      "alt": "",
       "wall": true
     },
     {
-      "id": "p-outdoors",
-      "src": "/assets/preview-outdoors.jpg",
-      "alt": "Students spending time together on a lawn",
+      "id": "u-mwvpjpvyoioc",
+      "src": "/assets/uploads/mwvpjpoh-21c02c-4.webp",
+      "alt": "",
       "wall": true
     },
     {
-      "id": "p-walking",
-      "src": "/assets/preview-walking.jpg",
-      "alt": "Students walking together on a sunny campus",
+      "id": "u-mwvpjp8goukk",
+      "src": "/assets/uploads/mwvpjp0h-a738d5-3.webp",
+      "alt": "",
       "wall": true
     },
     {
-      "id": "p-lawn",
-      "src": "/assets/preview-lawn.jpg",
-      "alt": "Students studying together on a campus lawn",
+      "id": "u-mwvpjoj8gjiz",
+      "src": "/assets/uploads/mwvpjobm-9ad48e-2.webp",
+      "alt": "",
       "wall": true
     },
     {
-      "id": "p-workshop",
-      "src": "/assets/preview-workshop.jpg",
-      "alt": "Students taking notes during an outdoor workshop",
+      "id": "u-mwvpjnx0t6cf",
+      "src": "/assets/uploads/mwvpjnn5-97efeb-1.webp",
+      "alt": "",
       "wall": true
     },
     {
-      "id": "p-schoolyard",
-      "src": "/assets/preview-schoolyard.jpg",
-      "alt": "Students taking part in an outdoor activity on a school field",
+      "id": "u-mwvpjn667v2o",
+      "src": "/assets/uploads/mwvpjmxm-a57f25-18.webp",
+      "alt": "",
       "wall": true
     },
     {
-      "id": "p-together",
-      "src": "/assets/preview-together.jpg",
-      "alt": "Students talking together on a park lawn",
+      "id": "u-mwvpjmjqcm6a",
+      "src": "/assets/uploads/mwvpjmbm-275778-17.webp",
+      "alt": "",
+      "wall": true
+    },
+    {
+      "id": "u-mwvpjlw3jlgr",
+      "src": "/assets/uploads/mwvpjlo9-90fddb-16.webp",
+      "alt": "",
+      "wall": true
+    },
+    {
+      "id": "u-mwvpjl7tmuf8",
+      "src": "/assets/uploads/mwvpjl0u-b28026-15.webp",
+      "alt": "",
+      "wall": true
+    },
+    {
+      "id": "u-mwvpjkle0zt1",
+      "src": "/assets/uploads/mwvpjkeq-b75a92-14.webp",
+      "alt": "",
+      "wall": true
+    },
+    {
+      "id": "u-mwvpjk16prup",
+      "src": "/assets/uploads/mwvpjjtw-dd6bab-13.webp",
+      "alt": "",
+      "wall": true
+    },
+    {
+      "id": "u-mwvpjjgumqc2",
+      "src": "/assets/uploads/mwvpjj9m-3bd1b6-12.webp",
+      "alt": "",
+      "wall": true
+    },
+    {
+      "id": "u-mwvpjiw0uvmy",
+      "src": "/assets/uploads/mwvpjioz-7abe82-11.webp",
+      "alt": "",
+      "wall": true
+    },
+    {
+      "id": "u-mwvpjibgy6fz",
+      "src": "/assets/uploads/mwvpji3l-afcccc-10.webp",
+      "alt": "",
+      "wall": true
+    },
+    {
+      "id": "u-mwvpjhpyghnb",
+      "src": "/assets/uploads/mwvpjhjp-fc6b6e-9.webp",
+      "alt": "",
+      "wall": true
+    },
+    {
+      "id": "u-mwvpjh6ulqrl",
+      "src": "/assets/uploads/mwvpjgxw-eaf9a8-8.webp",
+      "alt": "",
+      "wall": true
+    },
+    {
+      "id": "u-mwvpjggsdg73",
+      "src": "/assets/uploads/mwvpjg5o-3bdc07-7.webp",
+      "alt": "",
+      "wall": true
+    },
+    {
+      "id": "u-mwvpjfrs51dm",
+      "src": "/assets/uploads/mwvpjf49-8816ed-6.webp",
+      "alt": "",
       "wall": true
     }
   ],
