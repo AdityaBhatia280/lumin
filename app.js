@@ -294,8 +294,29 @@ function countUp(el) {
 // Rebuild the photo wall when the screen switches between the phone and desktop layouts.
 matchMedia('(max-width: 860px)').addEventListener?.('change', () => {
   const wall = document.querySelector('.photo-wall');
-  if (wall) wall.outerHTML = photoWall();
+  if (wall) { wall.outerHTML = photoWall(); fitWall(); }
 });
+
+// The tilted columns take up different amounts of room on different screens. Measure them on this
+// screen and widen the gaps (which makes the photos a little smaller) until no two columns touch.
+function fitWall() {
+  const wall = document.querySelector('.photo-wall');
+  if (!wall) return;
+  wall.style.removeProperty('--wall-gap');
+  const base = parseFloat(getComputedStyle(wall).columnGap) || 16;
+  let gap = base;
+  for (let i = 0; i < 8; i++) {
+    const cols = [...wall.querySelectorAll('.photo-column')].map(c => c.getBoundingClientRect());
+    let need = 0;
+    for (let k = 1; k < cols.length; k++) need = Math.max(need, base - (cols[k].left - cols[k - 1].right));
+    if (need <= 1) break;
+    gap += need;
+    wall.style.setProperty('--wall-gap', gap + 'px');
+  }
+}
+let fitTimer;
+addEventListener('resize', () => { clearTimeout(fitTimer); fitTimer = setTimeout(fitWall, 150); });
+fitWall();
 
 // Drifting sun motes behind the hero title.
 const hero = document.querySelector('.photo-hero');

@@ -398,7 +398,7 @@ footer .text-link { color: var(--white); }
 }
 
 /* ---------- Curved photo wall: columns angle toward the middle like the inside of a cylinder ---------- */
-.photo-wall { inset: -4% 4% auto; perspective: 1500px; perspective-origin: 50% 35%; gap: clamp(10px, 1.3vw, 20px); }
+.photo-wall { inset: -4% 4% auto; perspective: max(1500px, 110vw); perspective-origin: 50% 35%; gap: var(--wall-gap, clamp(10px, 1.3vw, 20px)); }
 .photo-column { transform: rotateY(var(--tilt, 0deg)) translateZ(var(--z, 0px)) scale(var(--grow, 1)); transform-origin: center 40%; }
 .photo-wall .photo-sequence { gap: clamp(10px, 1.3vw, 20px); padding-bottom: clamp(10px, 1.3vw, 20px); }
 .photo-wall .photo-sequence img { aspect-ratio: 4 / 3; border-radius: clamp(10px, 1.2vw, 18px); box-shadow: 0 14px 30px -16px #16326d66; }
