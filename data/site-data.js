@@ -518,7 +518,7 @@ window.LUMIN_DATA = {
       "id": "sdg-champions",
       "name": "SDG Champions",
       "url": "https://sdgchamps.org/",
-      "logo": null,
+      "logo": "/assets/partners/sdg-champions.png",
       "featured": true,
       "description": "A global network of student-led chapters working on the UN Sustainable Development Goals. Together we bring sun-safety education into student service and community outreach."
     },
@@ -526,7 +526,7 @@ window.LUMIN_DATA = {
       "id": "neuroscience-nation",
       "name": "Neuroscience Nation",
       "url": "https://www.neurosciencenation.org/",
-      "logo": null,
+      "logo": "/assets/partners/neuroscience-nation.png",
       "featured": true,
       "description": "A student organization with school and community chapters around the world. We share sun-safety initiatives across its network and give students the chance to lead awareness activities."
     },
@@ -549,8 +549,8 @@ window.LUMIN_DATA = {
     {
       "id": "charities2love",
       "name": "Charities2Love",
-      "url": "",
-      "logo": null,
+      "url": "https://charities2love.org/",
+      "logo": "/assets/partners/charities2love.jpg",
       "featured": false,
       "description": ""
     },
@@ -573,8 +573,8 @@ window.LUMIN_DATA = {
     {
       "id": "hack-club",
       "name": "Hack Club",
-      "url": "",
-      "logo": null,
+      "url": "https://hackclub.com/",
+      "logo": "/assets/partners/hack-club.svg",
       "featured": false,
       "description": ""
     },
@@ -589,8 +589,8 @@ window.LUMIN_DATA = {
     {
       "id": "innerview",
       "name": "InnerView",
-      "url": "",
-      "logo": null,
+      "url": "https://innerview.org/",
+      "logo": "/assets/partners/innerview.png",
       "featured": false,
       "description": ""
     },
@@ -613,8 +613,8 @@ window.LUMIN_DATA = {
     {
       "id": "nami",
       "name": "NAMI",
-      "url": "",
-      "logo": null,
+      "url": "https://www.nami.org/",
+      "logo": "/assets/partners/nami.png",
       "featured": false,
       "description": ""
     },
@@ -637,24 +637,24 @@ window.LUMIN_DATA = {
     {
       "id": "radicubs-robotics",
       "name": "Radicubs Robotics",
-      "url": "",
-      "logo": null,
+      "url": "https://www.radicubs.com/",
+      "logo": "/assets/partners/radicubs-robotics.png",
       "featured": false,
       "description": ""
     },
     {
       "id": "stemsters",
       "name": "Stemsters",
-      "url": "",
-      "logo": null,
+      "url": "https://stemsters.org/",
+      "logo": "/assets/partners/stemsters.png",
       "featured": false,
       "description": ""
     },
     {
       "id": "teeem",
       "name": "TEEEM",
-      "url": "",
-      "logo": null,
+      "url": "https://www.teeem.org/",
+      "logo": "/assets/partners/teeem.webp",
       "featured": false,
       "description": ""
     },
