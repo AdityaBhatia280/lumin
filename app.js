@@ -272,13 +272,12 @@ function memberCard(m, i) {
 }
 function teamPage() {
   const story = content.teamStory;
-  return `<section class="page-intro compact"><div class="wrap"><div class="intro-copy" data-enter><h1>Our Team</h1>
-      <p class="lead">Five students, one mission: redefine the standard of sun safety.</p></div></div></section>
+  return `<section class="page-intro"><div class="wrap intro-grid">
+      <div class="intro-copy" data-enter><h1>Our Inspiration</h1>${story.text.map(p => `<p class="lead">${esc(p)}</p>`).join('')}</div>
+      <div class="intro-photo" data-enter style="--d:1">${photoCycler('team-hero')}</div>
+    </div></section>
     <section class="section team-section"><div class="wrap">
-      <div class="pentagon${team.length === 5 ? '' : ' loose'}">
-        <div class="team-story" data-reveal><span class="team-sun" aria-hidden="true"></span><h2>${esc(story.title)}</h2>${story.text.map(p => `<p>${esc(p)}</p>`).join('')}</div>
-        ${team.map(memberCard).join('')}
-      </div>
+      <div class="team-row">${team.map(memberCard).join('')}</div>
     </div></section>`;
 }
 

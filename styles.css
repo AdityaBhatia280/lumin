@@ -670,3 +670,10 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
   .nav .button { min-height: 42px; padding: .45rem .8rem; font-size: .9rem; gap: .4rem; }
   .brand img { height: 40px; }
 }
+
+/* ---------- Our Team: inspiration on top, five co-founders in one row ---------- */
+.intro-copy .lead + .lead { margin-top: 1rem; }
+.team-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 26px); }
+.team-row .member { width: 100%; }
+@media (max-width: 1000px) { .team-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .team-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } .member-copy { padding: 12px 14px 14px; } }

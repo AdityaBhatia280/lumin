@@ -60,6 +60,7 @@ window.LUMEN_CONTENT = {
     { key: 'about-approach', label: 'About: Approach photo', page: 'About' },
     { key: 'impact-hero', label: 'Impact: Top photo', page: 'Impact' },
     { key: 'partners-hero', label: 'Partnerships: Top photo', page: 'Partnerships' },
-    { key: 'contact-hero', label: 'Contact: Photo', page: 'Contact' }
+    { key: 'contact-hero', label: 'Contact: Photo', page: 'Contact' },
+    { key: 'team-hero', label: 'Our Team: Inspiration photo', page: 'Our Team' }
   ]
 };
