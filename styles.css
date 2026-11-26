@@ -693,3 +693,10 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
 .member-copy h3 .last:empty::before { content: "\00a0"; }
 .member-copy h3 .first, .member-copy h3 .last { margin: 0; color: var(--navy); font: inherit; font-size: inherit; }
 .member-copy { text-align: center; }
+
+/* A bit more white behind the "Project Lumin" title so it reads easily */
+.hero-bloom { background:
+  radial-gradient(ellipse 62% 40% at 50% 70%, #fff9f3f5 18%, #fff9f3d9 48%, #fff9f300 78%),
+  radial-gradient(ellipse 58% 42% at 50% 76%, #fff9f3 8%, #fff9f3d0 45%, transparent 75%),
+  linear-gradient(0deg, var(--cream) 0%, #fff9f3ee 18%, #fff9f3a6 40%, #fff9f340 62%, transparent 80%),
+  linear-gradient(90deg, #fff9f3e6 0%, #fff9f340 9%, transparent 20%, transparent 80%, #fff9f340 91%, #fff9f3e6 100%); }
