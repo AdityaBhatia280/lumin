@@ -15,6 +15,8 @@ const spots = window.LUMEN_CONTENT.photoSpots;
 let mode = 'local';
 let state = null;         // the site data being edited
 let tab = 'photos';
+const selected = new Set(); // photo ids picked for bulk actions
+let lastPicked = null;
 let dirty = false;
 let saving = false;
 let pendingUploads = [];  // live mode: images stored in GitHub but not yet published
@@ -153,10 +155,16 @@ const views = {
         <button class="btn small primary" data-action="smart-all" title="Removes borders, then crops every photo to a square around its subject">✦ Smart crop all photos</button></div>
       <div class="toolbar"><span class="note">${state.photos.length} photos · ${onWall} in the moving wall</span>
         <button class="btn small" data-action="wall-all">Put all in moving wall</button>
+        <button class="btn small" data-action="select-all">Select all</button>
         ${samples ? `<button class="btn small danger" data-action="remove-samples">Remove ${samples} sample photos</button>` : ''}</div>
+      ${selected.size ? `<div class="select-bar" role="region" aria-label="Selected photos"><strong>${selected.size} selected</strong>
+        <button class="btn small" data-action="sel-wall-on">Add to moving wall</button>
+        <button class="btn small" data-action="sel-wall-off">Remove from moving wall</button>
+        <button class="btn small danger" data-action="sel-delete">Delete ${selected.size} photo${selected.size > 1 ? 's' : ''}</button>
+        <button class="btn small" data-action="sel-clear">Clear selection</button></div>` : '<p class="select-hint">Tip: tick the circle on photos to select several at once (Shift-click selects a range).</p>'}
       ${state.photos.length ? `<div class="photo-grid">${state.photos.map(p => {
         const used = usage(p.id);
-        return `<figure class="photo" style="margin:0"><img src="${esc(view(p.src))}" alt="" loading="lazy">
+        return `<figure class="photo${selected.has(p.id) ? ' is-selected' : ''}" style="margin:0"><button class="pick" data-action="select-photo" data-id="${p.id}" aria-pressed="${selected.has(p.id)}" aria-label="Select photo" title="Select"></button><img src="${esc(view(p.src))}" alt="" loading="lazy">
           ${p.src.startsWith('/assets/preview-') ? '<span class="sample">Sample</span>' : ''}
           <button class="edit" data-action="edit-photo" data-id="${p.id}" title="Crop, rotate, adjust">✎ Edit</button>
           <button class="del" data-action="delete-photo" data-id="${p.id}" aria-label="Delete photo" title="Delete photo">✕</button>
@@ -283,9 +291,27 @@ document.addEventListener('click', e => {
   if (action === 'edit-photo') openEditor(id);
   if (action === 'fix-all') fixAllBorders(el);
   if (action === 'smart-all' && confirm('Smart crop every photo to a square around its subject? You can still undo by not publishing.')) smartCropAll(el);
-  if (action === 'delete-photo' && confirm('Delete this photo from the site?')) { deletePhoto(id); render(); }
+  if (action === 'delete-photo' && confirm('Delete this photo from the site?')) { selected.delete(id); deletePhoto(id); render(); }
   if (action === 'remove-samples' && confirm('Remove all the sample photos? Your own uploads stay.')) {
     state.photos.filter(p => p.src.startsWith('/assets/preview-')).forEach(p => deletePhoto(p.id)); render();
+  }
+  if (action === 'select-photo') {
+    const ids = state.photos.map(p => p.id);
+    if (e.shiftKey && lastPicked && ids.includes(lastPicked)) {
+      const [from, to] = [ids.indexOf(lastPicked), ids.indexOf(id)].sort((x, y) => x - y);
+      ids.slice(from, to + 1).forEach(x => selected.add(x));
+    } else if (selected.has(id)) selected.delete(id);
+    else selected.add(id);
+    lastPicked = id; render();
+  }
+  if (action === 'select-all') { state.photos.forEach(p => selected.add(p.id)); render(); }
+  if (action === 'sel-clear') { selected.clear(); render(); }
+  if (action === 'sel-wall-on' || action === 'sel-wall-off') {
+    state.photos.forEach(p => { if (selected.has(p.id)) p.wall = action === 'sel-wall-on'; });
+    changed(); render();
+  }
+  if (action === 'sel-delete' && confirm(`Delete ${selected.size} photo${selected.size > 1 ? 's' : ''} from the site?`)) {
+    [...selected].forEach(deletePhoto); selected.clear(); render();
   }
   if (action === 'wall-all') { state.photos.forEach(p => { p.wall = true; }); changed(); render(); }
   if (action === 'pick') openPicker(target);

@@ -62,6 +62,16 @@
     .errors { margin-top: 8px; color: var(--red); font-size: .9rem; }
     .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 14px; }
     .toolbar .note { color: var(--muted); font-size: .9rem; margin-right: auto; }
+    .select-bar { position: sticky; top: 112px; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 14px; margin-bottom: 14px; border-radius: 14px; background: var(--navy); color: #fff; box-shadow: 0 10px 24px -12px #0d2150aa; }
+    .select-bar strong { margin-right: auto; }
+    .select-bar .btn { background: #fff; }
+    .select-hint { margin: 0 0 12px; color: var(--muted); font-size: .88rem; }
+    .photo .pick { position: absolute; top: 8px; left: 8px; z-index: 2; width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; background: #0d215055; box-shadow: 0 2px 8px #0004; }
+    .photo .pick[aria-pressed="true"] { background: var(--gold); border-color: #fff; }
+    .photo .pick[aria-pressed="true"]::after { content: "✓"; color: var(--navy-deep); font-weight: 900; }
+    .photo.is-selected { outline: 3px solid var(--gold); outline-offset: -3px; }
+    .photo.is-selected img { opacity: .8; }
+    .photo .sample { left: 46px; }
     .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
     .photo { position: relative; border-radius: 16px; overflow: hidden; background: #fff; border: 1px solid var(--rule); }
     .photo img { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--sand); }
