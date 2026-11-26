@@ -109,9 +109,9 @@ function photoWall(cols = wallColumns()) {
   for (let i = 0; i < cols * perColumn; i++) {
     columns[i % cols].push(order[(i + Math.floor(i / n)) % n]);    // each pass through the list shifts by one, so a repeat lands in a different column
   }
-  return `<div class="photo-wall cols-${cols}" aria-hidden="true">${columns.map(list => {
+  return `<div class="photo-wall cols-${cols}" aria-hidden="true">${columns.map((list, c) => {
     const tiles = list.map(p => `<img src="${esc(p.src)}" alt="" decoding="async">`).join('');
-    return `<div class="photo-column"><div class="photo-track"><div class="photo-sequence">${tiles}</div><div class="photo-sequence">${tiles}</div></div></div>`;
+    return `<div class="photo-column" style="--cycle-time: ${(list.length * (5.5 + c % 3 * 0.6)).toFixed(1)}s"><div class="photo-track"><div class="photo-sequence">${tiles}</div><div class="photo-sequence">${tiles}</div></div></div>`;
   }).join('')}</div>`;
 }
 
