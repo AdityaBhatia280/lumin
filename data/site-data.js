@@ -675,33 +675,5 @@ window.LUMIN_DATA = {
       "description": ""
     }
   ],
-  "posts": [
-    {
-      "id": "welcome-to-project-lumin",
-      "title": "Welcome to Project Lumin",
-      "date": "",
-      "tag": "News",
-      "photo": null,
-      "summary": "Meet the student-led initiative turning sun protection into a natural, everyday habit for young people.",
-      "body": "Project Lumin is a student-led public health initiative based in Frisco, Texas. We want young people to enjoy the outdoors safely, and we think the best way to do that is to make sun protection easy, interactive and routine.\n\nRather than telling kids to stay indoors, we focus on three things: digital tools and social media that meet youth where they already are, hands-on outreach in the community, and a growing network of student chapters and partner organizations.\n\nFollow along here as we share what we are building and where we are headed next."
-    },
-    {
-      "id": "living-with-eczema-partnership",
-      "title": "Partnering with Living with Eczema",
-      "date": "",
-      "tag": "Partnership",
-      "photo": null,
-      "summary": "We are teaming up with Living with Eczema to support young people in caring for their skin under the sun.",
-      "body": "Project Lumin is partnering with Living with Eczema. Healthy skin and sun protection go hand in hand, and this partnership helps us reach more young people with practical, friendly sun-safety habits.\n\nMore details on what we are working on together are coming soon."
-    },
-    {
-      "id": "community-outreach-plans",
-      "title": "Bringing sun safety into the community",
-      "date": "",
-      "tag": "Coming up",
-      "photo": null,
-      "summary": "Booths, free sunscreen, UV-revealing wristbands and hands-on workshops: here is what our outreach will look like.",
-      "body": "Our community outreach puts sun protection directly into people's hands. We are planning interactive booths at local festivals, youth sports tournaments, parks and school events.\n\nAt each event we hand out free sunscreen, sun-safety kits and UV-revealing wristbands that change color in the sun, so kids can see for themselves when UV rays are strong.\n\nWe are also preparing short, age-appropriate workshops for schools, camps and outdoor programs that teach the science of UV radiation on the spot."
-    }
-  ]
+  "posts": []
 };

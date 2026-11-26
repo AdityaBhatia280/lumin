@@ -85,7 +85,7 @@ const stats = [
   {value: network.length, label: 'Schools & communities in our network', plus: true},
   {value: countries.size, label: 'Countries reached', plus: true},
   {value: partners.length, label: 'Partner organizations', plus: true},
-  {value: content.focusAreas.length, label: 'Focus areas'}
+  {value: content.focusAreas.length, label: 'Focus areas', plus: true}
 ];
 const statGrid = (cls = '') => `<div class="stat-grid ${cls}">${stats.map((s, i) => `<div class="stat" data-reveal style="--d:${i}"><strong><span data-count="${s.value}">${s.value}</span>${s.plus ? '+' : ''}</strong><span>${esc(s.label)}</span></div>`).join('')}</div>`;
 
@@ -94,6 +94,19 @@ function pageIntro(eyebrow, title, lead, photoKey, extra = '') {
     <div class="intro-copy" data-enter><p class="eyebrow">${esc(eyebrow)}</p><h1>${title}</h1><p class="lead">${esc(lead)}</p>${extra}</div>
     <div class="intro-photo" data-enter style="--d:1">${img(spot(photoKey), '', true)}<span class="logo-badge" aria-hidden="true"><img src="/assets/brand/lumin-icon.png" alt=""></span></div>
   </div></section>`;
+}
+
+const comingSoon = () => `<div class="coming-soon" data-reveal><span class="coming-sun" aria-hidden="true"></span><strong>Coming soon</strong><p>New posts are on the way. Check back soon.</p></div>`;
+
+// All partners scroll side to side: two rows moving in opposite directions (one row if there are only a few).
+function partnerScroller() {
+  if (!partners.length) return '';
+  const item = (p, i) => `<${p.url ? `a href="${esc(p.url)}" target="_blank" rel="noopener"` : 'span'} class="partner-chip">${partnerMark(p, i)}<b>${esc(p.name)}</b></${p.url ? 'a' : 'span'}>`;
+  const rows = partners.length >= 8 ? [partners.filter((_, i) => i % 2 === 0), partners.filter((_, i) => i % 2 === 1)] : [partners];
+  return `<div class="partner-rows" data-reveal>${rows.map((row, r) => {
+    const items = row.map((p, i) => item(p, partners.indexOf(p))).join('');
+    return `<div class="partner-row${r % 2 ? ' reverse' : ''}" style="--speed:${Math.max(30, row.length * 5)}s"><div class="partner-track">${items}${items.replace(/<a /g, '<a tabindex="-1" aria-hidden="true" ')}</div></div>`;
+  }).join('')}</div>`;
 }
 
 /* ---------- Home ---------- */
@@ -129,31 +142,28 @@ function home() {
     </div>
   </section>
 
-  <section class="impact-band numbers-only"><div class="wrap">${statGrid('on-dark')}</div></section>
+  <section class="numbers-band"><div class="wrap"><div class="numbers">${stats.map((s, i) => `<div class="number" data-reveal style="--d:${i}"><strong><span data-count="${s.value}">${s.value}</span>${s.plus ? '+' : ''}</strong><span class="number-label">${esc(s.label)}</span></div>`).join('')}</div></div></section>
 
-  ${section(heading('', 'Latest from Project Lumin', '', button('All posts', '/blog', 'secondary')) +
-    `<div class="post-grid">${blogPosts.slice(0, 3).map(postCard).join('')}</div>`, 'blog-section', 'blog')}
+  ${section(blogPosts.length
+    ? heading('', 'Latest from Project Lumin', '', button('All posts', '/blog', 'secondary')) + `<div class="post-grid">${blogPosts.slice(0, 3).map(postCard).join('')}</div>`
+    : heading('', 'Latest from Project Lumin') + comingSoon(), 'blog-section', 'blog')}
 
-  ${section(heading('', 'Three ways we protect<br>young people under the sun.', content.approach) +
+  ${section(heading('', 'Our Goals') +
     `<div class="focus-grid">${content.focusAreas.map((f, i) => `<a class="focus-card" href="/about#${f.id}" data-reveal style="--d:${i}">
       <div class="focus-photo">${img(spot('focus-' + f.id))}<span class="focus-number">${f.number}</span></div>
       <div class="focus-copy"><h3>${esc(f.title)}</h3><p>${esc(f.short)}</p>
       <ul>${f.points.map(([t]) => `<li>${esc(t)}</li>`).join('')}</ul><span class="card-link">Learn more ${arrow}</span></div>
     </a>`).join('')}</div>`, 'focus-section', 'focus')}
 
-  ${section(heading('', 'Working alongside<br>great organizations.', '', '') + featuredCards() +
-    (others.length ? `<a class="more-partners" href="/partnerships" data-reveal>
-      <div class="more-copy"><strong>+${others.length}</strong><span>more partners<br>across our network</span></div>
-      <div class="marquee" aria-hidden="true"><div class="marquee-track">${[...others, ...others].map((p, i) => `<span class="marquee-item">${partnerMark(p, i, 'small')}${esc(p.name)}</span>`).join('')}</div></div>
-      <span class="button primary">View all partners ${arrow}</span>
-    </a>` : ''), 'partner-section', 'partners')}`;
+  ${section(heading('', 'Our Dedicated Partners') + partnerScroller() +
+    `<div class="partners-cta" data-reveal>${button('View all partners', '/partnerships')}</div>`, 'partner-section', 'partners')}`;
 }
 
 /* ---------- Blog ---------- */
 function blog() {
   return `<section class="page-intro compact"><div class="wrap"><div class="intro-copy" data-enter><p class="eyebrow">Blog</p><h1>News & stories</h1>
     <p class="lead">What Project Lumin is building, where we are going, and who we are working with.</p></div></div></section>` +
-    section(blogPosts.length ? `<div class="post-grid">${blogPosts.map(postCard).join('')}</div>` : '<p class="lead">New posts are on the way.</p>', 'blog-section');
+    section(blogPosts.length ? `<div class="post-grid">${blogPosts.map(postCard).join('')}</div>` : comingSoon(), 'blog-section');
 }
 
 function blogPost(post) {
