@@ -675,5 +675,15 @@ window.LUMIN_DATA = {
       "description": ""
     }
   ],
-  "posts": []
+  "posts": [
+    {
+      "id": "meet-project-lumin",
+      "title": "Meet Project Lumin: Who We Are",
+      "date": "2026-07-08",
+      "tag": "Introduction",
+      "photo": null,
+      "summary": "A student-led initiative helping young people enjoy the outdoors safely by turning sun protection into an everyday habit.",
+      "body": "Project Lumin is a student-led public health initiative based in Frisco, Texas. Our mission is simple: empower young people to safely enjoy the outdoors by turning UV awareness and sun protection into a natural, lifelong habit.\n\nMost skin damage from the sun builds up quietly, starting in childhood. Instead of telling kids to stay inside, we want to make sun safety easy, interactive, and part of everyday life for children, students, youth athletes, parents, educators, and summer camps.\n\nOur work focuses on three goals. First, sun safety at your fingertips: easy-to-use tools, short videos, and daily reminders that make protecting your skin simple to understand. Second, showing up where kids play: we bring free sunscreen, color-changing UV wristbands, and hands-on lessons to parks, schools, camps, and sports events. Third, a movement led by students: chapters and partner organizations that carry Project Lumin into their own schools and cities.\n\nWe are proud to work alongside more than 20 partner organizations and a network of schools and communities around the world, and we are just getting started.\n\nFollow along here on our blog for event recaps, new tools, and stories from our chapters. If you want to bring Project Lumin to your school or community, reach out through our Contact page. We would love to work with you."
+    }
+  ]
 };

@@ -134,7 +134,10 @@ function deletePhoto(id) {
   const p = photoById(id);
   if (!p) return;
   state.photos = state.photos.filter(x => x !== p);
-  for (const key of Object.keys(state.slots)) if (state.slots[key] === id) delete state.slots[key];
+  for (const key of Object.keys(state.slots)) {
+    const arr = slotList(key).map(x => x === id ? null : x);
+    if (arr.some(Boolean)) state.slots[key] = arr; else delete state.slots[key];
+  }
   for (const post of state.posts) if (post.photo === id) post.photo = null;
   forgetFile(p.src);
   if (p.original && p.original !== p.src) forgetFile(p.original);
@@ -142,8 +145,9 @@ function deletePhoto(id) {
 }
 
 /* ---------- Where each photo is used ---------- */
+const slotList = key => { const v = state.slots[key]; const arr = Array.isArray(v) ? v.slice(0, 4) : v ? [v] : []; while (arr.length < 4) arr.push(null); return arr; };
 function usage(id) {
-  const out = spots.filter(s => state.slots[s.key] === id).map(s => s.label);
+  const out = spots.filter(s => slotList(s.key).includes(id)).map(s => s.label);
   state.posts.filter(p => p.photo === id).forEach(p => out.push('Blog: ' + p.title));
   return out;
 }
@@ -181,14 +185,21 @@ const views = {
       }).join('')}</div>` : '<div class="empty">No photos yet. Drop some above.</div>'}`;
   },
   spots() {
+    // Each spot rotates through up to 4 photos. Click a square to pick that photo, or leave it on Random.
+    const spotRow = s => {
+      const ids = slotList(s.key), pinned = ids.filter(Boolean).length;
+      return `<div class="spot-row"><div class="spot-info"><h3>${esc(s.label)}</h3><p>${esc(s.page)} · ${pinned ? `${pinned} of 4 photos picked, the rest are random` : 'All 4 photos are random'}</p></div>
+        <div class="spot-slots">${ids.map((id, k) => { const p = photoById(id); return `<div class="spot-slot"><button class="spot-pick" data-action="pick" data-target="spot:${esc(s.key)}#${k}" title="Choose photo ${k + 1}">${p ? `<img src="${esc(view(p.src))}" alt="">` : `<span class="random-tile">Photo ${k + 1}<br>Random</span>`}</button>
+          ${p ? `<button class="spot-clear" data-action="unpin" data-target="spot:${esc(s.key)}#${k}" aria-label="Back to random" title="Back to random">✕</button>` : ''}</div>`; }).join('')}</div></div>`;
+    };
     const row = (label, page, id, target) => {
       const p = photoById(id);
       return `<div class="row">${p ? `<img class="thumb" src="${esc(view(p.src))}" alt="">` : '<span class="random-tile">Random<br>photo</span>'}
         <div><h3>${esc(label)}</h3><p>${esc(page)} · ${p ? 'Pinned to this photo' : 'Shows a random photo each visit'}</p></div>
         <div class="actions"><button class="btn small primary" data-action="pick" data-target="${esc(target)}">Choose photo</button>${p ? `<button class="btn small" data-action="unpin" data-target="${esc(target)}">Back to random</button>` : ''}</div></div>`;
     };
-    return `<div class="intro"><div><h2>Photo spots</h2><p>Every place on the site that shows a photo. Leave one on <b>Random</b> and it pulls from your photo library, or pin a specific photo. The homepage moving wall uses every photo marked "In moving wall" on the Photos tab.</p></div></div>
-      <div class="rows">${spots.map(s => row(s.label, s.page, state.slots[s.key], 'spot:' + s.key)).join('')}
+    return `<div class="intro"><div><h2>Photo spots</h2><p>Every place on the site that shows photos. Each spot slowly rotates through <b>4 photos</b>: click a square to pick a photo, or leave it on <b>Random</b> to pull from your library. The homepage moving wall is automatic and uses every photo marked "In moving wall" on the Photos tab.</p></div></div>
+      <div class="rows">${spots.map(spotRow).join('')}
       ${state.posts.map(p => row('Blog: ' + (p.title || 'Untitled post'), 'Blog post photo', p.photo, 'post:' + p.id)).join('')}</div>`;
   },
   blog() {
@@ -263,11 +274,16 @@ function openPicker(target) {
 }
 function currentPick(target) {
   const [kind, key] = target.split(/:(.*)/);
-  return kind === 'spot' ? state.slots[key] : state.posts.find(p => p.id === key)?.photo;
+  if (kind === 'spot') { const [k, i] = key.split('#'); return slotList(k)[Number(i) || 0]; }
+  return state.posts.find(p => p.id === key)?.photo;
 }
 function setPick(target, id) {
   const [kind, key] = target.split(/:(.*)/);
-  if (kind === 'spot') { if (id) state.slots[key] = id; else delete state.slots[key]; }
+  if (kind === 'spot') {
+    const [k, i] = key.split('#');
+    const arr = slotList(k); arr[Number(i) || 0] = id || null;
+    if (arr.some(Boolean)) state.slots[k] = arr; else delete state.slots[k];
+  }
   else { const post = state.posts.find(p => p.id === key); if (post) post.photo = id || null; }
   changed(); render();
 }

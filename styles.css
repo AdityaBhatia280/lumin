@@ -550,3 +550,18 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
 .motion .school-card.in { opacity: 1; translate: 0 0; scale: 1; }
 @media (max-width: 900px) { .school-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .school-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Bigger partner tiles: 5 per row on the Partnerships page ---------- */
+.ptile-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); }
+.ptile-cell { display: flex; }
+.ptile-grid .ptile { width: 100%; aspect-ratio: 1; gap: 18px; padding: 24px 18px; border-radius: 30px; }
+.ptile-grid .ptile .partner-mark.large, .ptile-row .ptile .partner-mark.large { width: clamp(96px, 9vw, 140px); border-radius: 30px; font-size: clamp(1.4rem, 2vw, 2rem); }
+.ptile-grid .ptile-name, .ptile-row .ptile-name { font-size: clamp(1rem, 1.3vw, 1.25rem); }
+.ptile-row .ptile { width: clamp(200px, 17vw, 250px); gap: 16px; border-radius: 28px; }
+.ptile-row .ptile-track { gap: 24px; }
+@media (max-width: 1000px) { .ptile-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .ptile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ptile-row .ptile { width: 170px; } }
+
+/* No-photo school cards get the Project Lumin logo */
+.school-card img.school-logo { position: absolute; inset: auto; top: clamp(16px, 2vw, 24px); left: clamp(16px, 2vw, 22px); width: auto; height: clamp(46px, 4.4vw, 64px); object-fit: contain; z-index: 0; scale: 1; transition: none; }
+.school-card.no-photo:hover img.school-logo { scale: 1; }

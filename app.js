@@ -34,7 +34,7 @@ function shuffle(list) {
 }
 const photos = (data.photos || []).filter(p => p && p.src);
 const photoById = new Map(photos.map(p => [p.id, p]));
-const pinnedIds = new Set([...Object.values(data.slots || {}), ...(data.posts || []).map(p => p.photo)].filter(id => photoById.has(id)));
+const pinnedIds = new Set([...Object.values(data.slots || {}).flat(), ...(data.posts || []).map(p => p.photo)].filter(id => photoById.has(id)));
 let pool = shuffle(photos.filter(p => !pinnedIds.has(p.id)));
 if (!pool.length) pool = shuffle(photos);
 let poolIndex = 0;
@@ -44,7 +44,10 @@ function pick(key, pinnedId) {
   if (!picked.has(key)) picked.set(key, pool.length ? pool[poolIndex++ % pool.length] : null);
   return picked.get(key);
 }
-const spot = key => pick('spot:' + key, data.slots?.[key]);
+// A photo spot holds up to 4 photos; each one is either pinned in the admin or picked at random.
+const slotIds = key => { const v = data.slots?.[key]; return Array.isArray(v) ? v : v ? [v] : []; };
+const spotShots = key => [0, 1, 2, 3].map(k => pick(`spot:${key}:${k}`, slotIds(key)[k])).filter((p, k, all) => p && all.indexOf(p) === k);
+const spot = key => spotShots(key)[0] || null;
 const postPhoto = post => pick('post:' + post.id, post.photo);
 const img = (p, cls = '', eager = false) => p
   ? `<img class="${cls}" src="${esc(p.src)}" alt="${esc(p.alt || '')}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`
@@ -93,7 +96,7 @@ const statGrid = (cls = '') => `<div class="stat-grid ${cls}">${stats.map((s, i)
 
 // A photo box that slowly cycles through several photos (the pinned one first).
 function photoCycler(key, cls = '') {
-  const shots = [spot(key), ...[1, 2, 3].map(k => pick(`${key}:${k}`))].filter((p, k, all) => p && all.indexOf(p) === k);
+  const shots = spotShots(key);
   if (!shots.length) return `<div class="cycler ${cls}">${img(null)}</div>`;
   return `<div class="cycler ${cls}" data-cycle>${shots.map((p, k) => `<img class="${k ? '' : 'on'}" src="${esc(p.src)}" alt="${esc(p.alt || '')}" ${k ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async">`).join('')}
     ${shots.length > 1 ? `<span class="goal-dots" aria-hidden="true">${shots.map((_, k) => `<i class="${k ? '' : 'on'}"></i>`).join('')}</span>` : ''}</div>`;
@@ -166,7 +169,7 @@ function home() {
   ${numbersBand()}
 
   ${section(heading('', 'Our Goals') + `<div class="goals">${content.focusAreas.map((f, i) => {
-      const shots = [spot('focus-' + f.id), ...[1, 2, 3].map(k => pick(`goal:${f.id}:${k}`))].filter((p, k, all) => p && all.indexOf(p) === k);
+      const shots = spotShots('focus-' + f.id);
       return `<article class="goal${i % 2 ? ' flip' : ''}" data-reveal>
         <div class="goal-text"><span class="goal-num">Goal ${f.number}</span><h3>${esc(f.name || f.title)}</h3><p>${esc(f.blurb || f.short)}</p>
           ${button('Learn more', '/about#' + f.id, 'secondary')}</div>
@@ -174,6 +177,10 @@ function home() {
           <span class="goal-dots" aria-hidden="true">${shots.map((_, k) => `<i class="${k ? '' : 'on'}"></i>`).join('')}</span></div>
       </article>`;
     }).join('')}</div>`, 'focus-section', 'focus')}
+
+  ${section(blogPosts.length
+    ? heading('', 'Our Blog', '', button('All posts', '/blog', 'secondary')) + `<div class="post-grid">${blogPosts.slice(0, 3).map(postCard).join('')}</div>`
+    : heading('', 'Our Blog') + comingSoon(), 'blog-section', 'blog')}
 
   ${section(heading('', 'Our Dedicated Partners') + partnerRow() +
     `<div class="partners-cta" data-reveal>${button('View all partners', '/partnerships')}</div>`, 'partner-section', 'partners')}`;
@@ -229,7 +236,7 @@ function impact() {
       </div>`, 'map-section', 'map') +
     section(heading('', 'Schools & communities.', 'Every school and community in our network.') +
       `<ul class="school-grid">${network.slice().sort((a, b) => a.name.localeCompare(b.name)).map((e, i) => `<li class="school-card${e.photo ? '' : ' no-photo tone-' + (i % 3)}">
-        ${e.photo ? `<img src="${esc(e.photo)}" alt="" loading="lazy" decoding="async">` : '<span class="school-sun" aria-hidden="true"></span>'}
+        ${e.photo ? `<img src="${esc(e.photo)}" alt="" loading="lazy" decoding="async">` : '<span class="school-sun" aria-hidden="true"></span><img class="school-logo" src="/assets/brand/lumin-lockup-white.png" alt="" loading="lazy">'}
         <div class="school-copy"><strong>${esc(e.name)}</strong>${e.location || e.geography ? `<span>${esc(e.location || e.geography)}</span>` : ''}</div></li>`).join('')}</ul>`, 'directory-section', 'chapters');
 }
 
