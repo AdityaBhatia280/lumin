@@ -48,8 +48,7 @@ window.LUMEN_CONTENT = {
   teamStory: {
     title: 'What inspired us to build Project Lumin',
     text: [
-      'We saw kids spending entire summers at parks, practices, and camps with no sunscreen and no idea how strong the sun really was. Sun damage starts in childhood, yet almost no one was teaching young people about it in a way they actually cared about.',
-      'Nothing like Project Lumin existed, so we decided to be the first. We set out to redefine the standard of sun safety: making it fun, hands-on, and part of every single day.'
+      'We saw kids spend whole summers outside with no sunscreen and no idea how strong the sun was, and no one was teaching them in a way they cared about. Nothing like Project Lumin existed, so we built it to redefine the standard of sun safety.'
     ]
   },
   photoSpots: [

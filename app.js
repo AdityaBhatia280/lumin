@@ -272,7 +272,7 @@ function memberCard(m, i) {
 }
 function teamPage() {
   const story = content.teamStory;
-  return `<section class="page-intro"><div class="wrap intro-grid">
+  return `<section class="page-intro team-intro"><div class="wrap intro-grid">
       <div class="intro-copy" data-enter><h1>Our Inspiration</h1>${story.text.map(p => `<p class="lead">${esc(p)}</p>`).join('')}</div>
       <div class="intro-photo" data-enter style="--d:1">${photoCycler('team-hero')}</div>
     </div></section>
