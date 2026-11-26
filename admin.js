@@ -108,8 +108,13 @@ async function uploadPhotos(files) {
   render();
   for (const file of files) {
     try {
-      const src = await upload(file, 1800, {trim: autoTrimOn()});
-      state.photos.unshift({id: uid('u'), src, alt: '', wall: true});
+      const original = await upload(file, 1800, {trim: false});
+      let src = original;
+      if (autoTrimOn()) {
+        const bitmap = await createImageBitmap(file, {imageOrientation: 'from-image'}).catch(() => null);
+        if (bitmap && findBorders(bitmap)) src = await upload(file, 1800, {trim: true});
+      }
+      state.photos.unshift(src === original ? {id: uid('u'), src, alt: '', wall: true} : {id: uid('u'), src, original, alt: '', wall: true});
       changed();
     } catch (e) { uploadState.errors.push(e.message); }
     uploadState.done++;
@@ -132,6 +137,7 @@ function deletePhoto(id) {
   for (const key of Object.keys(state.slots)) if (state.slots[key] === id) delete state.slots[key];
   for (const post of state.posts) if (post.photo === id) post.photo = null;
   forgetFile(p.src);
+  if (p.original && p.original !== p.src) forgetFile(p.original);
   changed();
 }
 
@@ -151,8 +157,9 @@ const views = {
       <label class="drop" id="drop" for="photo-input"><span class="sun" aria-hidden="true"></span><strong>Drop photos here</strong><span>or click to choose. Select as many as you want at once. Big photos are resized automatically.</span></label>
       ${uploadState ? `<div class="progress" role="status">Uploading ${Math.min(uploadState.done + 1, uploadState.total)} of ${uploadState.total}…${uploadState.done === uploadState.total ? ' Done! Remember to press ' + verb() + ' changes.' : ''}<div class="bar"><i style="width:${uploadState.done / uploadState.total * 100}%"></i></div>${uploadState.errors.length ? `<div class="errors">${uploadState.errors.map(esc).join('<br>')}</div>` : ''}</div>` : ''}
       <div class="tool-row"><label class="switch"><input type="checkbox" data-action="auto-trim" ${autoTrimOn() ? 'checked' : ''}> Automatically remove white/black borders from new uploads</label>
-        <button class="btn small primary" data-action="fix-all">✂ Fix borders on all photos</button>
-        <button class="btn small primary" data-action="smart-all" title="Removes borders, then crops every photo to a square around its subject">✦ Smart crop all photos</button></div>
+        <button class="btn small primary" data-action="smart-all" title="AI finds the people and the logo in each photo and frames them in a square">✦ AI auto-frame ${selected.size ? 'selected' : 'all'} photos</button>
+        <button class="btn small" data-action="fix-all">✂ Fix borders on ${selected.size ? 'selected' : 'all'} photos</button>
+        <button class="btn small" data-action="restore-all" title="Undo every crop and edit">↺ Restore ${selected.size ? 'selected' : 'all'} originals</button></div>
       <div class="toolbar"><span class="note">${state.photos.length} photos · ${onWall} in the moving wall</span>
         <button class="btn small" data-action="wall-all">Put all in moving wall</button>
         <button class="btn small" data-action="select-all">Select all</button>
@@ -165,7 +172,7 @@ const views = {
       ${state.photos.length ? `<div class="photo-grid">${state.photos.map(p => {
         const used = usage(p.id);
         return `<figure class="photo${selected.has(p.id) ? ' is-selected' : ''}" style="margin:0"><button class="pick" data-action="select-photo" data-id="${p.id}" aria-pressed="${selected.has(p.id)}" aria-label="Select photo" title="Select"></button><img class="open-viewer" data-action="view-photo" data-id="${p.id}" title="Click to view" src="${esc(view(p.src))}" alt="" loading="lazy">
-          ${p.src.startsWith('/assets/preview-') ? '<span class="sample">Sample</span>' : ''}
+          ${p.src.startsWith('/assets/preview-') ? '<span class="sample">Sample</span>' : ''}${p.original && p.src !== p.original ? '<span class="edited">Edited</span>' : ''}
           <button class="edit" data-action="edit-photo" data-id="${p.id}" title="Crop, rotate, adjust">✎ Edit</button>
           <button class="del" data-action="delete-photo" data-id="${p.id}" aria-label="Delete photo" title="Delete photo">✕</button>
           <figcaption class="meta"><label><input type="checkbox" data-action="toggle-wall" data-id="${p.id}" ${p.wall !== false ? 'checked' : ''}> In moving wall</label>
@@ -291,7 +298,8 @@ document.addEventListener('click', e => {
   if (action === 'edit-photo') openEditor(id);
   if (action === 'view-photo') openViewer(id);
   if (action === 'fix-all') fixAllBorders(el);
-  if (action === 'smart-all' && confirm('Smart crop every photo to a square around its subject? You can still undo by not publishing.')) smartCropAll(el);
+  if (action === 'smart-all' && confirm(`AI auto-frame ${selected.size ? selected.size + ' selected' : 'all ' + state.photos.length} photos? It works from the originals, and Restore originals undoes it anytime.`)) smartCropAll(el);
+  if (action === 'restore-all') restoreAll();
   if (action === 'delete-photo' && confirm('Delete this photo from the site?')) { selected.delete(id); deletePhoto(id); render(); }
   if (action === 'remove-samples' && confirm('Remove all the sample photos? Your own uploads stay.')) {
     state.photos.filter(p => p.src.startsWith('/assets/preview-')).forEach(p => deletePhoto(p.id)); render();
