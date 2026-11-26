@@ -700,3 +700,7 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
   radial-gradient(ellipse 58% 42% at 50% 76%, #fff9f3 8%, #fff9f3d0 45%, transparent 75%),
   linear-gradient(0deg, var(--cream) 0%, #fff9f3ee 18%, #fff9f3a6 40%, #fff9f340 62%, transparent 80%),
   linear-gradient(90deg, #fff9f3e6 0%, #fff9f340 9%, transparent 20%, transparent 80%, #fff9f340 91%, #fff9f3e6 100%); }
+
+/* About: centered mission */
+.mission-band .wrap { text-align: center; }
+.mission-band blockquote { margin-inline: auto; }
