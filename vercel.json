@@ -38,7 +38,7 @@
   ],
   "rewrites": [
     {
-      "source": "/(about|blog|impact|partnerships|contact)",
+      "source": "/(about|blog|impact|partnerships|team|contact)",
       "destination": "/index.html"
     },
     {

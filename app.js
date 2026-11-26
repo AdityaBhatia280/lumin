@@ -261,6 +261,27 @@ function about() {
       <ul class="pillar-points">${f.points.map(([t, d]) => `<li><strong>${esc(t)}</strong><span>${esc(d)}</span></li>`).join('')}</ul></article>`).join(''), 'pillars-section');
 }
 
+/* ---------- Our Team ---------- */
+const team = (data.team || []).filter(m => m.name);
+function memberCard(m, i) {
+  const initialsOf = n => n.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  return `<article class="member m${i + 1}" data-reveal style="--d:${i}">
+    <div class="member-photo">${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}" loading="lazy" decoding="async">` : `<span class="member-initials" aria-hidden="true">${esc(initialsOf(m.name))}</span>`}</div>
+    <div class="member-copy"><h3>${esc(m.name)}</h3><span>${esc(m.role || 'Co-Founder')}</span></div>
+  </article>`;
+}
+function teamPage() {
+  const story = content.teamStory;
+  return `<section class="page-intro compact"><div class="wrap"><div class="intro-copy" data-enter><h1>Our Team</h1>
+      <p class="lead">Five students, one mission: redefine the standard of sun safety.</p></div></div></section>
+    <section class="section team-section"><div class="wrap">
+      <div class="pentagon${team.length === 5 ? '' : ' loose'}">
+        <div class="team-story" data-reveal><span class="team-sun" aria-hidden="true"></span><h2>${esc(story.title)}</h2>${story.text.map(p => `<p>${esc(p)}</p>`).join('')}</div>
+        ${team.map(memberCard).join('')}
+      </div>
+    </div></section>`;
+}
+
 /* ---------- Contact ---------- */
 function contact() {
   return pageIntro('Contact', 'Let’s make sun safety <span class="hl">a habit.</span>', 'Reach out about partnerships, events, starting a chapter, or anything else.', 'contact-hero') +
@@ -275,7 +296,7 @@ function contact() {
 }
 
 /* ---------- Render ---------- */
-const pages = {'/about': ['About', about], '/blog': ['Blog', blog], '/impact': ['Impact', impact], '/partnerships': ['Partnerships', partnershipsPage], '/contact': ['Contact', contact]};
+const pages = {'/about': ['About', about], '/blog': ['Blog', blog], '/impact': ['Impact', impact], '/partnerships': ['Partnerships', partnershipsPage], '/team': ['Our Team', teamPage], '/contact': ['Contact', contact]};
 const currentPage = route.startsWith('/blog/') ? '/blog' : route;
 if (route.startsWith('/blog/')) main.innerHTML = blogPost(blogPosts.find(p => p.id === route.split('/')[2]));
 else if (pages[route]) { main.innerHTML = pages[route][1](); document.title = `${pages[route][0]} | Project Lumin`; }
