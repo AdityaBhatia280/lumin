@@ -356,3 +356,74 @@ async function smartCropAll(button) {
   if (cropped) { changed(); render(); setStatus(`Smart cropped ${cropped} photo${cropped > 1 ? 's' : ''}${extra}. Press ${verb()} changes to keep them.`, 'dirty'); }
   else setStatus('All photos are already square and clean.' + extra);
 }
+
+/* ---------- Photo viewer: flip through every photo, edit or delete from there ---------- */
+const viewerStyle = document.createElement('style');
+viewerStyle.textContent = `
+  .photo img.open-viewer { cursor: zoom-in; }
+  #viewer { width: min(1000px, 100% - 24px); background: #0d2150; color: #fff; }
+  #viewer .dialog-head { background: #0d2150; border-color: #ffffff22; color: #fff; }
+  #viewer .dialog-head h2 { color: #fff; font-size: 1.05rem; }
+  .vw-stage { position: relative; display: grid; place-items: center; height: min(68vh, 720px); padding: 10px 70px; }
+  .vw-stage { overflow: hidden; }
+  .vw-stage img { width: auto; max-width: 100%; max-height: calc(min(68vh, 720px) - 20px); object-fit: contain; border-radius: 10px; box-shadow: 0 20px 50px #0008; }
+  .vw-nav { position: absolute; top: 50%; translate: 0 -50%; width: 52px; height: 52px; border-radius: 50%; border: 0; background: #ffffff1f; color: #fff; font-size: 1.8rem; line-height: 1; }
+  .vw-nav:hover { background: var(--gold); color: var(--navy-deep); }
+  .vw-prev { left: 10px; } .vw-next { right: 10px; }
+  .vw-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 20px 18px; }
+  .vw-info { margin-right: auto; font-size: .88rem; color: #c6d2ea; }
+  .vw-bar .btn { background: #fff; }
+  .vw-bar .btn.primary { background: var(--gold); }
+  @media (max-width: 700px) { .vw-stage { padding: 10px 8px 60px; } .vw-nav { top: auto; bottom: 6px; translate: none; } }
+`;
+document.head.append(viewerStyle);
+
+const viewer = document.createElement('dialog');
+viewer.id = 'viewer';
+viewer.innerHTML = `<div class="dialog-head"><h2 id="vw-count"></h2><button class="btn" data-vw="close">Close</button></div>
+  <div class="vw-stage"><button class="vw-nav vw-prev" data-vw="prev" aria-label="Previous photo">‹</button><img id="vw-img" alt=""><button class="vw-nav vw-next" data-vw="next" aria-label="Next photo">›</button></div>
+  <div class="vw-bar"><span class="vw-info" id="vw-info"></span>
+    <button class="btn small" data-vw="wall"></button>
+    <button class="btn small danger" data-vw="delete">Delete</button>
+    <button class="btn small primary" data-vw="edit">✎ Edit photo</button></div>`;
+document.body.append(viewer);
+let viewIndex = 0;
+
+function showViewer() {
+  if (!state.photos.length) return viewer.close();
+  viewIndex = (viewIndex + state.photos.length) % state.photos.length;
+  const p = state.photos[viewIndex];
+  viewer.querySelector('#vw-img').src = view(p.src);
+  viewer.querySelector('#vw-count').textContent = `Photo ${viewIndex + 1} of ${state.photos.length}`;
+  const used = usage(p.id);
+  viewer.querySelector('#vw-info').textContent = (p.wall !== false ? 'In the moving wall' : 'Not in the moving wall') + (used.length ? ' · Pinned: ' + used.join(', ') : '');
+  viewer.querySelector('[data-vw="wall"]').textContent = p.wall !== false ? 'Remove from moving wall' : 'Add to moving wall';
+  // preload neighbours so Next feels instant
+  [1, -1].forEach(d => { const n = state.photos[(viewIndex + d + state.photos.length) % state.photos.length]; if (n) new Image().src = view(n.src); });
+}
+function openViewer(id) {
+  viewIndex = Math.max(0, state.photos.findIndex(p => p.id === id));
+  showViewer();
+  if (!viewer.open) viewer.showModal();
+}
+viewer.addEventListener('click', e => {
+  const b = e.target.closest('[data-vw]');
+  if (!b) return;
+  const act = b.dataset.vw, p = state.photos[viewIndex];
+  if (act === 'close') viewer.close();
+  if (act === 'prev') { viewIndex--; showViewer(); }
+  if (act === 'next') { viewIndex++; showViewer(); }
+  if (act === 'edit') openEditor(p.id);
+  if (act === 'wall') { p.wall = p.wall === false; changed(); render(); showViewer(); }
+  if (act === 'delete' && confirm('Delete this photo from the site?')) {
+    if (typeof selected !== 'undefined') selected.delete(p.id);
+    deletePhoto(p.id); render(); showViewer();
+  }
+});
+viewer.addEventListener('keydown', e => {
+  if (editor.open) return;
+  if (e.key === 'ArrowRight') { viewIndex++; showViewer(); }
+  if (e.key === 'ArrowLeft') { viewIndex--; showViewer(); }
+});
+// After editing, show the updated photo in the viewer.
+editor.addEventListener('close', () => { if (viewer.open) showViewer(); });

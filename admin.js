@@ -164,7 +164,7 @@ const views = {
         <button class="btn small" data-action="sel-clear">Clear selection</button></div>` : '<p class="select-hint">Tip: tick the circle on photos to select several at once (Shift-click selects a range).</p>'}
       ${state.photos.length ? `<div class="photo-grid">${state.photos.map(p => {
         const used = usage(p.id);
-        return `<figure class="photo${selected.has(p.id) ? ' is-selected' : ''}" style="margin:0"><button class="pick" data-action="select-photo" data-id="${p.id}" aria-pressed="${selected.has(p.id)}" aria-label="Select photo" title="Select"></button><img src="${esc(view(p.src))}" alt="" loading="lazy">
+        return `<figure class="photo${selected.has(p.id) ? ' is-selected' : ''}" style="margin:0"><button class="pick" data-action="select-photo" data-id="${p.id}" aria-pressed="${selected.has(p.id)}" aria-label="Select photo" title="Select"></button><img class="open-viewer" data-action="view-photo" data-id="${p.id}" title="Click to view" src="${esc(view(p.src))}" alt="" loading="lazy">
           ${p.src.startsWith('/assets/preview-') ? '<span class="sample">Sample</span>' : ''}
           <button class="edit" data-action="edit-photo" data-id="${p.id}" title="Crop, rotate, adjust">✎ Edit</button>
           <button class="del" data-action="delete-photo" data-id="${p.id}" aria-label="Delete photo" title="Delete photo">✕</button>
@@ -289,6 +289,7 @@ document.addEventListener('click', e => {
   const {action, id, target} = el.dataset;
   const dir = Number(el.dataset.dir);
   if (action === 'edit-photo') openEditor(id);
+  if (action === 'view-photo') openViewer(id);
   if (action === 'fix-all') fixAllBorders(el);
   if (action === 'smart-all' && confirm('Smart crop every photo to a square around its subject? You can still undo by not publishing.')) smartCropAll(el);
   if (action === 'delete-photo' && confirm('Delete this photo from the site?')) { selected.delete(id); deletePhoto(id); render(); }
