@@ -387,13 +387,6 @@ window.LUMIN_DATA = {
       "original": "/assets/uploads/mwx8ns3n-c96b4f-55.webp"
     },
     {
-      "id": "u-mwx8nr65zs9m",
-      "src": "/assets/uploads/mwx8reg0-3b99d8-framed.jpg",
-      "alt": "",
-      "wall": true,
-      "original": "/assets/uploads/mwx8nrjh-d3c1fb-54.webp"
-    },
-    {
       "id": "u-mwx8nqkem9nb",
       "src": "/assets/uploads/mwx8rf9l-b202a4-framed.jpg",
       "alt": "",
