@@ -128,6 +128,12 @@
       .row .thumb, .row .random-tile { width: 72px; }
       .row .actions { grid-column: 1 / -1; justify-content: start; }
     }
+    /* Photo card buttons: Edit and delete sit on the bottom edge of the photo; select circle and badges stay on top. */
+    .photo { container-type: inline-size; }
+    .photo .edit, .photo .del { top: calc(100cqw - 42px) !important; bottom: auto !important; }
+    .photo .del { right: 8px !important; }
+    .photo .edit { right: 46px !important; }
+    .photo .edited, .photo .sample { left: 46px; top: 12px; }
   </style>
 </head>
 <body class="logged-out">
