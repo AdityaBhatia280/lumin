@@ -396,3 +396,27 @@ footer .text-link { color: var(--white); }
   background-size: 300% 300%;
   animation: gradient-pan 16s ease-in-out infinite;
 }
+
+/* ---------- Curved photo wall: columns angle toward the middle like the inside of a cylinder ---------- */
+.photo-wall { inset: -6% -1% auto; perspective: 1500px; perspective-origin: 50% 35%; gap: clamp(10px, 1.3vw, 20px); }
+.photo-column { transform: rotateY(var(--tilt, 0deg)) translateZ(var(--z, 0px)) scale(var(--grow, 1)); transform-origin: center 40%; }
+.photo-wall .photo-sequence { gap: clamp(10px, 1.3vw, 20px); padding-bottom: clamp(10px, 1.3vw, 20px); }
+.photo-wall .photo-sequence img { aspect-ratio: 4 / 3; border-radius: clamp(10px, 1.2vw, 18px); box-shadow: 0 14px 30px -16px #16326d66; }
+.photo-wall.cols-5 .photo-column:nth-child(1) { --tilt: 24deg; --z: 30px; --grow: 1.04; }
+.photo-wall.cols-5 .photo-column:nth-child(2) { --tilt: 8deg; --z: 0px; }
+.photo-wall.cols-5 .photo-column:nth-child(4) { --tilt: -8deg; --z: 0px; }
+.photo-wall.cols-5 .photo-column:nth-child(5) { --tilt: -24deg; --z: 30px; --grow: 1.04; }
+.photo-wall.cols-4 .photo-column:nth-child(1) { --tilt: 24deg; --z: 30px; --grow: 1.04; }
+.photo-wall.cols-4 .photo-column:nth-child(2) { --tilt: 7deg; }
+.photo-wall.cols-4 .photo-column:nth-child(3) { --tilt: -7deg; }
+.photo-wall.cols-4 .photo-column:nth-child(4) { --tilt: -24deg; --z: 30px; --grow: 1.04; }
+.photo-wall.cols-3 .photo-column:nth-child(1) { --tilt: 20deg; --z: 20px; }
+.photo-wall.cols-3 .photo-column:nth-child(3) { --tilt: -20deg; --z: 20px; }
+/* Soft fade at the left and right edges, and under the title, in the site's light colors */
+.hero-bloom { background:
+  radial-gradient(ellipse 58% 42% at 50% 76%, #fff9f3 8%, #fff9f3d0 45%, transparent 75%),
+  linear-gradient(0deg, var(--cream) 0%, #fff9f3ee 18%, #fff9f399 38%, #fff9f330 60%, transparent 78%),
+  linear-gradient(90deg, #fff9f3e6 0%, #fff9f340 9%, transparent 20%, transparent 80%, #fff9f340 91%, #fff9f3e6 100%); }
+@media (max-width: 860px) {
+  .photo-wall { inset-inline: -22%; perspective: 900px; }
+}

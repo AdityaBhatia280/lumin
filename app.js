@@ -102,7 +102,7 @@ function photoWall(cols = wallColumns()) {
   let wallPhotos = photos.filter(p => p.wall !== false);
   if (!wallPhotos.length) wallPhotos = photos;
   if (!wallPhotos.length) return '';
-  const tile = innerWidth * (cols === 3 ? 1.4 : 1.04) / cols;                            // tiles are square, so this is roughly their height
+  const tile = innerWidth * (cols === 3 ? 1.4 : 1.04) / cols * 0.75;                     // tiles are 4:3 landscape, so this is roughly their height
   const perColumn = Math.max(4, Math.ceil(Math.max(720, innerHeight) * 1.25 / tile) + 1); // fills the screen, so one column never shows a photo twice at once
   const order = shuffle(wallPhotos), n = order.length;
   const columns = Array.from({length: cols}, () => []);
