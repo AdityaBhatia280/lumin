@@ -1,7 +1,7 @@
 // Edited by the admin panel (/admin). Safe to edit by hand too.
 window.LUMIN_DATA = {
   "settings": {
-    "instagram": "",
+    "instagram": "https://www.instagram.com/project.lumins",
     "linkedin": "https://www.linkedin.com/company/projectlumin",
     "youtube": "https://www.youtube.com/@projectlumins",
     "email": "projectluminfrisco@gmail.com"

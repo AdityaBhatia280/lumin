@@ -22,7 +22,7 @@ window.LUMEN_NETWORK = [
       40.71,
       -74
     ],
-    "photo": null
+    "photo": "/assets/schools/academy-of-american-studies.webp"
   },
   {
     "id": "adarsh-college",
@@ -46,7 +46,7 @@ window.LUMEN_NETWORK = [
       26.66,
       87.27
     ],
-    "photo": null
+    "photo": "/assets/schools/adarsh-college.webp"
   },
   {
     "id": "albany-high-school",
@@ -88,7 +88,7 @@ window.LUMEN_NETWORK = [
       38.98,
       -77.64
     ],
-    "photo": null
+    "photo": "/assets/schools/aldie-community.webp"
   },
   {
     "id": "allen-high-school",
@@ -140,7 +140,7 @@ window.LUMEN_NETWORK = [
       -1.25,
       36.66
     ],
-    "photo": null,
+    "photo": "/assets/schools/alliance-high-school.webp",
     "pinLabel": "Kikuyu, Kenya (town)",
     "locationVerification": "https://tenders.go.ke/storage/Documents/1781793912090-provision-of-conference-accommodation-catering-team-building-and-related-services-20262027.pdf"
   },
@@ -166,7 +166,7 @@ window.LUMEN_NETWORK = [
       24.71,
       46.68
     ],
-    "photo": null
+    "photo": "/assets/schools/alrowad-private-schools.webp"
   },
   {
     "id": "apsacs-army-public-school-and-college",
@@ -190,7 +190,7 @@ window.LUMEN_NETWORK = [
       24.66,
       68.84
     ],
-    "photo": null
+    "photo": "/assets/schools/apsacs-army-public-school-and-college.webp"
   },
   {
     "id": "arcadia-community",
@@ -214,7 +214,7 @@ window.LUMEN_NETWORK = [
       34.14,
       -118.04
     ],
-    "photo": null
+    "photo": "/assets/schools/arcadia-community.webp"
   },
   {
     "id": "archimedean-upper-conservatory",
@@ -238,7 +238,7 @@ window.LUMEN_NETWORK = [
       25.76,
       -80.19
     ],
-    "photo": null
+    "photo": "/assets/schools/archimedean-upper-conservatory.webp"
   },
   {
     "id": "ardrey-kell-high-school",
@@ -280,7 +280,7 @@ window.LUMEN_NETWORK = [
       33.31,
       -111.84
     ],
-    "photo": null
+    "photo": "/assets/schools/arizona-college-prep-high-school.webp"
   },
   {
     "id": "bard-high-school-early-college-manhattan",
@@ -304,7 +304,7 @@ window.LUMEN_NETWORK = [
       40.71,
       -74
     ],
-    "photo": null
+    "photo": "/assets/schools/bard-high-school-early-college-manhattan.webp"
   },
   {
     "id": "barron-high-school",
@@ -346,7 +346,7 @@ window.LUMEN_NETWORK = [
       29.42,
       -98.49
     ],
-    "photo": null
+    "photo": "/assets/schools/basis-san-antonio-shavano-campus.webp"
   },
   {
     "id": "beaverton-high-school",
@@ -370,7 +370,7 @@ window.LUMEN_NETWORK = [
       45.49,
       -122.8
     ],
-    "photo": null
+    "photo": "/assets/schools/beaverton-high-school.webp"
   },
   {
     "id": "beckman-high-school",
@@ -391,7 +391,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": null,
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/beckman-high-school.webp"
   },
   {
     "id": "bellaire-high-school",
@@ -433,7 +433,7 @@ window.LUMEN_NETWORK = [
       -36.85,
       174.76
     ],
-    "photo": null
+    "photo": "/assets/schools/botany-downs-secondary-college.webp"
   },
   {
     "id": "bristol-community",
@@ -457,7 +457,7 @@ window.LUMEN_NETWORK = [
       36.6,
       -82.19
     ],
-    "photo": null
+    "photo": "/assets/schools/bristol-community.webp"
   },
   {
     "id": "bronx-high-school-of-science",
@@ -481,7 +481,7 @@ window.LUMEN_NETWORK = [
       40.84,
       -73.86
     ],
-    "photo": null
+    "photo": "/assets/schools/bronx-high-school-of-science.webp"
   },
   {
     "id": "bustwood",
@@ -502,7 +502,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": null,
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/bustwood.webp"
   },
   {
     "id": "castaic-high-school",
@@ -544,7 +544,7 @@ window.LUMEN_NETWORK = [
       43.73,
       -79.76
     ],
-    "photo": null
+    "photo": "/assets/schools/central-peel-secondary-school.webp"
   },
   {
     "id": "channing-high-school",
@@ -565,7 +565,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": null,
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/channing-high-school.webp"
   },
   {
     "id": "charter-school-of-wilmington",
@@ -607,7 +607,7 @@ window.LUMEN_NETWORK = [
       42.96,
       -85.67
     ],
-    "photo": null
+    "photo": "/assets/schools/city-high-middle-school.webp"
   },
   {
     "id": "coar-san-martin",
@@ -628,7 +628,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": "Peru",
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/coar-san-martin.webp"
   },
   {
     "id": "conroe-high-school",
@@ -688,7 +688,7 @@ window.LUMEN_NETWORK = [
       36.04,
       -114.98
     ],
-    "photo": null
+    "photo": "/assets/schools/coronado-high-school.webp"
   },
   {
     "id": "cuthbertson-high-school",
@@ -712,7 +712,7 @@ window.LUMEN_NETWORK = [
       34.99,
       -80.55
     ],
-    "photo": null
+    "photo": "/assets/schools/cuthbertson-high-school.webp"
   },
   {
     "id": "cy-fair-high-school",
@@ -736,7 +736,7 @@ window.LUMEN_NETWORK = [
       29.76,
       -95.37
     ],
-    "photo": null
+    "photo": "/assets/schools/cy-fair-high-school.webp"
   },
   {
     "id": "delhi-ncr-community",
@@ -760,7 +760,7 @@ window.LUMEN_NETWORK = [
       28.54,
       77.39
     ],
-    "photo": null
+    "photo": "/assets/schools/delhi-ncr-community.webp"
   },
   {
     "id": "dougherty-valley-high-school",
@@ -784,7 +784,7 @@ window.LUMEN_NETWORK = [
       37.78,
       -121.98
     ],
-    "photo": null
+    "photo": "/assets/schools/dougherty-valley-high-school.webp"
   },
   {
     "id": "druid-hills-high-school",
@@ -808,7 +808,7 @@ window.LUMEN_NETWORK = [
       33.75,
       -84.39
     ],
-    "photo": null
+    "photo": "/assets/schools/druid-hills-high-school.webp"
   },
   {
     "id": "du-high-school",
@@ -832,7 +832,7 @@ window.LUMEN_NETWORK = [
       40.69,
       -89.59
     ],
-    "photo": null
+    "photo": "/assets/schools/du-high-school.webp"
   },
   {
     "id": "east-port-said-national-university",
@@ -874,7 +874,7 @@ window.LUMEN_NETWORK = [
       36.17,
       -115.14
     ],
-    "photo": null
+    "photo": "/assets/schools/edward-w-clark-high-school.webp"
   },
   {
     "id": "elbayadia-high-school",
@@ -916,7 +916,7 @@ window.LUMEN_NETWORK = [
       33.95,
       -117.58
     ],
-    "photo": null
+    "photo": "/assets/schools/eleanor-roosevelt-high-school.webp"
   },
   {
     "id": "emerald-high-school",
@@ -940,7 +940,7 @@ window.LUMEN_NETWORK = [
       37.7,
       -121.94
     ],
-    "photo": null
+    "photo": "/assets/schools/emerald-high-school.webp"
   },
   {
     "id": "emerson-high-school",
@@ -982,7 +982,7 @@ window.LUMEN_NETWORK = [
       25.2,
       55.27
     ],
-    "photo": null
+    "photo": "/assets/schools/english-college.webp"
   },
   {
     "id": "freeman-high-school",
@@ -1006,7 +1006,7 @@ window.LUMEN_NETWORK = [
       29.79,
       -95.82
     ],
-    "photo": null
+    "photo": "/assets/schools/freeman-high-school.webp"
   },
   {
     "id": "frisco-high-school",
@@ -1037,7 +1037,7 @@ window.LUMEN_NETWORK = [
       33.15,
       -96.82
     ],
-    "photo": null
+    "photo": "/assets/schools/frisco-high-school.webp"
   },
   {
     "id": "hargeisa-community",
@@ -1079,7 +1079,7 @@ window.LUMEN_NETWORK = [
       40.18,
       -75.13
     ],
-    "photo": null
+    "photo": "/assets/schools/hatboro-horsham-high-school.webp"
   },
   {
     "id": "hebron-high-school",
@@ -1136,7 +1136,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": null,
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/hilliard.webp"
   },
   {
     "id": "hinsdale-central-high-school",
@@ -1160,7 +1160,7 @@ window.LUMEN_NETWORK = [
       41.8,
       -87.94
     ],
-    "photo": null
+    "photo": "/assets/schools/hinsdale-central-high-school.webp"
   },
   {
     "id": "horace-greeley-high-school",
@@ -1184,7 +1184,7 @@ window.LUMEN_NETWORK = [
       41.16,
       -73.76
     ],
-    "photo": null
+    "photo": "/assets/schools/horace-greeley-high-school.webp"
   },
   {
     "id": "independence-high-school",
@@ -1226,7 +1226,7 @@ window.LUMEN_NETWORK = [
       25.2,
       55.27
     ],
-    "photo": null
+    "photo": "/assets/schools/international-academy-dubai.webp"
   },
   {
     "id": "irvington-community",
@@ -1250,7 +1250,7 @@ window.LUMEN_NETWORK = [
       37.53,
       -121.96
     ],
-    "photo": null
+    "photo": "/assets/schools/irvington-community.webp"
   },
   {
     "id": "istiqaama",
@@ -1292,7 +1292,7 @@ window.LUMEN_NETWORK = [
       37.59,
       -122.02
     ],
-    "photo": null
+    "photo": "/assets/schools/james-logan-high-school.webp"
   },
   {
     "id": "jasper-high-school",
@@ -1331,7 +1331,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": "United States",
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/john-h-reagan.webp"
   },
   {
     "id": "john-hay-high-school-campus",
@@ -1355,7 +1355,7 @@ window.LUMEN_NETWORK = [
       41.5,
       -81.69
     ],
-    "photo": null
+    "photo": "/assets/schools/john-hay-high-school-campus.webp"
   },
   {
     "id": "jr-masterman",
@@ -1415,7 +1415,7 @@ window.LUMEN_NETWORK = [
       29.79,
       -95.82
     ],
-    "photo": null
+    "photo": "/assets/schools/katy-high-school.webp"
   },
   {
     "id": "khairpur-mir-community",
@@ -1457,7 +1457,7 @@ window.LUMEN_NETWORK = [
       24.71,
       46.68
     ],
-    "photo": null
+    "photo": "/assets/schools/kingdom-schools.webp"
   },
   {
     "id": "lake-norman-charter-high-school",
@@ -1481,7 +1481,7 @@ window.LUMEN_NETWORK = [
       35.41,
       -80.84
     ],
-    "photo": null
+    "photo": "/assets/schools/lake-norman-charter-high-school.webp"
   },
   {
     "id": "lakeville-north-high-school",
@@ -1505,7 +1505,7 @@ window.LUMEN_NETWORK = [
       44.65,
       -93.24
     ],
-    "photo": null
+    "photo": "/assets/schools/lakeville-north-high-school.webp"
   },
   {
     "id": "lambert-high-school",
@@ -1547,7 +1547,7 @@ window.LUMEN_NETWORK = [
       29.76,
       -95.37
     ],
-    "photo": null
+    "photo": "/assets/schools/lawrence-e-elkins-high-school.webp"
   },
   {
     "id": "lebanon-trail-high-school",
@@ -1607,7 +1607,7 @@ window.LUMEN_NETWORK = [
       12.11,
       -86.24
     ],
-    "photo": null
+    "photo": "/assets/schools/lincoln-international-academy.webp"
   },
   {
     "id": "lone-star-high-school",
@@ -1649,7 +1649,7 @@ window.LUMEN_NETWORK = [
       37.39,
       -122.11
     ],
-    "photo": null
+    "photo": "/assets/schools/los-altos-high-school.webp"
   },
   {
     "id": "lyme-old-lyme-community",
@@ -1673,7 +1673,7 @@ window.LUMEN_NETWORK = [
       41.4,
       -72.35
     ],
-    "photo": null
+    "photo": "/assets/schools/lyme-old-lyme-community.webp"
   },
   {
     "id": "maharshi-dayanand-college",
@@ -1697,7 +1697,7 @@ window.LUMEN_NETWORK = [
       19.08,
       72.88
     ],
-    "photo": null
+    "photo": "/assets/schools/maharshi-dayanand-college.webp"
   },
   {
     "id": "makerere-university",
@@ -1739,7 +1739,7 @@ window.LUMEN_NETWORK = [
       -27.47,
       153.03
     ],
-    "photo": null
+    "photo": "/assets/schools/mansfield-state-high-school.webp"
   },
   {
     "id": "maseno-university",
@@ -1778,7 +1778,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": null,
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/mclean-high-school.webp"
   },
   {
     "id": "mcneil-high-school",
@@ -1802,7 +1802,7 @@ window.LUMEN_NETWORK = [
       30.27,
       -97.74
     ],
-    "photo": null
+    "photo": "/assets/schools/mcneil-high-school.webp"
   },
   {
     "id": "memorial-high-school",
@@ -1880,7 +1880,7 @@ window.LUMEN_NETWORK = [
       37.82,
       -121.999
     ],
-    "photo": null
+    "photo": "/assets/schools/monte-vista-high-school.webp"
   },
   {
     "id": "montgomery-princeton-community",
@@ -1901,7 +1901,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": "United States",
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/montgomery-princeton-community.webp"
   },
   {
     "id": "monticello-community",
@@ -1922,7 +1922,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": "United States",
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/monticello-community.webp"
   },
   {
     "id": "mount-kenya-university",
@@ -1964,7 +1964,7 @@ window.LUMEN_NETWORK = [
       37.78,
       -121.55
     ],
-    "photo": null
+    "photo": "/assets/schools/mountain-house-high-school.webp"
   },
   {
     "id": "mountain-ridge-high-school",
@@ -1988,7 +1988,7 @@ window.LUMEN_NETWORK = [
       33.54,
       -112.19
     ],
-    "photo": null
+    "photo": "/assets/schools/mountain-ridge-high-school.webp"
   },
   {
     "id": "multimedia-university-of-kenya",
@@ -2030,7 +2030,7 @@ window.LUMEN_NETWORK = [
       41.75,
       -88.15
     ],
-    "photo": null
+    "photo": "/assets/schools/naperville-community.webp"
   },
   {
     "id": "new-life-christian-academy",
@@ -2054,7 +2054,7 @@ window.LUMEN_NETWORK = [
       18.49,
       -69.93
     ],
-    "photo": null
+    "photo": "/assets/schools/new-life-christian-academy.webp"
   },
   {
     "id": "new-utrecht-high-school",
@@ -2078,7 +2078,7 @@ window.LUMEN_NETWORK = [
       40.68,
       -73.94
     ],
-    "photo": null
+    "photo": "/assets/schools/new-utrecht-high-school.webp"
   },
   {
     "id": "new-victoria-high-school",
@@ -2102,7 +2102,7 @@ window.LUMEN_NETWORK = [
       40.68,
       -73.94
     ],
-    "photo": null
+    "photo": "/assets/schools/new-victoria-high-school.webp"
   },
   {
     "id": "newark-community",
@@ -2126,7 +2126,7 @@ window.LUMEN_NETWORK = [
       37.53,
       -122.04
     ],
-    "photo": null
+    "photo": "/assets/schools/newark-community.webp"
   },
   {
     "id": "north-norman",
@@ -2147,7 +2147,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": null,
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/north-norman.webp"
   },
   {
     "id": "northside",
@@ -2171,7 +2171,7 @@ window.LUMEN_NETWORK = [
       29.42,
       -98.49
     ],
-    "photo": null
+    "photo": "/assets/schools/northside.webp"
   },
   {
     "id": "northville-high-school",
@@ -2195,7 +2195,7 @@ window.LUMEN_NETWORK = [
       42.43,
       -83.48
     ],
-    "photo": null
+    "photo": "/assets/schools/northville-high-school.webp"
   },
   {
     "id": "novi-high-school",
@@ -2219,7 +2219,7 @@ window.LUMEN_NETWORK = [
       42.48,
       -83.48
     ],
-    "photo": null
+    "photo": "/assets/schools/novi-high-school.webp"
   },
   {
     "id": "oak-park-high-school",
@@ -2243,7 +2243,7 @@ window.LUMEN_NETWORK = [
       34.18,
       -118.76
     ],
-    "photo": null
+    "photo": "/assets/schools/oak-park-high-school.webp"
   },
   {
     "id": "obra-d-tompkins-high-school",
@@ -2267,7 +2267,7 @@ window.LUMEN_NETWORK = [
       29.79,
       -95.82
     ],
-    "photo": null
+    "photo": "/assets/schools/obra-d-tompkins-high-school.webp"
   },
   {
     "id": "outstanding-girls-high-school",
@@ -2291,7 +2291,7 @@ window.LUMEN_NETWORK = [
       32.62,
       44.02
     ],
-    "photo": null
+    "photo": "/assets/schools/outstanding-girls-high-school.webp"
   },
   {
     "id": "palisades-charter-high-school",
@@ -2315,7 +2315,7 @@ window.LUMEN_NETWORK = [
       34.05,
       -118.53
     ],
-    "photo": null
+    "photo": "/assets/schools/palisades-charter-high-school.webp"
   },
   {
     "id": "panama-community",
@@ -2339,7 +2339,7 @@ window.LUMEN_NETWORK = [
       8.43,
       -82.43
     ],
-    "photo": null
+    "photo": "/assets/schools/panama-community.webp"
   },
   {
     "id": "panther-creek-high-school",
@@ -2381,7 +2381,7 @@ window.LUMEN_NETWORK = [
       40.93,
       -74.28
     ],
-    "photo": null
+    "photo": "/assets/schools/passaic-county-technical-institute.webp"
   },
   {
     "id": "patriot-high-school",
@@ -2405,7 +2405,7 @@ window.LUMEN_NETWORK = [
       33.98,
       -117.38
     ],
-    "photo": null
+    "photo": "/assets/schools/patriot-high-school.webp"
   },
   {
     "id": "plano-west-senior-high-school",
@@ -2447,7 +2447,7 @@ window.LUMEN_NETWORK = [
       39.24,
       -77.28
     ],
-    "photo": null
+    "photo": "/assets/schools/poolesville-high-school.webp"
   },
   {
     "id": "prince-william",
@@ -2468,7 +2468,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": null,
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/prince-william.webp"
   },
   {
     "id": "prosper-high-school",
@@ -2510,7 +2510,7 @@ window.LUMEN_NETWORK = [
       1.35,
       103.82
     ],
-    "photo": null
+    "photo": "/assets/schools/raffles-girls-school.webp"
   },
   {
     "id": "rancho-san-juan-high",
@@ -2531,7 +2531,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": null,
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/rancho-san-juan-high.webp"
   },
   {
     "id": "reach-international-center-of-education",
@@ -2555,7 +2555,7 @@ window.LUMEN_NETWORK = [
       9.03,
       38.74
     ],
-    "photo": null
+    "photo": "/assets/schools/reach-international-center-of-education.webp"
   },
   {
     "id": "redmond-high-school",
@@ -2579,7 +2579,7 @@ window.LUMEN_NETWORK = [
       47.67,
       -122.12
     ],
-    "photo": null
+    "photo": "/assets/schools/redmond-high-school.webp"
   },
   {
     "id": "reedy-high-school",
@@ -2621,7 +2621,7 @@ window.LUMEN_NETWORK = [
       37.54,
       -77.44
     ],
-    "photo": null
+    "photo": "/assets/schools/richmond-community.webp"
   },
   {
     "id": "ridge-point-high-school",
@@ -2645,7 +2645,7 @@ window.LUMEN_NETWORK = [
       29.62,
       -95.54
     ],
-    "photo": null
+    "photo": "/assets/schools/ridge-point-high-school.webp"
   },
   {
     "id": "rock-ridge-high-school",
@@ -2676,7 +2676,7 @@ window.LUMEN_NETWORK = [
       39.04,
       -77.49
     ],
-    "photo": null,
+    "photo": "/assets/schools/rock-ridge-high-school.webp",
     "pinLabel": "Ashburn, VA (city)",
     "locationVerification": "https://www.lcps.org/o/rrh"
   },
@@ -2699,7 +2699,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": null,
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/roger-wells.webp"
   },
   {
     "id": "rusinga-school-nairobi",
@@ -2723,7 +2723,7 @@ window.LUMEN_NETWORK = [
       -1.29,
       36.82
     ],
-    "photo": null
+    "photo": "/assets/schools/rusinga-school-nairobi.webp"
   },
   {
     "id": "san-antonio-community",
@@ -2747,7 +2747,7 @@ window.LUMEN_NETWORK = [
       29.42,
       -98.49
     ],
-    "photo": null
+    "photo": "/assets/schools/san-antonio-community.webp"
   },
   {
     "id": "san-francisco-community",
@@ -2771,7 +2771,7 @@ window.LUMEN_NETWORK = [
       37.77,
       -122.42
     ],
-    "photo": null
+    "photo": "/assets/schools/san-francisco-community.webp"
   },
   {
     "id": "san-leandro-high-school",
@@ -2795,7 +2795,7 @@ window.LUMEN_NETWORK = [
       37.72,
       -122.16
     ],
-    "photo": null
+    "photo": "/assets/schools/san-leandro-high-school.webp"
   },
   {
     "id": "santa-susana-high-school",
@@ -2819,7 +2819,7 @@ window.LUMEN_NETWORK = [
       34.27,
       -118.78
     ],
-    "photo": null
+    "photo": "/assets/schools/santa-susana-high-school.webp"
   },
   {
     "id": "secaucus-high-school",
@@ -2843,7 +2843,7 @@ window.LUMEN_NETWORK = [
       40.79,
       -74.06
     ],
-    "photo": null,
+    "photo": "/assets/schools/secaucus-high-school.webp",
     "pinLabel": "Secaucus, NJ (city)"
   },
   {
@@ -2868,7 +2868,7 @@ window.LUMEN_NETWORK = [
       26.22,
       -98.28
     ],
-    "photo": null
+    "photo": "/assets/schools/sharyland-high-school.webp"
   },
   {
     "id": "south-carolina-governors-school",
@@ -2892,7 +2892,7 @@ window.LUMEN_NETWORK = [
       34.37,
       -80.07
     ],
-    "photo": null
+    "photo": "/assets/schools/south-carolina-governors-school.webp"
   },
   {
     "id": "st-charles-high-school",
@@ -2970,7 +2970,7 @@ window.LUMEN_NETWORK = [
       45.03,
       -92.79
     ],
-    "photo": null
+    "photo": "/assets/schools/stillwater-area-high-school.webp"
   },
   {
     "id": "sugar-land-community",
@@ -2994,7 +2994,7 @@ window.LUMEN_NETWORK = [
       29.62,
       -95.63
     ],
-    "photo": null
+    "photo": "/assets/schools/sugar-land-community.webp"
   },
   {
     "id": "suncity-school",
@@ -3018,7 +3018,7 @@ window.LUMEN_NETWORK = [
       28.46,
       77.03
     ],
-    "photo": null
+    "photo": "/assets/schools/suncity-school.webp"
   },
   {
     "id": "syosset-high-school",
@@ -3078,7 +3078,7 @@ window.LUMEN_NETWORK = [
       47.61,
       -122.33
     ],
-    "photo": null
+    "photo": "/assets/schools/the-bush-school.webp"
   },
   {
     "id": "thomas-jefferson-high-school-for-science-and-technology",
@@ -3102,7 +3102,7 @@ window.LUMEN_NETWORK = [
       38.8,
       -77.05
     ],
-    "photo": null
+    "photo": "/assets/schools/thomas-jefferson-high-school-for-science-and-technology.webp"
   },
   {
     "id": "tomball-13",
@@ -3126,7 +3126,7 @@ window.LUMEN_NETWORK = [
       30.1,
       -95.62
     ],
-    "photo": null
+    "photo": "/assets/schools/tomball-13.webp"
   },
   {
     "id": "travis-high-school",
@@ -3147,7 +3147,7 @@ window.LUMEN_NETWORK = [
     ],
     "geography": null,
     "coordinates": null,
-    "photo": null
+    "photo": "/assets/schools/travis-high-school.webp"
   },
   {
     "id": "trivbhuvan-university",
@@ -3261,7 +3261,7 @@ window.LUMEN_NETWORK = [
       39.33,
       -77.35
     ],
-    "photo": null
+    "photo": "/assets/schools/urbana-high-school.webp"
   },
   {
     "id": "valley-christian-high-school",
@@ -3285,7 +3285,7 @@ window.LUMEN_NETWORK = [
       37.34,
       -121.89
     ],
-    "photo": null
+    "photo": "/assets/schools/valley-christian-high-school.webp"
   },
   {
     "id": "washington-liberty",
@@ -3319,7 +3319,7 @@ window.LUMEN_NETWORK = [
       38.88,
       -77.1
     ],
-    "photo": null
+    "photo": "/assets/schools/washington-liberty.webp"
   },
   {
     "id": "washtenaw-international-high-school",
@@ -3343,7 +3343,7 @@ window.LUMEN_NETWORK = [
       42.24,
       -83.61
     ],
-    "photo": null
+    "photo": "/assets/schools/washtenaw-international-high-school.webp"
   },
   {
     "id": "welwitschia-primary-school",
@@ -3385,7 +3385,7 @@ window.LUMEN_NETWORK = [
       42.11,
       -88.03
     ],
-    "photo": null
+    "photo": "/assets/schools/william-fremd-high-school.webp"
   },
   {
     "id": "woodbridge-high-school",

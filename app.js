@@ -85,20 +85,41 @@ const stats = [
   {value: network.length, label: 'Schools & communities in our network', plus: true},
   {value: countries.size, label: 'Countries reached', plus: true},
   {value: partners.length, label: 'Partner organizations', plus: true},
-  {value: 1, label: 'Estimated economic impact', prefix: '$', suffix: 'M+'}
+  {value: 1000000, label: 'Estimated economic impact', money: true, plus: true}
 ];
+const money = n => n >= 1e6 ? '$' + (Math.round(n / 1e5) / 10) + 'M' : n >= 1000 ? '$' + Math.floor(n / 1000) + 'K' : '$' + n;
+const numbersBand = () => `<section class="numbers-band"><div class="wrap"><div class="numbers">${stats.map((s, i) => `<div class="number" data-reveal style="--d:${i}"><strong><span data-count="${s.value}"${s.money ? ' data-format="money"' : ''}>${s.money ? money(s.value) : s.value}</span>${s.plus ? '+' : ''}</strong><span class="number-label">${esc(s.label)}</span></div>`).join('')}</div></div></section>`;
 const statGrid = (cls = '') => `<div class="stat-grid ${cls}">${stats.map((s, i) => `<div class="stat" data-reveal style="--d:${i}"><strong>${s.prefix || ''}<span data-count="${s.value}">${s.value}</span>${s.suffix ?? (s.plus ? '+' : '')}</strong><span>${esc(s.label)}</span></div>`).join('')}</div>`;
 
+// A photo box that slowly cycles through several photos (the pinned one first).
+function photoCycler(key, cls = '') {
+  const shots = [spot(key), ...[1, 2, 3].map(k => pick(`${key}:${k}`))].filter((p, k, all) => p && all.indexOf(p) === k);
+  if (!shots.length) return `<div class="cycler ${cls}">${img(null)}</div>`;
+  return `<div class="cycler ${cls}" data-cycle>${shots.map((p, k) => `<img class="${k ? '' : 'on'}" src="${esc(p.src)}" alt="${esc(p.alt || '')}" ${k ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async">`).join('')}
+    ${shots.length > 1 ? `<span class="goal-dots" aria-hidden="true">${shots.map((_, k) => `<i class="${k ? '' : 'on'}"></i>`).join('')}</span>` : ''}</div>`;
+}
 function pageIntro(eyebrow, title, lead, photoKey, extra = '') {
   return `<section class="page-intro"><div class="wrap intro-grid">
-    <div class="intro-copy" data-enter><p class="eyebrow">${esc(eyebrow)}</p><h1>${title}</h1><p class="lead">${esc(lead)}</p>${extra}</div>
-    <div class="intro-photo" data-enter style="--d:1">${img(spot(photoKey), '', true)}<span class="logo-badge" aria-hidden="true"><img src="/assets/brand/lumin-icon.png" alt=""></span></div>
+    <div class="intro-copy" data-enter><h1>${title}</h1><p class="lead">${esc(lead)}</p>${extra}</div>
+    <div class="intro-photo" data-enter style="--d:1">${photoCycler(photoKey)}</div>
   </div></section>`;
 }
 
 const comingSoon = () => `<div class="coming-soon" data-reveal><span class="coming-sun" aria-hidden="true"></span><strong>Coming soon</strong><p>New posts are on the way. Check back soon.</p></div>`;
 
-// All partners scroll side to side: two rows moving in opposite directions (one row if there are only a few).
+const sortedPartners = partners.slice().sort((a, b) => a.name.localeCompare(b.name));
+const partnerTile = (p, i, hidden = false) => {
+  const inner = `${partnerMark(p, i, 'large')}<span class="ptile-name">${esc(p.name)}</span>`;
+  const extra = hidden ? ' tabindex="-1" aria-hidden="true"' : '';
+  return p.url ? `<a class="ptile" href="${esc(p.url)}" target="_blank" rel="noopener"${extra}>${inner}</a>` : `<div class="ptile"${hidden ? ' aria-hidden="true"' : ''}>${inner}</div>`;
+};
+// Homepage: one row of partner tiles scrolling side to side.
+function partnerRow() {
+  if (!sortedPartners.length) return '';
+  const tiles = hidden => sortedPartners.map((p, i) => partnerTile(p, i, hidden)).join('');
+  return `<div class="ptile-row" data-reveal style="--speed:${Math.max(30, sortedPartners.length * 3.2)}s"><div class="ptile-track">${tiles(false)}${tiles(true)}</div></div>`;
+}
+// Old two-row scroller (no longer used on the homepage).
 function partnerScroller() {
   if (!partners.length) return '';
   const item = (p, i) => `<${p.url ? `a href="${esc(p.url)}" target="_blank" rel="noopener"` : 'span'} class="partner-chip">${partnerMark(p, i)}<b>${esc(p.name)}</b></${p.url ? 'a' : 'span'}>`;
@@ -142,7 +163,7 @@ function home() {
     </div>
   </section>
 
-  <section class="numbers-band"><div class="wrap"><div class="numbers">${stats.map((s, i) => `<div class="number" data-reveal style="--d:${i}"><strong>${s.prefix || ''}<span data-count="${s.value}">${s.value}</span>${s.suffix ?? (s.plus ? '+' : '')}</strong><span class="number-label">${esc(s.label)}</span></div>`).join('')}</div></div></section>
+  ${numbersBand()}
 
   ${section(heading('', 'Our Goals') + `<div class="goals">${content.focusAreas.map((f, i) => {
       const shots = [spot('focus-' + f.id), ...[1, 2, 3].map(k => pick(`goal:${f.id}:${k}`))].filter((p, k, all) => p && all.indexOf(p) === k);
@@ -154,13 +175,13 @@ function home() {
       </article>`;
     }).join('')}</div>`, 'focus-section', 'focus')}
 
-  ${section(heading('', 'Our Dedicated Partners') + partnerScroller() +
+  ${section(heading('', 'Our Dedicated Partners') + partnerRow() +
     `<div class="partners-cta" data-reveal>${button('View all partners', '/partnerships')}</div>`, 'partner-section', 'partners')}`;
 }
 
 /* ---------- Blog ---------- */
 function blog() {
-  return `<section class="page-intro compact"><div class="wrap"><div class="intro-copy" data-enter><p class="eyebrow">Blog</p><h1>News & stories</h1>
+  return `<section class="page-intro compact"><div class="wrap"><div class="intro-copy" data-enter><h1>News & stories</h1>
     <p class="lead">What Project Lumin is building, where we are going, and who we are working with.</p></div></div></section>` +
     section(blogPosts.length ? `<div class="post-grid">${blogPosts.map(postCard).join('')}</div>` : comingSoon(), 'blog-section');
 }
@@ -194,8 +215,8 @@ function impact() {
   const states = {AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California', CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware', DC: 'Washington DC', FL: 'Florida', GA: 'Georgia', HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana', IA: 'Iowa', KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland', MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi', MO: 'Missouri', MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire', NJ: 'New Jersey', NM: 'New Mexico', NY: 'New York', NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio', OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina', SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont', VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming'};
   const searchText = e => [e.name, e.location, e.geography, states[(e.location || '').match(/,\s*([A-Z]{2})$/)?.[1]]].filter(Boolean).join(' ').toLowerCase();
   return pageIntro('Impact', 'Sun safety, <span class="hl">spreading.</span>', 'Project Lumin reaches young people through a growing network of schools, communities, and partner organizations around the world.', 'impact-hero') +
-    section(statGrid(), 'stats-section') +
-    section(heading('Our network', 'Where we reach.', `${located.length} mapped locations across ${countries.size} countries. Hover or tap a dot to see who is there.`) +
+    numbersBand() +
+    section(heading('', 'Where we reach.', `${located.length} mapped locations across ${countries.size} countries. Hover or tap a dot to see who is there.`) +
       `<div class="map-card" data-reveal>
         <div class="map-frame"><svg class="world-map" viewBox="0 0 720 294" role="img" aria-label="World map of ${located.length} schools and communities in the Project Lumin network">
           <image href="/assets/world-map.svg" width="720" height="294"/>${dots}</svg>
@@ -206,31 +227,28 @@ function impact() {
         <div class="chart-card" data-reveal><h3>Top countries</h3><ul class="bars">${countryCounts.slice(0, 8).map(([c, n]) => `<li><span>${esc(c)}</span><b style="--w:${(n / maxCountry * 100).toFixed(1)}%"></b><em>${n}</em></li>`).join('')}</ul></div>
         <div class="chart-card" data-reveal style="--d:1"><h3>Who is in the network</h3><ul class="bars types">${typeCounts.map(([t, n]) => `<li><span>${esc(t)}</span><b class="${typeClass(t)}" style="--w:${(n / typeCounts[0][1] * 100).toFixed(1)}%"></b><em>${n}</em></li>`).join('')}</ul></div>
       </div>`, 'map-section', 'map') +
-    section(heading('Chapters', 'Schools & communities.', 'Every school and community in our network.') +
-      `<div class="directory-tools" data-reveal><label class="search"><span class="visually-hidden">Search schools and communities</span><input type="search" id="directory-search" placeholder="Search by name or place"></label>
-        <div class="chips" role="group" aria-label="Filter by type"><button type="button" class="chip" aria-pressed="true" data-type="all">All</button>${types.map(t => `<button type="button" class="chip" aria-pressed="false" data-type="${esc(t)}">${esc(t)}</button>`).join('')}</div></div>
-      <p class="directory-count" aria-live="polite"></p>
-      <ul class="directory">${network.slice().sort((a, b) => a.name.localeCompare(b.name)).map(e => `<li data-type="${esc(e.type)}" data-search="${esc(searchText(e))}">
-        <span class="dir-mark ${typeClass(e.type)}" aria-hidden="true">${esc(initials(e.name))}</span><div><strong>${esc(e.name)}</strong><span>${esc(e.location || e.geography || e.type)}</span></div></li>`).join('')}</ul>`, 'directory-section', 'chapters');
+    section(heading('', 'Schools & communities.', 'Every school and community in our network.') +
+      `<ul class="school-grid">${network.slice().sort((a, b) => a.name.localeCompare(b.name)).map((e, i) => `<li class="school-card${e.photo ? '' : ' no-photo tone-' + (i % 3)}">
+        ${e.photo ? `<img src="${esc(e.photo)}" alt="" loading="lazy" decoding="async">` : '<span class="school-sun" aria-hidden="true"></span>'}
+        <div class="school-copy"><strong>${esc(e.name)}</strong>${e.location || e.geography ? `<span>${esc(e.location || e.geography)}</span>` : ''}</div></li>`).join('')}</ul>`, 'directory-section', 'chapters');
 }
 
 /* ---------- Partnerships ---------- */
 function partnershipsPage() {
   return pageIntro('Partnerships', 'Stronger <span class="hl">together.</span>', 'We work with organizations of every size to bring sun safety to more young people, from global student networks to local nonprofits.', 'partners-hero',
     `<div class="actions">${button('Become a partner', mail('Partnering with Project Lumin'))}</div>`) +
-    section(heading('Our partners', `${partners.length} organizations and counting.`) + featuredCards() +
-      `<ul class="partner-grid">${others.map((p, i) => `<li class="partner-tile" data-reveal style="--d:${i % 4}">${partnerMark(p, i + 3)}<strong>${esc(p.name)}</strong>${p.description ? `<p>${esc(p.description)}</p>` : ''}${p.url ? `<a class="card-link" href="${esc(p.url)}" target="_blank" rel="noopener">Website ${arrow}</a>` : ''}</li>`).join('')}</ul>`, 'partner-section');
+    section(heading('', 'Our Partners') + `<div class="ptile-grid">${sortedPartners.map((p, i) => `<div class="ptile-cell" data-reveal style="--d:${i % 6}">${partnerTile(p, i)}</div>`).join('')}</div>`, 'partner-section');
 }
 
 /* ---------- About ---------- */
 function about() {
   return pageIntro('About', 'Sun safety starts with <span class="hl">students.</span>', content.oneLiner, 'about-hero', `<div class="actions">${button('Get involved', '/contact')}</div>`) +
-    `<section class="mission-band"><div class="wrap" data-reveal><p class="eyebrow">Our mission</p><blockquote>${esc(content.mission)}</blockquote></div></section>` +
-    section(`<div class="split"><div class="split-photo" data-reveal>${img(spot('about-approach'))}</div>
-      <div data-reveal style="--d:1"><p class="eyebrow">Our approach</p><h2>Enjoy the outdoors. Stay protected.</h2><p class="lead">${esc(content.approach)}</p>
+    `<section class="mission-band"><div class="wrap" data-reveal><h2 class="mission-title">Our mission</h2><blockquote>${esc(content.mission)}</blockquote></div></section>` +
+    section(`<div class="split"><div class="split-photo" data-reveal>${photoCycler('about-approach')}</div>
+      <div data-reveal style="--d:1"><h2>Enjoy the outdoors. Stay protected.</h2><p class="lead">${esc(content.approach)}</p>
       <h3 class="small-head">Who we serve</h3><ul class="pill-list">${content.audience.map(a => `<li>${esc(a)}</li>`).join('')}</ul></div></div>`, 'approach-section') +
-    section(heading('What we do', 'Our three focus areas.') + content.focusAreas.map((f, i) => `<article class="pillar" id="${f.id}" data-reveal>
-      <div class="pillar-head"><span class="pillar-number">${f.number}</span><div><h3>${esc(f.title)}</h3><p>${esc(f.text)}</p></div></div>
+    section(heading('', 'Our three focus areas.') + content.focusAreas.map((f, i) => `<article class="pillar" id="${f.id}" data-reveal>
+      <div class="pillar-head"><span class="pillar-number">${f.number}</span><div><h3>${esc(f.name || f.title)}</h3><p>${esc(f.text)}</p></div></div>
       <ul class="pillar-points">${f.points.map(([t, d]) => `<li><strong>${esc(t)}</strong><span>${esc(d)}</span></li>`).join('')}</ul></article>`).join(''), 'pillars-section');
 }
 
@@ -293,7 +311,8 @@ function countUp(el) {
   const start = performance.now(), duration = 1400;
   const tick = now => {
     const t = Math.min(1, (now - start) / duration);
-    el.textContent = Math.round(target * (1 - Math.pow(1 - t, 3)));
+    const n = Math.round(target * (1 - Math.pow(1 - t, 3)));
+    el.textContent = el.dataset.format === 'money' ? money(n) : n;
     if (t < 1) requestAnimationFrame(tick);
   };
   requestAnimationFrame(tick);
@@ -397,35 +416,21 @@ if (mapFrame) {
   mapFrame.addEventListener('focusin', e => { if (e.target.matches('.map-dot')) show(e.target); });
   mapFrame.addEventListener('pointerleave', () => { tip.hidden = true; });
 }
-const directory = document.querySelector('.directory');
-if (directory) {
-  const search = document.querySelector('#directory-search');
-  const chips = document.querySelectorAll('.chip');
-  const count = document.querySelector('.directory-count');
-  let type = 'all';
-  const filter = () => {
-    const q = search.value.trim().toLowerCase();
-    let matches = 0;
-    const limit = expanded || q || type !== 'all' ? Infinity : 24;
-    directory.querySelectorAll('li').forEach(li => {
-      const ok = (type === 'all' || li.dataset.type === type) && (!q || li.dataset.search.includes(q));
-      if (ok) matches++;
-      li.hidden = !ok || matches > limit;
-    });
-    count.textContent = matches > limit ? `Showing ${limit} of ${network.length}` : `Showing ${matches} of ${network.length}`;
-    more.hidden = !(matches > limit);
-  };
-  let expanded = false;
-  directory.insertAdjacentHTML('afterend', `<div class="directory-more"><button type="button" class="button secondary">Show all ${network.length} ${arrow}</button></div>`);
-  const more = directory.nextElementSibling;
-  more.querySelector('button').addEventListener('click', () => { expanded = true; filter(); });
-  search.addEventListener('input', filter);
-  chips.forEach(chip => chip.addEventListener('click', () => {
-    type = chip.dataset.type;
-    chips.forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
-    filter();
-  }));
-  filter();
+// School cards: show 24 first, then everything on "Show all", with a pop-in as they appear.
+const schoolGrid = document.querySelector('.school-grid');
+if (schoolGrid) {
+  const cards = [...schoolGrid.children];
+  const show = all => cards.forEach((li, i) => { li.hidden = !all && i >= 24; });
+  show(false);
+  if (cards.length > 24) {
+    schoolGrid.insertAdjacentHTML('afterend', `<div class="directory-more"><button type="button" class="button secondary">Show all ${cards.length} ${arrow}</button></div>`);
+    const more = schoolGrid.nextElementSibling;
+    more.querySelector('button').addEventListener('click', () => { show(true); more.hidden = true; });
+  }
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    const pop = new IntersectionObserver(entries => entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); pop.unobserve(en.target); } }), {threshold: 0.1});
+    cards.forEach((li, i) => { li.style.setProperty('--d', i % 3); pop.observe(li); });
+  } else cards.forEach(li => li.classList.add('in'));
 }
 
 if (location.hash) requestAnimationFrame(() => document.getElementById(location.hash.slice(1))?.scrollIntoView());
