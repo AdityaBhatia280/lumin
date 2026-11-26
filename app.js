@@ -269,7 +269,7 @@ function contact() {
       ${instagram ? `<a class="contact-card" href="${esc(instagram)}" target="_blank" rel="noopener" data-reveal style="--d:1"><span class="contact-icon">${instagramIcon}</span><span class="contact-label">Instagram</span><strong>Follow us</strong></a>` : ''}
       ${linkedin ? `<a class="contact-card" href="${esc(linkedin)}" target="_blank" rel="noopener" data-reveal style="--d:2"><span class="contact-icon">${linkedinIcon}</span><span class="contact-label">LinkedIn</span><strong>Connect with us</strong></a>` : ''}
       ${youtube ? `<a class="contact-card" href="${esc(youtube)}" target="_blank" rel="noopener" data-reveal style="--d:3"><span class="contact-icon">${youtubeIcon}</span><span class="contact-label">YouTube</span><strong>Watch our videos</strong></a>` : ''}
-      ${donate ? `<a class="contact-card" href="${esc(donate)}" target="_blank" rel="noopener" data-reveal style="--d:4"><span class="contact-icon" aria-hidden="true">♥</span><span class="contact-label">Donate</span><strong>Support our work</strong></a>` : ''}
+      ${donate ? `<a class="contact-card" href="${esc(donate)}" target="_blank" rel="noopener" data-reveal style="--d:4"><span class="contact-icon" aria-hidden="true">$</span><span class="contact-label">Donate</span><strong>Support our work</strong></a>` : ''}
       <div class="contact-card" data-reveal style="--d:5"><span class="contact-icon" aria-hidden="true">☀</span><span class="contact-label">Based in</span><strong>Frisco, Texas</strong></div>
     </div>`, 'contact-section');
 }
@@ -286,7 +286,7 @@ document.body.dataset.page = currentPage === '/' ? 'home' : currentPage.slice(1)
 const nav = document.querySelector('.nav');
 const menu = nav.querySelector('.menu');
 nav.querySelector(`.nav-links a[href="${currentPage}"]`)?.setAttribute('aria-current', 'page');
-if (donate) nav.querySelector('.nav-contact')?.insertAdjacentHTML('beforebegin', `<a class="button secondary nav-donate" href="${esc(donate)}" target="_blank" rel="noopener"><span class="heart" aria-hidden="true">♥</span> Donate</a>`);
+if (donate) nav.querySelector('.nav-contact')?.insertAdjacentHTML('beforebegin', `<a class="button secondary nav-donate" href="${esc(donate)}" target="_blank" rel="noopener">Donate</a>`);
 const setMenu = open => { menu.setAttribute('aria-expanded', String(open)); document.body.classList.toggle('menu-open', open); };
 menu.addEventListener('click', () => setMenu(menu.getAttribute('aria-expanded') === 'false'));
 document.addEventListener('click', e => { if (!nav.contains(e.target) || e.target.closest('a')) setMenu(false); });
@@ -298,7 +298,7 @@ document.querySelector('#footer').innerHTML = `<div class="wrap"><div class="foo
   <div class="footer-brand"><a class="brand" href="/"><img src="/assets/brand/lumin-lockup.png" alt="Project Lumin home" width="592" height="240" loading="lazy"></a>
     <p>Empowering young people to safely enjoy the outdoors.</p>
     <div class="footer-contact">${textLink(email, mail())}${instagram ? `<a class="social" href="${esc(instagram)}" target="_blank" rel="noopener" aria-label="Project Lumin on Instagram">${instagramIcon}</a>` : ''}${linkedin ? `<a class="social" href="${esc(linkedin)}" target="_blank" rel="noopener" aria-label="Project Lumin on LinkedIn">${linkedinIcon}</a>` : ''}${youtube ? `<a class="social" href="${esc(youtube)}" target="_blank" rel="noopener" aria-label="Project Lumin on YouTube">${youtubeIcon}</a>` : ''}</div></div>
-  <nav aria-label="Footer navigation">${[['/', 'Home'], ...Object.entries(pages).map(([u, [l]]) => [u, l])].map(([u, l]) => `<a href="${u}">${l}</a>`).join('')}${donate ? `<a href="${esc(donate)}" target="_blank" rel="noopener">Donate ♥</a>` : ''}</nav></div>
+  <nav aria-label="Footer navigation">${[['/', 'Home'], ...Object.entries(pages).map(([u, [l]]) => [u, l])].map(([u, l]) => `<a href="${u}">${l}</a>`).join('')}${donate ? `<a href="${esc(donate)}" target="_blank" rel="noopener">Donate</a>` : ''}</nav></div>
   <div class="footer-end"><span>© ${new Date().getFullYear()} Project Lumin</span><span>Frisco, Texas</span></div></div>`;
 
 /* ---------- Motion ---------- */
