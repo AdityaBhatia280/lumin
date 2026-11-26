@@ -1,6 +1,7 @@
 ﻿// Site text. Photos, partners, blog posts, email and Instagram live in data/site-data.js (edit them at /admin).
 window.LUMEN_CONTENT = {
-  heroLine: 'Empowering young people to safely enjoy the outdoors.',
+  heroTag: 'A global, student-led 501(c)(3) nonprofit',
+  heroLine: 'Turning UV awareness and sun protection into a natural, lifelong habit, so young people everywhere can safely enjoy the outdoors.',
   oneLiner: 'Project Lumin is a student-led public health initiative protecting youth from the cumulative dangers of UV radiation through digital tools, hands-on community outreach, and a growing network of chapters and partners.',
   mission: 'Empowering young people to safely enjoy the outdoors by turning UV awareness and sun protection into a natural, lifelong daily habit.',
   approach: 'Rather than telling kids to stay indoors, Project Lumin makes sun safety accessible, interactive, and routine, so communities have everything they need to stay protected under the sun.',

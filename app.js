@@ -161,6 +161,7 @@ function home() {
     <canvas class="hero-sky" aria-hidden="true"></canvas>
     <div class="hero-center wrap" data-enter>
       <h1>Project <span>Lumin</span></h1>
+      ${content.heroTag ? `<p class="hero-tag">${esc(content.heroTag)}</p>` : ""}
       <p class="hero-line">${esc(content.heroLine)}</p>
       <div class="actions">${button('Read the blog', '/blog')}${button('See our impact', '/impact', 'secondary')}</div>
     </div>
