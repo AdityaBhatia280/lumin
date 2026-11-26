@@ -620,3 +620,9 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
 
 /* One-line hero statement */
 .hero-line { max-width: 40ch; font-weight: 600; color: var(--navy); }
+
+/* Donate button in the menu */
+.nav-donate { margin-left: .4rem; }
+.nav-donate .heart { color: #e0475b; font-size: 1.05em; }
+.nav-donate + .nav-contact { margin-left: 0; }
+@media (max-width: 860px) { .nav-donate { margin: 6px 0 0; } }
