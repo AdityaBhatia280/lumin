@@ -8,6 +8,8 @@ window.LUMEN_CONTENT = {
   focusAreas: [
     {
       id: 'digital', number: '01', title: 'Digital ecosystem & social media',
+      name: 'Sun Safety at Your Fingertips',
+      blurb: 'Easy-to-use tools, short videos, and daily reminders that make protecting your skin simple to understand and hard to forget.',
       short: 'Tools, trackers, and content that make UV safety accessible anywhere.',
       text: 'Everything we build, publish, and manage online to meet young people where they already spend their time.',
       points: [
@@ -19,6 +21,8 @@ window.LUMEN_CONTENT = {
     },
     {
       id: 'community', number: '02', title: 'Community outreach & events',
+      name: 'Showing Up Where Kids Play',
+      blurb: 'We bring free sunscreen, color-changing UV wristbands, and hands-on lessons to parks, schools, camps, and sports events.',
       short: 'Booths, free sunscreen, UV wristbands, and hands-on workshops.',
       text: 'Our physical presence in the community: going outside, meeting people face to face, and putting sun protection directly into their hands.',
       points: [
@@ -29,6 +33,8 @@ window.LUMEN_CONTENT = {
     },
     {
       id: 'network', number: '03', title: 'Chapters & partnerships',
+      name: 'A Movement Led by Students',
+      blurb: 'Students and partner organizations carry Project Lumin into their own schools and cities, so sun safety keeps spreading.',
       short: 'Student chapters and partner organizations that scale the movement.',
       text: 'Turning Project Lumin from a local initiative into a widespread movement through student leadership and collaboration.',
       points: [

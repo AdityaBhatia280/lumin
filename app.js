@@ -85,9 +85,9 @@ const stats = [
   {value: network.length, label: 'Schools & communities in our network', plus: true},
   {value: countries.size, label: 'Countries reached', plus: true},
   {value: partners.length, label: 'Partner organizations', plus: true},
-  {value: content.focusAreas.length, label: 'Focus areas', plus: true}
+  {value: 1, label: 'Estimated economic impact', prefix: '$', suffix: 'M+'}
 ];
-const statGrid = (cls = '') => `<div class="stat-grid ${cls}">${stats.map((s, i) => `<div class="stat" data-reveal style="--d:${i}"><strong><span data-count="${s.value}">${s.value}</span>${s.plus ? '+' : ''}</strong><span>${esc(s.label)}</span></div>`).join('')}</div>`;
+const statGrid = (cls = '') => `<div class="stat-grid ${cls}">${stats.map((s, i) => `<div class="stat" data-reveal style="--d:${i}"><strong>${s.prefix || ''}<span data-count="${s.value}">${s.value}</span>${s.suffix ?? (s.plus ? '+' : '')}</strong><span>${esc(s.label)}</span></div>`).join('')}</div>`;
 
 function pageIntro(eyebrow, title, lead, photoKey, extra = '') {
   return `<section class="page-intro"><div class="wrap intro-grid">
@@ -142,18 +142,17 @@ function home() {
     </div>
   </section>
 
-  <section class="numbers-band"><div class="wrap"><div class="numbers">${stats.map((s, i) => `<div class="number" data-reveal style="--d:${i}"><strong><span data-count="${s.value}">${s.value}</span>${s.plus ? '+' : ''}</strong><span class="number-label">${esc(s.label)}</span></div>`).join('')}</div></div></section>
+  <section class="numbers-band"><div class="wrap"><div class="numbers">${stats.map((s, i) => `<div class="number" data-reveal style="--d:${i}"><strong>${s.prefix || ''}<span data-count="${s.value}">${s.value}</span>${s.suffix ?? (s.plus ? '+' : '')}</strong><span class="number-label">${esc(s.label)}</span></div>`).join('')}</div></div></section>
 
-  ${section(blogPosts.length
-    ? heading('', 'Latest from Project Lumin', '', button('All posts', '/blog', 'secondary')) + `<div class="post-grid">${blogPosts.slice(0, 3).map(postCard).join('')}</div>`
-    : heading('', 'Latest from Project Lumin') + comingSoon(), 'blog-section', 'blog')}
-
-  ${section(heading('', 'Our Goals') +
-    `<div class="focus-grid">${content.focusAreas.map((f, i) => `<a class="focus-card" href="/about#${f.id}" data-reveal style="--d:${i}">
-      <div class="focus-photo">${img(spot('focus-' + f.id))}<span class="focus-number">${f.number}</span></div>
-      <div class="focus-copy"><h3>${esc(f.title)}</h3><p>${esc(f.short)}</p>
-      <ul>${f.points.map(([t]) => `<li>${esc(t)}</li>`).join('')}</ul><span class="card-link">Learn more ${arrow}</span></div>
-    </a>`).join('')}</div>`, 'focus-section', 'focus')}
+  ${section(heading('', 'Our Goals') + `<div class="goals">${content.focusAreas.map((f, i) => {
+      const shots = [spot('focus-' + f.id), ...[1, 2, 3].map(k => pick(`goal:${f.id}:${k}`))].filter((p, k, all) => p && all.indexOf(p) === k);
+      return `<article class="goal${i % 2 ? ' flip' : ''}" data-reveal>
+        <div class="goal-text"><span class="goal-num">Goal ${f.number}</span><h3>${esc(f.name || f.title)}</h3><p>${esc(f.blurb || f.short)}</p>
+          ${button('Learn more', '/about#' + f.id, 'secondary')}</div>
+        <div class="goal-media" data-cycle style="--start:${i * 1.3}s">${shots.length ? shots.map((p, k) => `<img class="${k ? '' : 'on'}" src="${esc(p.src)}" alt="${esc(p.alt || '')}" loading="lazy" decoding="async">`).join('') : img(null)}
+          <span class="goal-dots" aria-hidden="true">${shots.map((_, k) => `<i class="${k ? '' : 'on'}"></i>`).join('')}</span></div>
+      </article>`;
+    }).join('')}</div>`, 'focus-section', 'focus')}
 
   ${section(heading('', 'Our Dedicated Partners') + partnerScroller() +
     `<div class="partners-cta" data-reveal>${button('View all partners', '/partnerships')}</div>`, 'partner-section', 'partners')}`;
@@ -365,6 +364,19 @@ if (hero && sky && !reduceMotion) {
   }).observe(hero);
   draw();
 }
+
+/* ---------- Goal boxes: cycle through their photos ---------- */
+document.querySelectorAll('[data-cycle]').forEach((box, b) => {
+  const imgs = [...box.querySelectorAll('img')], dots = [...box.querySelectorAll('.goal-dots i')];
+  if (imgs.length < 2 || reduceMotion) return;
+  let at = 0;
+  setTimeout(() => setInterval(() => {
+    if (document.hidden) return;
+    imgs[at].classList.remove('on'); dots[at]?.classList.remove('on');
+    at = (at + 1) % imgs.length;
+    imgs[at].classList.add('on'); dots[at]?.classList.add('on');
+  }, 4200), b * 1400);
+});
 
 /* ---------- Impact page interactions ---------- */
 const mapFrame = document.querySelector('.map-frame');
