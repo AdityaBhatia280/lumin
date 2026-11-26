@@ -306,6 +306,7 @@ document.addEventListener('click', e => {
   const tabButton = e.target.closest('[data-tab]');
   if (tabButton && state) {
     tab = tabButton.dataset.tab;
+    fetch('/api/history', {method: 'POST', credentials: 'same-origin', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({what: tabButton.textContent.replace(/\d+/g, '').trim()})}).catch(() => {});
     document.querySelectorAll('[data-tab]').forEach(b => b.setAttribute('aria-selected', String(b === tabButton)));
     render(); scrollTo(0, 0); return;
   }
@@ -440,15 +441,15 @@ function showLogin(message = '', notConfigured = false) {
     ${notConfigured
       ? '<p>The admin panel isn\'t switched on yet. In Vercel, add the <b>ADMIN_PASSWORD</b> and <b>GITHUB_TOKEN</b> environment variables, then redeploy.</p>'
       : `<p>Enter the admin password to edit photos, blog posts and partners.</p>
-        <form id="login-form"><input type="password" id="password" placeholder="Password" autocomplete="current-password" required aria-label="Password">
+        <form id="login-form"><input type="text" id="admin-name" placeholder="Your name" autocomplete="name" required maxlength="40" aria-label="Your name"><input type="password" id="password" placeholder="Password" autocomplete="current-password" required aria-label="Password">
         <p class="error" role="alert">${esc(message)}</p><button class="btn primary" type="submit">Log in</button></form>`}</div>`;
   const form = panel.querySelector('#login-form');
-  form?.querySelector('input').focus();
+  form?.querySelector('#admin-name').focus();
   form?.addEventListener('submit', async e => {
     e.preventDefault();
     const btn = form.querySelector('button'); btn.disabled = true;
     try {
-      await api('/api/login', {method: 'POST', body: JSON.stringify({password: form.querySelector('input').value})});
+      await api('/api/login', {method: 'POST', body: JSON.stringify({name: form.querySelector('#admin-name').value, password: form.querySelector('#password').value})});
       start();
     } catch (err) { form.querySelector('.error').textContent = err.message; btn.disabled = false; }
   });
@@ -468,6 +469,7 @@ async function start() {
     publishBtn.textContent = verb() + ' changes';
     publishBtn.hidden = false; publishBtn.disabled = true;
     logoutBtn.hidden = mode !== 'live';
+    window.adminSession = session;
     setStatus(mode === 'live' ? 'Everything is published' : 'Everything is saved');
     render();
   } catch (e) {

@@ -36,22 +36,25 @@ async function readJson(req) {
 const key = () => crypto.createHash('sha256').update('lumin-session:' + process.env.ADMIN_PASSWORD).digest();
 const sign = value => crypto.createHmac('sha256', key()).update(value).digest('base64url');
 
-function sessionCookie() {
+// The cookie carries who logged in (their name) and when it expires, signed so it can't be forged.
+function sessionCookie(name = 'Admin') {
   const expires = Date.now() + SESSION_DAYS * 864e5;
-  const token = `${expires}.${sign(String(expires))}`;
+  const who = Buffer.from(String(name).slice(0, 40)).toString('base64url');
+  const token = `${expires}.${who}.${sign(expires + '.' + who)}`;
   return `${COOKIE}=${token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${SESSION_DAYS * 86400}`;
 }
 const clearCookie = () => `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0`;
 
+// Returns {name} for a valid session, otherwise null.
 function loggedIn(req) {
-  if (!configured()) return false;
+  if (!configured()) return null;
   const match = (req.headers.cookie || '').match(new RegExp(`(?:^|;\\s*)${COOKIE}=([^;]+)`));
-  if (!match) return false;
-  const [expires, sig] = match[1].split('.');
-  if (!expires || !sig || Number(expires) < Date.now()) return false;
-  const expected = Buffer.from(sign(expires));
-  const given = Buffer.from(sig);
-  return expected.length === given.length && crypto.timingSafeEqual(expected, given);
+  if (!match) return null;
+  const [expires, who, sig] = match[1].split('.');
+  if (!expires || !who || !sig || Number(expires) < Date.now()) return null;
+  const expected = Buffer.from(sign(expires + '.' + who)), given = Buffer.from(sig);
+  if (expected.length !== given.length || !crypto.timingSafeEqual(expected, given)) return null;
+  return {name: Buffer.from(who, 'base64url').toString('utf8')};
 }
 
 function passwordMatches(password) {

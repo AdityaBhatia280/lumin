@@ -445,3 +445,24 @@ if (schoolGrid) {
 }
 
 if (location.hash) requestAnimationFrame(() => document.getElementById(location.hash.slice(1))?.scrollIntoView());
+
+/* ---------- Anonymous analytics: page views and clicks (no cookies, no personal data) ---------- */
+(() => {
+  if (navigator.webdriver) return; // skip automated browsers
+  let vid = 'anon';
+  try { vid = localStorage.getItem('lumin-vid') || (localStorage.setItem('lumin-vid', Math.random().toString(36).slice(2) + Date.now().toString(36)), localStorage.getItem('lumin-vid')); } catch {}
+  const dev = innerWidth < 700 ? 'Phone' : innerWidth < 1100 ? 'Tablet' : 'Desktop';
+  let ref = '';
+  try { const r = new URL(document.referrer); if (r.host !== location.host) ref = r.host.replace(/^www\./, ''); } catch {}
+  const send = body => {
+    const payload = JSON.stringify({...body, vid, path: location.pathname});
+    if (!(navigator.sendBeacon && navigator.sendBeacon('/api/track', payload))) fetch('/api/track', {method: 'POST', body: payload, keepalive: true}).catch(() => {});
+  };
+  send({type: 'pageview', ref, dev});
+  document.addEventListener('click', e => {
+    const el = e.target.closest('a, button');
+    if (!el) return;
+    const label = (el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60) || '(icon)';
+    send({type: 'click', label, href: (el.getAttribute('href') || '').slice(0, 160)});
+  }, {capture: true});
+})();

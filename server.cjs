@@ -13,7 +13,41 @@ const mime = {
   '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.gif': 'image/gif', '.ico': 'image/x-icon'
 };
 const imageTypes = {'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp', 'image/gif': '.gif', 'image/svg+xml': '.svg'};
-const blocked = /^\/(\.git|\.taste-skill|Microsoft|node_modules)(\/|$)|^\/server\.cjs$/;
+const blocked = /^\/(\.git|\.taste-skill|Microsoft|node_modules|data\/logs)(\/|$)|^\/server\.cjs$|^\/api\//;
+const {diffData, sealEntry, verifyChain, summarize, dayList, cleanEvent} = require('./api/_core');
+
+/* ---------- Local history + analytics, kept in data/logs (never uploaded to GitHub) ---------- */
+const logDir = path.join(root, 'data', 'logs');
+const historyFile = path.join(logDir, 'history.jsonl');
+const statsFile = path.join(logDir, 'analytics.json');
+const who = 'This computer';
+const localInfo = req => ({ip: req.socket.remoteAddress, city: '', region: '', country: '', ua: String(req.headers['user-agent'] || '').slice(0, 300)});
+function readHistoryFile() {
+  if (!fs.existsSync(historyFile)) return [];
+  return fs.readFileSync(historyFile, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l));
+}
+function appendHistory(entry) {
+  fs.mkdirSync(logDir, {recursive: true});
+  const all = readHistoryFile();
+  fs.appendFileSync(historyFile, JSON.stringify(sealEntry(entry, all.at(-1)?.hash)) + '\n');
+}
+function readStats() { try { return JSON.parse(fs.readFileSync(statsFile, 'utf8')); } catch { return {days: {}, events: []}; } }
+function track(ev, req) {
+  const st = readStats(), day = new Date().toISOString().slice(0, 10);
+  const d = st.days[day] ||= {pv: {}, vis: [], clk: {}, ref: {}, dev: {}, ctry: {}};
+  const inc = (o, k) => { o[k] = (o[k] || 0) + 1; };
+  if (ev.type === 'pageview') { inc(d.pv, ev.path); if (!d.vis.includes(ev.vid)) d.vis.push(ev.vid); if (ev.ref) inc(d.ref, ev.ref); if (ev.dev) inc(d.dev, ev.dev); inc(d.ctry, isLocal(req) ? 'This computer' : 'Local network'); }
+  else inc(d.clk, `${ev.label}${ev.href ? ' → ' + ev.href : ''}`);
+  st.events.unshift({t: new Date().toISOString(), type: ev.type, path: ev.path, label: ev.label, href: ev.href, dev: ev.dev, ref: ev.ref, city: '', country: ''});
+  st.events = st.events.slice(0, 300);
+  fs.mkdirSync(logDir, {recursive: true});
+  fs.writeFileSync(statsFile, JSON.stringify(st));
+}
+function localAnalytics(n) {
+  const st = readStats(), days = dayList(n), all = new Set();
+  const perDay = days.map(date => { const d = st.days[date] || {}; (d.vis || []).forEach(v => all.add(v)); return {date, pv: d.pv, visitors: (d.vis || []).length, clk: d.clk, ref: d.ref, dev: d.dev, ctry: d.ctry}; });
+  return summarize(perDay, all.size, st.events.slice(0, 60));
+}
 
 const isLocal = req => ['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(req.socket.remoteAddress);
 const send = (res, code, body, type = 'text/plain; charset=utf-8') => res.writeHead(code, {'Content-Type': type, 'Cache-Control': 'no-store'}).end(body);
@@ -38,10 +72,29 @@ function writeData(value) {
 }
 
 async function api(req, res, route) {
+  // The public site reports anonymous page views here (works from phones on the Wi-Fi too).
+  if (route === '/api/track') {
+    try { const ev = cleanEvent(JSON.parse((await readBody(req, 4000)).toString('utf8') || '{}')); if (ev) track(ev, req); } catch {}
+    return res.writeHead(204).end();
+  }
   if (!isLocal(req)) return json(res, 403, {error: 'The admin panel only works on the computer running the server.'});
   // Same protocol as the live admin in /api, but saves straight to this folder and needs no password.
   try {
-    if (route === '/api/session') return json(res, 200, {mode: 'local', configured: true, loggedIn: true});
+    if (route === '/api/session') return json(res, 200, {mode: 'local', configured: true, loggedIn: true, who, store: true});
+    if (route === '/api/history' && req.method === 'GET') {
+      const start = Math.max(0, Number(new URL(req.url, 'http://x').searchParams.get('start')) || 0);
+      const all = readHistoryFile().reverse();
+      return json(res, 200, {entries: verifyChain(all.slice(start, start + 101)).slice(0, 100), total: all.length});
+    }
+    if (route === '/api/history' && req.method === 'POST') {
+      const {what} = JSON.parse((await readBody(req, 4000)).toString('utf8') || '{}');
+      appendHistory({type: 'view', who, what: String(what || '').slice(0, 60), ...localInfo(req)});
+      return json(res, 200, {ok: true});
+    }
+    if (route === '/api/analytics') {
+      const n = [7, 30, 90].includes(Number(new URL(req.url, 'http://x').searchParams.get('days'))) ? Number(new URL(req.url, 'http://x').searchParams.get('days')) : 7;
+      return json(res, 200, localAnalytics(n));
+    }
     if (route === '/api/login' || route === '/api/logout') return json(res, 200, {ok: true});
     if (route === '/api/data' && req.method === 'GET') return json(res, 200, {data: readData()});
     if (route === '/api/data' && req.method === 'POST') {
@@ -51,7 +104,9 @@ async function api(req, res, route) {
         const file = path.resolve(root, String(p));
         if (path.dirname(file) === uploadDir) fs.rmSync(file, {force: true});
       }
+      const before = (() => { try { return readData(); } catch { return null; } })();
       writeData(data);
+      appendHistory({type: 'publish', who, changes: diffData(before, data), ...localInfo(req)});
       return json(res, 200, {ok: true});
     }
     if (route === '/api/upload' && req.method === 'POST') {
@@ -62,6 +117,7 @@ async function api(req, res, route) {
       const file = `${Date.now().toString(36)}-${crypto.randomBytes(3).toString('hex')}-${base}${ext}`;
       fs.mkdirSync(uploadDir, {recursive: true});
       fs.writeFileSync(path.join(uploadDir, file), Buffer.from(data, 'base64'));
+      appendHistory({type: 'upload', who, file: 'assets/uploads/' + file, original: String(name).slice(0, 80), ...localInfo(req)});
       return json(res, 200, {src: '/assets/uploads/' + file});
     }
     json(res, 404, {error: 'Unknown endpoint'});
