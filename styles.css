@@ -660,3 +660,13 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
 }
 @media (max-width: 480px) { .pentagon { grid-template-columns: 1fr; } .pentagon .member { width: min(100%, 300px); } }
 .pentagon .m4, .pentagon .m5 { align-self: start; }
+
+/* Keep every menu item on one line on mid-size screens */
+.nav-links > a, .nav .button { white-space: nowrap; }
+@media (min-width: 861px) and (max-width: 1120px) {
+  .nav { gap: .5rem; padding-left: 14px; }
+  .nav-links { gap: 0; }
+  .nav-links > a:not(.button) { padding: 0 .42rem; font-size: .9rem; }
+  .nav .button { min-height: 42px; padding: .45rem .8rem; font-size: .9rem; gap: .4rem; }
+  .brand img { height: 40px; }
+}
