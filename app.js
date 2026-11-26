@@ -18,9 +18,11 @@ const textLink = (text, url) => `<a class="text-link" href="${esc(url)}">${esc(t
 const email = data.settings?.email || 'projectluminfrisco@gmail.com';
 const instagram = data.settings?.instagram || '';
 const linkedin = data.settings?.linkedin || '';
+const youtube = data.settings?.youtube || '';
 const mail = (subject = '') => 'mailto:' + email + (subject ? '?subject=' + encodeURIComponent(subject) : '');
 const section = (body, cls = '', id = '') => `<section class="section ${cls}"${id ? ` id="${id}"` : ''}><div class="wrap">${body}</div></section>`;
 const heading = (eyebrow, title, lead = '', action = '') => `<div class="section-head" data-reveal><div>${eyebrow ? `<p class="eyebrow">${esc(eyebrow)}</p>` : ''}<h2>${title}</h2>${lead ? `<p class="lead">${esc(lead)}</p>` : ''}</div>${action}</div>`;
+const youtubeIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path class="dot" d="M10 9.2v5.6l4.8-2.8z"/></svg>';
 const linkedinIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.5"/><path class="dot" d="M7.2 10h2.2v7H7.2zM8.3 6.6a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM11 10h2.1v1c.4-.7 1.2-1.2 2.4-1.2 2.1 0 2.6 1.4 2.6 3.2v4h-2.2v-3.6c0-.9-.2-1.7-1.2-1.7s-1.5.7-1.5 1.7V17H11z"/></svg>';
 const instagramIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" class="dot"/></svg>';
 
@@ -80,12 +82,12 @@ function postCard(post, i = 0) {
 const located = network.filter(e => Array.isArray(e.coordinates));
 const countries = new Set(network.map(e => e.geography).filter(Boolean));
 const stats = [
-  {value: network.length, label: 'Schools & communities in our network'},
-  {value: countries.size, label: 'Countries reached'},
-  {value: partners.length, label: 'Partner organizations'},
+  {value: network.length, label: 'Schools & communities in our network', plus: true},
+  {value: countries.size, label: 'Countries reached', plus: true},
+  {value: partners.length, label: 'Partner organizations', plus: true},
   {value: content.focusAreas.length, label: 'Focus areas'}
 ];
-const statGrid = (cls = '') => `<div class="stat-grid ${cls}">${stats.map((s, i) => `<div class="stat" data-reveal style="--d:${i}"><strong data-count="${s.value}">${s.value}</strong><span>${esc(s.label)}</span></div>`).join('')}</div>`;
+const statGrid = (cls = '') => `<div class="stat-grid ${cls}">${stats.map((s, i) => `<div class="stat" data-reveal style="--d:${i}"><strong><span data-count="${s.value}">${s.value}</span>${s.plus ? '+' : ''}</strong><span>${esc(s.label)}</span></div>`).join('')}</div>`;
 
 function pageIntro(eyebrow, title, lead, photoKey, extra = '') {
   return `<section class="page-intro"><div class="wrap intro-grid">
@@ -125,25 +127,21 @@ function home() {
       <p class="hero-line">${esc(content.heroLine)}</p>
       <div class="actions">${button('Read the blog', '/blog')}${button('See our impact', '/impact', 'secondary')}</div>
     </div>
-    <a class="scroll-cue" href="#blog" aria-label="Scroll to the blog"><span></span></a>
   </section>
 
-  ${section(heading('Blog', 'Latest from Project Lumin', '', button('All posts', '/blog', 'secondary')) +
+  <section class="impact-band numbers-only"><div class="wrap">${statGrid('on-dark')}</div></section>
+
+  ${section(heading('', 'Latest from Project Lumin', '', button('All posts', '/blog', 'secondary')) +
     `<div class="post-grid">${blogPosts.slice(0, 3).map(postCard).join('')}</div>`, 'blog-section', 'blog')}
 
-  ${section(heading('Focus areas', 'Three ways we protect<br>young people under the sun.', content.approach) +
+  ${section(heading('', 'Three ways we protect<br>young people under the sun.', content.approach) +
     `<div class="focus-grid">${content.focusAreas.map((f, i) => `<a class="focus-card" href="/about#${f.id}" data-reveal style="--d:${i}">
       <div class="focus-photo">${img(spot('focus-' + f.id))}<span class="focus-number">${f.number}</span></div>
       <div class="focus-copy"><h3>${esc(f.title)}</h3><p>${esc(f.short)}</p>
       <ul>${f.points.map(([t]) => `<li>${esc(t)}</li>`).join('')}</ul><span class="card-link">Learn more ${arrow}</span></div>
     </a>`).join('')}</div>`, 'focus-section', 'focus')}
 
-  <section class="impact-band"><div class="wrap">
-    <div class="impact-band-head" data-reveal><div><p class="eyebrow">Impact</p><h2>A movement that keeps growing.</h2></div>${button('See our impact', '/impact')}</div>
-    ${statGrid('on-dark')}
-  </div></section>
-
-  ${section(heading('Partnerships', 'Working alongside<br>great organizations.', '', '') + featuredCards() +
+  ${section(heading('', 'Working alongside<br>great organizations.', '', '') + featuredCards() +
     (others.length ? `<a class="more-partners" href="/partnerships" data-reveal>
       <div class="more-copy"><strong>+${others.length}</strong><span>more partners<br>across our network</span></div>
       <div class="marquee" aria-hidden="true"><div class="marquee-track">${[...others, ...others].map((p, i) => `<span class="marquee-item">${partnerMark(p, i, 'small')}${esc(p.name)}</span>`).join('')}</div></div>
@@ -234,7 +232,8 @@ function contact() {
       <a class="contact-card" href="${esc(mail())}" data-reveal><span class="contact-icon" aria-hidden="true">✉</span><span class="contact-label">Email</span><strong>${esc(email)}</strong></a>
       ${instagram ? `<a class="contact-card" href="${esc(instagram)}" target="_blank" rel="noopener" data-reveal style="--d:1"><span class="contact-icon">${instagramIcon}</span><span class="contact-label">Instagram</span><strong>Follow us</strong></a>` : ''}
       ${linkedin ? `<a class="contact-card" href="${esc(linkedin)}" target="_blank" rel="noopener" data-reveal style="--d:2"><span class="contact-icon">${linkedinIcon}</span><span class="contact-label">LinkedIn</span><strong>Connect with us</strong></a>` : ''}
-      <div class="contact-card" data-reveal style="--d:3"><span class="contact-icon" aria-hidden="true">☀</span><span class="contact-label">Based in</span><strong>Frisco, Texas</strong></div>
+      ${youtube ? `<a class="contact-card" href="${esc(youtube)}" target="_blank" rel="noopener" data-reveal style="--d:3"><span class="contact-icon">${youtubeIcon}</span><span class="contact-label">YouTube</span><strong>Watch our videos</strong></a>` : ''}
+      <div class="contact-card" data-reveal style="--d:4"><span class="contact-icon" aria-hidden="true">☀</span><span class="contact-label">Based in</span><strong>Frisco, Texas</strong></div>
     </div>`, 'contact-section');
 }
 
@@ -258,9 +257,9 @@ const onScroll = () => document.body.classList.toggle('scrolled', scrollY > 30);
 addEventListener('scroll', onScroll, {passive: true}); onScroll();
 
 document.querySelector('#footer').innerHTML = `<div class="wrap"><div class="footer-main">
-  <div class="footer-brand"><a class="brand" href="/"><img src="/assets/brand/lumin-lockup-white.png" alt="Project Lumin home" width="592" height="240" loading="lazy"></a>
+  <div class="footer-brand"><a class="brand" href="/"><img src="/assets/brand/lumin-lockup.png" alt="Project Lumin home" width="592" height="240" loading="lazy"></a>
     <p>Empowering young people to safely enjoy the outdoors.</p>
-    <div class="footer-contact">${textLink(email, mail())}${instagram ? `<a class="social" href="${esc(instagram)}" target="_blank" rel="noopener" aria-label="Project Lumin on Instagram">${instagramIcon}</a>` : ''}${linkedin ? `<a class="social" href="${esc(linkedin)}" target="_blank" rel="noopener" aria-label="Project Lumin on LinkedIn">${linkedinIcon}</a>` : ''}</div></div>
+    <div class="footer-contact">${textLink(email, mail())}${instagram ? `<a class="social" href="${esc(instagram)}" target="_blank" rel="noopener" aria-label="Project Lumin on Instagram">${instagramIcon}</a>` : ''}${linkedin ? `<a class="social" href="${esc(linkedin)}" target="_blank" rel="noopener" aria-label="Project Lumin on LinkedIn">${linkedinIcon}</a>` : ''}${youtube ? `<a class="social" href="${esc(youtube)}" target="_blank" rel="noopener" aria-label="Project Lumin on YouTube">${youtubeIcon}</a>` : ''}</div></div>
   <nav aria-label="Footer navigation">${[['/', 'Home'], ...Object.entries(pages).map(([u, [l]]) => [u, l])].map(([u, l]) => `<a href="${u}">${l}</a>`).join('')}</nav></div>
   <div class="footer-end"><span>© ${new Date().getFullYear()} Project Lumin</span><span>Frisco, Texas</span></div></div>`;
 

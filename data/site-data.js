@@ -3,6 +3,7 @@ window.LUMIN_DATA = {
   "settings": {
     "instagram": "",
     "linkedin": "https://www.linkedin.com/company/projectlumin",
+    "youtube": "https://www.youtube.com/@projectlumins",
     "email": "projectluminfrisco@gmail.com"
   },
   "photos": [

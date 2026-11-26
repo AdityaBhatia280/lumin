@@ -420,3 +420,21 @@ footer .text-link { color: var(--white); }
 @media (max-width: 860px) {
   .photo-wall { inset-inline: 3%; perspective: 900px; }
 }
+
+/* ---------- Cleaner home: no little labels or dots, numbers band under the title, light footer ---------- */
+.eyebrow::before { display: none; }
+.impact-band::after { display: none; }
+.impact-band.numbers-only { padding-block: clamp(36px, 5vw, 64px); }
+.stat strong span { font: inherit; color: inherit; }
+footer, footer[id] {
+  background: linear-gradient(120deg, #ffffff 0%, #fff9f3 35%, #fdeed6 70%, #ffffff 100%);
+  background-size: 300% 300%;
+  animation: gradient-pan 22s ease-in-out infinite;
+  color: var(--muted);
+  border-top: 1px solid var(--rule);
+}
+footer .text-link, footer .footer-main nav a { color: var(--navy); }
+footer .footer-main nav a:hover { color: var(--gold-deep); }
+footer .social { background: var(--white); color: var(--navy); border: 1px solid var(--rule); }
+footer .social:hover { background: var(--gold); color: var(--navy-deep); }
+footer .footer-end { border-top-color: var(--rule); color: var(--muted); }
