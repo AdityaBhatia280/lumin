@@ -689,3 +689,5 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
 @media (min-width: 1001px) { .team-row .member-photo { max-height: 30vh; aspect-ratio: auto; height: min(30vh, 17vw); } }
 .team-row .member-copy { padding: 12px 16px 14px; }
 @media (max-width: 860px) { .team-intro .intro-photo .cycler { max-height: none; } }
+.member-copy h3 .first, .member-copy h3 .last { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.member-copy h3 .last:empty::before { content: "\00a0"; }

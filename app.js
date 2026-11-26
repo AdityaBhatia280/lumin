@@ -267,7 +267,7 @@ function memberCard(m, i) {
   const initialsOf = n => n.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
   return `<article class="member m${i + 1}" data-reveal style="--d:${i}">
     <div class="member-photo">${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}" loading="lazy" decoding="async">` : `<span class="member-initials" aria-hidden="true">${esc(initialsOf(m.name))}</span>`}</div>
-    <div class="member-copy"><h3>${esc(m.name)}</h3><span>${esc(m.role || 'Co-Founder')}</span></div>
+    <div class="member-copy"><h3>${(() => { const parts = String(m.name).trim().split(" ").filter(Boolean); const first = parts.shift() || ""; return `<span class="first">${esc(first)}</span><span class="last">${esc(parts.join(" "))}</span>`; })()}</h3><span>${esc(m.role || 'Co-Founder')}</span></div>
   </article>`;
 }
 function teamPage() {
