@@ -692,3 +692,4 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
 .member-copy h3 .first, .member-copy h3 .last { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .member-copy h3 .last:empty::before { content: "\00a0"; }
 .member-copy h3 .first, .member-copy h3 .last { margin: 0; color: var(--navy); font: inherit; font-size: inherit; }
+.member-copy { text-align: center; }
