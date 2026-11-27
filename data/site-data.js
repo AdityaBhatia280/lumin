@@ -678,7 +678,7 @@ window.LUMIN_DATA = {
       "id": "aditya-bhatia",
       "name": "Aditya Bhatia",
       "role": "Co-Founder / Leader",
-      "photo": null
+      "photo": "/assets/uploads/mwya5dds-4a5135-screenshot-2026-11-26-at-7-05-15-pm.webp"
     },
     {
       "id": "arnav-varghese",
