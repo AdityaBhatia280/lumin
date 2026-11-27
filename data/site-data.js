@@ -678,7 +678,7 @@ window.LUMIN_DATA = {
       "id": "aditya-bhatia",
       "name": "Aditya Bhatia",
       "role": "Co-Founder / Leader",
-      "photo": "/assets/uploads/mwya5dds-4a5135-screenshot-2026-11-26-at-7-05-15-pm.webp"
+      "photo": null
     },
     {
       "id": "arnav-varghese",
@@ -702,7 +702,7 @@ window.LUMIN_DATA = {
       "id": "saikavin-rajarajeswaran",
       "name": "Saikavin Rajarajeswaran",
       "role": "Co-Founder / Leader",
-      "photo": "/assets/uploads/mwya0101-5075d6-screenshot-2026-11-26-at-7-01-06-pm.webp"
+      "photo": "/assets/uploads/mwyabdjk-3f7750-screenshot-2026-11-26-at-7-09-51-pm.webp"
     }
   ]
 };
