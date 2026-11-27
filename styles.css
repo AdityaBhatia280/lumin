@@ -704,3 +704,12 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
 /* About: centered mission */
 .mission-band .wrap { text-align: center; }
 .mission-band blockquote { margin-inline: auto; }
+
+/* ---------- Fixed photo shapes (these match the "Website display" crops in the admin editor) ---------- */
+.goal-media { min-height: 0; aspect-ratio: 3 / 2; align-self: center; }
+.goal { align-items: center; }
+.team-intro .intro-photo .cycler { aspect-ratio: 16 / 9; max-height: none; width: min(100%, calc(34vh * 16 / 9)); margin-left: auto; }
+.team-row { max-width: calc(min(30vh, 17vw) * 5 + 4 * clamp(14px, 1.8vw, 26px)); margin-inline: auto; }
+.team-row .member-photo, .team-row .member-photo { aspect-ratio: 1; height: auto; max-height: none; }
+.post-hero img, .post-hero .photo-empty { aspect-ratio: 3 / 2; max-height: none; }
+@media (max-width: 860px) { .team-intro .intro-photo .cycler { width: 100%; } .team-row { max-width: none; } }

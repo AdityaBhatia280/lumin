@@ -33,7 +33,7 @@ document.addEventListener('click', e => {
   if (act === 'up' && i > 0) [t[i - 1], t[i]] = [t[i], t[i - 1]];
   if (act === 'down' && i < t.length - 1) [t[i + 1], t[i]] = [t[i], t[i + 1]];
   if (act === 'delete') { if (!confirm(`Remove ${t[i].name || 'this person'} from the team page?`)) return; forgetFile(t[i].photo); t.splice(i, 1); }
-  if (act === 'edit') return openEditorFor(fieldTarget(t[i], 'photo', 'photoOriginal', {maxSide: 1000}));
+  if (act === 'edit') return openEditorFor(fieldTarget(t[i], 'photo', 'photoOriginal', {maxSide: 1000, shapes: [{label: 'Team card (square)', aspect: 1}]}));
   if (act === 'restore') { if (!restoreOriginal(fieldTarget(t[i], 'photo', 'photoOriginal'))) return; }
   if (act === 'nophoto') { forgetFile(t[i].photo); if (t[i].photoOriginal && t[i].photoOriginal !== t[i].photo) forgetFile(t[i].photoOriginal); t[i].photo = null; t[i].photoOriginal = null; }
   if (act === 'photo') { teamTarget = i; teamInput.value = ''; teamInput.click(); return; }

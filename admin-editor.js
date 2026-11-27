@@ -108,6 +108,8 @@ editorStyle.textContent = `
   .ed-magic .btn { justify-content: flex-start; }
   .ed-slider { display: grid; grid-template-columns: 90px 1fr 40px; align-items: center; gap: 8px; font-size: .88rem; font-weight: 600; }
   .ed-slider input { accent-color: var(--navy); }
+  .ed-hint { margin-top: 6px; font-size: .82rem; color: var(--muted); line-height: 1.4; }
+  .ed-row .btn[data-display][aria-pressed="true"] { background: var(--gold); color: var(--navy-deep); border-color: var(--gold); }
   .ed-msg { min-height: 1.3em; font-size: .88rem; color: var(--navy); font-weight: 600; }
   .ed-foot { display: flex; justify-content: flex-end; gap: 10px; padding: 0 20px 20px; }
   .photo .edit { position: absolute; top: 8px; right: 46px; height: 32px; padding: 0 12px; border: 0; border-radius: 16px; background: #ffffffe6; color: var(--navy); font-weight: 700; font-size: .82rem; box-shadow: 0 2px 8px #0003; }
@@ -254,6 +256,7 @@ editor.innerHTML = `<div class="dialog-head"><h2>Edit photo</h2><button class="b
         <button class="btn primary" data-ed="frame">✦ Auto-frame with AI (people + logo)</button>
         <button class="btn" data-ed="trim">✂ Remove borders</button>
       </div></div>
+      <div id="ed-display-box"><h3>Website display</h3><div class="ed-row" id="ed-display"></div><p class="ed-hint" id="ed-display-hint"></p></div>
       <div><h3>Crop shape</h3><div class="ed-row" id="ed-aspects">
         <button class="btn small" data-aspect="free">Free</button><button class="btn small" data-aspect="1">Square</button>
         <button class="btn small" data-aspect="1.3333">4:3</button><button class="btn small" data-aspect="0.75">3:4</button><button class="btn small" data-aspect="1.7778">16:9</button>
@@ -309,12 +312,49 @@ function drawEditor() {
   edCanvas.style.filter = filterCss();
   placeCrop();
 }
+/* ---------- "Website display": crop to the exact shape the photo has on the site ---------- */
+// Shapes match styles.css: goal boxes 3:2, page photos square, Our Team photo 16:9, team members square,
+// blog cards square, top of a blog post 3:2, moving wall 4:3.
+function displayShapesFor(photo) {
+  if (photo.shapes) return photo.shapes;
+  const out = [], spotLabel = k => (spots.find(s => s.key === k) || {}).label || k;
+  for (const [k, v] of Object.entries(state.slots || {})) {
+    if (!(Array.isArray(v) ? v : [v]).includes(photo.id)) continue;
+    out.push({label: spotLabel(k), aspect: k.startsWith('focus-') ? 1.5 : k === 'team-hero' ? 16 / 9 : 1});
+  }
+  for (const p of state.posts || []) if (p.photo === photo.id) out.push({label: 'Blog card: ' + p.title, aspect: 1}, {label: 'Top of blog post: ' + p.title, aspect: 1.5});
+  if (out.length) return out;
+  return [{label: 'Goal box (homepage)', aspect: 1.5, any: true}, {label: 'Page photo (square)', aspect: 1, any: true}, {label: 'Our Team photo', aspect: 16 / 9, any: true}, {label: 'Moving wall', aspect: 4 / 3, any: true}];
+}
+function applyDisplay(i) {
+  const shape = ed.displays[i];
+  if (!shape) return;
+  ed.displayIdx = i; ed.fill = false; ed.aspect = shape.aspect;
+  ed.crop = fitAspect(shape.aspect);
+  editor.querySelector('#ed-display-hint').textContent = shape.any
+    ? `This photo isn't pinned anywhere yet, so it can appear in any of these spots. The box shows exactly what visitors see in a ${shape.label.toLowerCase()}.`
+    : `The box shows exactly what visitors see in: ${shape.label}.`;
+  placeCrop();
+}
+function setupDisplays(photo) {
+  ed.displays = displayShapesFor(photo);
+  const box = editor.querySelector('#ed-display-box');
+  box.hidden = !ed.displays.length;
+  editor.querySelector('#ed-display').innerHTML = ed.displays.map((s, i) => `<button class="btn small" data-display="${i}">${esc(s.label)}</button>`).join('');
+  editor.querySelector('#ed-display-hint').textContent = '';
+  if (ed.displays.length) applyDisplay(0);
+}
+editor.addEventListener('click', e => {
+  const d = e.target.closest('[data-display]');
+  if (d && ed) applyDisplay(Number(d.dataset.display));
+});
 function placeCrop() {
   const {x, y, w, h} = ed.crop;
   Object.assign(edCrop.style, {left: x * 100 + '%', top: y * 100 + '%', width: w * 100 + '%', height: h * 100 + '%'});
   edCrop.classList.toggle('fill', ed.fill);
   edFill.checked = ed.fill;
   editor.querySelectorAll('[data-aspect]').forEach(b => b.setAttribute('aria-pressed', String(String(ed.aspect ?? 'free') === b.dataset.aspect)));
+  editor.querySelectorAll('[data-display]').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.display) === ed.displayIdx && ed.aspect === ed.displays?.[ed.displayIdx]?.aspect)));
 }
 // Largest centered box of the chosen shape (aspect is width/height in pixels).
 function fitAspect(aspect, within = {x: 0, y: 0, w: 1, h: 1}) {
@@ -351,6 +391,7 @@ async function openEditorFor(photo) {
     edMsg.textContent = photo.original && photo.src !== photo.original ? 'Showing the original photo. Your saved edit replaces the current version.' : '';
     editor.showModal();
     drawEditor();
+    setupDisplays(photo);
   } catch { alert('Could not open this photo for editing.'); }
 }
 

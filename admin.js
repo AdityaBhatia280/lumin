@@ -188,7 +188,7 @@ const views = {
     // Each spot rotates through up to 4 photos. Click a square to pick that photo, or leave it on Random.
     const spotRow = s => {
       const ids = slotList(s.key), pinned = ids.filter(Boolean).length;
-      return `<div class="spot-row"><div class="spot-info"><h3>${esc(s.label)}</h3><p>${esc(s.page)} · ${pinned ? `${pinned} of 4 photos picked, the rest are random` : 'All 4 photos are random'}</p></div>
+      return `<div class="spot-row"><div class="spot-info"><h3>${esc(s.label)}</h3><p>${esc(s.page)} · ${pinned ? `Shows only your ${pinned} picked photo${pinned > 1 ? 's' : ''}` : 'Shows 4 random photos'}</p></div>
         <div class="spot-slots">${ids.map((id, k) => { const p = photoById(id); return `<div class="spot-slot"><button class="spot-pick" data-action="pick" data-target="spot:${esc(s.key)}#${k}" title="Choose photo ${k + 1}">${p ? `<img src="${esc(view(p.src))}" alt="">` : `<span class="random-tile">Photo ${k + 1}<br>Random</span>`}</button>
           ${p ? `<button class="spot-clear" data-action="unpin" data-target="spot:${esc(s.key)}#${k}" aria-label="Back to random" title="Back to random">✕</button><button class="spot-edit" data-action="edit-picked" data-id="${p.id}" aria-label="Edit this photo" title="Edit this photo">✎</button>` : ''}</div>`; }).join('')}</div></div>`;
     };
@@ -198,7 +198,7 @@ const views = {
         <div><h3>${esc(label)}</h3><p>${esc(page)} · ${p ? 'Pinned to this photo' : 'Shows a random photo each visit'}</p></div>
         <div class="actions"><button class="btn small primary" data-action="pick" data-target="${esc(target)}">Choose photo</button>${p ? `<button class="btn small" data-action="edit-picked" data-id="${p.id}">✎ Edit photo</button><button class="btn small" data-action="unpin" data-target="${esc(target)}">Back to random</button>` : ''}</div></div>`;
     };
-    return `<div class="intro"><div><h2>Photo spots</h2><p>Every place on the site that shows photos. Each spot slowly rotates through <b>4 photos</b>: click a square to pick a photo, or leave it on <b>Random</b> to pull from your library. The homepage moving wall is automatic and uses every photo marked "In moving wall" on the Photos tab.</p></div></div>
+    return `<div class="intro"><div><h2>Photo spots</h2><p>Every place on the site that shows photos. Each spot rotates through up to <b>4 photos</b>. Pick photos and only those show; leave a spot empty and it shows 4 random photos from your library. The homepage moving wall is automatic and uses every photo marked "In moving wall" on the Photos tab.</p></div></div>
       <div class="rows">${spots.map(spotRow).join('')}
       ${state.posts.map(p => row('Blog: ' + (p.title || 'Untitled post'), 'Blog post photo', p.photo, 'post:' + p.id)).join('')}</div>`;
   },
@@ -365,7 +365,7 @@ document.addEventListener('click', e => {
     state.partners = state.partners.filter(x => x !== p); changed(); render();
   }
   if (action === 'upload-logo') { logoTarget = id; logoInput.value = ''; logoInput.click(); }
-  if (action === 'edit-logo') { const p = state.partners.find(x => x.id === id); if (p) openEditorFor(fieldTarget(p, 'logo', 'logoOriginal', {keepAlpha: true, maxSide: 600})); }
+  if (action === 'edit-logo') { const p = state.partners.find(x => x.id === id); if (p) openEditorFor(fieldTarget(p, 'logo', 'logoOriginal', {keepAlpha: true, maxSide: 600, shapes: []})); }
   if (action === 'restore-logo') { const p = state.partners.find(x => x.id === id); if (p && restoreOriginal(fieldTarget(p, 'logo', 'logoOriginal'))) { changed(); render(); } }
   if (action === 'edit-picked') openEditor(id);
   if (action === 'remove-logo') {

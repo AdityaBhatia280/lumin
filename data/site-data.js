@@ -499,7 +499,62 @@ window.LUMIN_DATA = {
       "original": "/assets/uploads/mwx8nhju-cc90b3-37.webp"
     }
   ],
-  "slots": {},
+  "slots": {
+    "focus-digital": [
+      "u-mwx8oi2ojdhj",
+      null,
+      "u-mwx8nmh7t1fh",
+      "u-mwx8noihb2fw"
+    ],
+    "focus-community": [
+      "u-mwx8o3xzt51r",
+      "u-mwx8oey1zkbu",
+      "u-mwx8ofjx6xq7",
+      null
+    ],
+    "focus-network": [
+      "u-mwx8nu6i8xr2",
+      "u-mwx8nz96bkj9",
+      "u-mwx8o0kbpb3j",
+      "u-mwx8nl7sl7dl"
+    ],
+    "about-hero": [
+      "u-mwx8ob8mkm2r",
+      "u-mwx8o4k8pi6f",
+      null,
+      null
+    ],
+    "about-approach": [
+      "u-mwx8od76tum6",
+      "u-mwx8oq7ukxj2",
+      "u-mwx8nq0ylvl7",
+      null
+    ],
+    "impact-hero": [
+      "u-mwx8o1j6ofos",
+      "u-mwx8o8uofrcz",
+      "u-mwx8nklscenn",
+      null
+    ],
+    "partners-hero": [
+      "u-mwx8ntf7wh9o",
+      "u-mwx8oplop9ud",
+      "u-mwx8np09sdlb",
+      null
+    ],
+    "contact-hero": [
+      "u-mwx8og5kzf4s",
+      "u-mwx8nqkem9nb",
+      null,
+      null
+    ],
+    "team-hero": [
+      "u-mwx8o9ianhab",
+      null,
+      null,
+      null
+    ]
+  },
   "partners": [
     {
       "id": "sdg-champions",
@@ -668,7 +723,7 @@ window.LUMIN_DATA = {
       "title": "Meet Project Lumin: Who We Are",
       "date": "2026-07-08",
       "tag": "Introduction",
-      "photo": null,
+      "photo": "u-mwx8o6ckl7i2",
       "summary": "A student-led initiative helping young people enjoy the outdoors safely by turning sun protection into an everyday habit.",
       "body": "Project Lumin is a student-led public health initiative based in Frisco, Texas. Our mission is simple: empower young people to safely enjoy the outdoors by turning UV awareness and sun protection into a natural, lifelong habit.\n\nMost skin damage from the sun builds up quietly, starting in childhood. Instead of telling kids to stay inside, we want to make sun safety easy, interactive, and part of everyday life for children, students, youth athletes, parents, educators, and summer camps.\n\nOur work focuses on three goals. First, sun safety at your fingertips: easy-to-use tools, short videos, and daily reminders that make protecting your skin simple to understand. Second, showing up where kids play: we bring free sunscreen, color-changing UV wristbands, and hands-on lessons to parks, schools, camps, and sports events. Third, a movement led by students: chapters and partner organizations that carry Project Lumin into their own schools and cities.\n\nWe are proud to work alongside more than 20 partner organizations and a network of schools and communities around the world, and we are just getting started.\n\nFollow along here on our blog for event recaps, new tools, and stories from our chapters. If you want to bring Project Lumin to your school or community, reach out through our Contact page. We would love to work with you."
     }

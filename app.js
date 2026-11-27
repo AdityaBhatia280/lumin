@@ -47,7 +47,12 @@ function pick(key, pinnedId) {
 }
 // A photo spot holds up to 4 photos; each one is either pinned in the admin or picked at random.
 const slotIds = key => { const v = data.slots?.[key]; return Array.isArray(v) ? v : v ? [v] : []; };
-const spotShots = key => [0, 1, 2, 3].map(k => pick(`spot:${key}:${k}`, slotIds(key)[k])).filter((p, k, all) => p && all.indexOf(p) === k);
+// If any photos are picked for a spot, only those show; otherwise it rotates through 4 random photos.
+const spotShots = key => {
+  const picked = slotIds(key).filter(id => photoById.has(id)).map(id => photoById.get(id));
+  if (picked.length) return picked.filter((p, k, all) => all.indexOf(p) === k);
+  return [0, 1, 2, 3].map(k => pick(`spot:${key}:${k}`)).filter((p, k, all) => p && all.indexOf(p) === k);
+};
 const spot = key => spotShots(key)[0] || null;
 const postPhoto = post => pick('post:' + post.id, post.photo);
 const img = (p, cls = '', eager = false) => p
