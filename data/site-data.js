@@ -733,7 +733,7 @@ window.LUMIN_DATA = {
       "id": "aditya-bhatia",
       "name": "Aditya Bhatia",
       "role": "Co-Founder / Leader",
-      "photo": "/assets/uploads/mwybqwju-e8d307-edited.jpg",
+      "photo": "/assets/uploads/mwybry1v-c432a0-edited.jpg",
       "photoOriginal": "/assets/uploads/mwyachq8-e32bbb-img-20261015-221136-2.jpg"
     },
     {
