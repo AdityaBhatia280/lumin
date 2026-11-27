@@ -746,13 +746,15 @@ window.LUMIN_DATA = {
       "id": "rishik-mandadapu",
       "name": "Rishik Mandadapu",
       "role": "Co-Founder / Leader",
-      "photo": "/assets/uploads/mwya0mfr-49dc9d-screenshot-2026-11-26-at-7-01-38-pm.webp"
+      "photo": "/assets/uploads/mwycslno-570d05-edited.jpg",
+      "photoOriginal": "/assets/uploads/mwycsb6n-dd93a3-img-20260921-160505-2.jpg"
     },
     {
       "id": "shreyans-pandey",
       "name": "Shreyans Pandey",
       "role": "Co-Founder / Leader",
-      "photo": "/assets/uploads/mwy9z8yb-f2714c-screenshot-2026-11-26-at-7-00-31-pm.webp"
+      "photo": "/assets/uploads/mwyct99j-109767-edited.jpg",
+      "photoOriginal": "/assets/uploads/mwyct323-6c0522-img-20260921-160505-2.jpg"
     },
     {
       "id": "saikavin-rajarajeswaran",
