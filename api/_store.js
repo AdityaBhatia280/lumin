@@ -1,19 +1,100 @@
-// Permanent storage for the live site: Upstash Redis (free), added in Vercel → Storage / Marketplace.
-// Uses KV_REST_API_URL + KV_REST_API_TOKEN (or UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN).
+// Permanent storage for the live site (history + analytics). Works with any of:
+//   • Upstash / Vercel KV REST settings:  *KV_REST_API_URL + *KV_REST_API_TOKEN  or  *UPSTASH_REDIS_REST_URL + *_TOKEN
+//   • A regular Redis connection string:  *REDIS_URL or *KV_URL  (redis:// or rediss://), e.g. Vercel's "Redis" integration
+// Any custom prefix Vercel adds (e.g. STORAGE_KV_REST_API_URL) is detected automatically.
 // The admin panel can only ADD history entries; nothing in this code edits or deletes them.
+const net = require('node:net');
+const tls = require('node:tls');
 const {sealEntry, verifyChain, summarize, dayList} = require('./_core');
 
-const base = () => process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const token = () => process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-const storeReady = () => Boolean(base() && token());
+function findStore() {
+  const env = process.env, keys = Object.keys(env);
+  const restUrl = keys.find(k => /(KV_REST_API_URL|UPSTASH_REDIS_REST_URL)$/.test(k) && /^https:\/\//.test(env[k] || ''));
+  if (restUrl) {
+    const prefix = restUrl.replace(/(KV_REST_API_URL|UPSTASH_REDIS_REST_URL)$/, '');
+    const tokenKey = [prefix + 'KV_REST_API_TOKEN', prefix + 'UPSTASH_REDIS_REST_TOKEN', 'KV_REST_API_TOKEN', 'UPSTASH_REDIS_REST_TOKEN'].find(k => env[k]);
+    if (tokenKey) return {kind: 'rest', url: env[restUrl], token: env[tokenKey]};
+  }
+  const tcpKey = keys.find(k => /(REDIS_URL|KV_URL)$/.test(k) && /^rediss?:\/\//.test(env[k] || ''));
+  if (tcpKey) return {kind: 'tcp', url: env[tcpKey]};
+  return null;
+}
+const storeReady = () => Boolean(findStore());
+// Names (never values) of storage-looking settings, to help diagnose setup problems.
+const storeSettingNames = () => Object.keys(process.env).filter(k => /REDIS|KV_|UPSTASH/.test(k)).sort();
 const KEEP = 60 * 60 * 24 * 400; // analytics counters kept ~13 months
 
-async function redis(commands) {
-  const res = await fetch(base().replace(/\/$/, '') + '/pipeline', {
-    method: 'POST', headers: {Authorization: `Bearer ${token()}`, 'Content-Type': 'application/json'}, body: JSON.stringify(commands)
+/* ---------- Redis over HTTPS (Upstash REST) ---------- */
+async function restPipeline(store, commands) {
+  const res = await fetch(store.url.replace(/\/$/, '') + '/pipeline', {
+    method: 'POST', headers: {Authorization: `Bearer ${store.token}`, 'Content-Type': 'application/json'}, body: JSON.stringify(commands)
   });
-  if (!res.ok) throw new Error('Storage error ' + res.status);
+  if (!res.ok) throw new Error('Storage error ' + res.status + (res.status === 401 ? ' (token rejected)' : ''));
   return (await res.json()).map(r => { if (r.error) throw new Error(r.error); return r.result; });
+}
+
+/* ---------- Redis over a normal connection (redis:// or rediss://), no extra packages ---------- */
+const encode = args => `*${args.length}\r\n` + args.map(a => { const s = String(a); return `$${Buffer.byteLength(s)}\r\n${s}\r\n`; }).join('');
+// Parses one RESP reply at `pos`; returns [value, nextPos] or null if more data is needed.
+function parse(buf, pos) {
+  const end = buf.indexOf('\r\n', pos);
+  if (end < 0) return null;
+  const type = String.fromCharCode(buf[pos]), line = buf.toString('utf8', pos + 1, end);
+  if (type === '+') return [line, end + 2];
+  if (type === '-') return [{error: line}, end + 2];
+  if (type === ':') return [Number(line), end + 2];
+  if (type === '$') {
+    const n = Number(line); if (n < 0) return [null, end + 2];
+    if (buf.length < end + 2 + n + 2) return null;
+    return [buf.toString('utf8', end + 2, end + 2 + n), end + 2 + n + 2];
+  }
+  if (type === '*') {
+    const n = Number(line); if (n < 0) return [null, end + 2];
+    const out = []; let p = end + 2;
+    for (let i = 0; i < n; i++) { const r = parse(buf, p); if (!r) return null; out.push(r[0]); p = r[1]; }
+    return [out, p];
+  }
+  throw new Error('Unexpected reply from Redis');
+}
+function tcpPipeline(store, commands) {
+  const u = new URL(store.url);
+  const pre = [];
+  if (u.password) pre.push(u.username && u.username !== 'default' ? ['AUTH', decodeURIComponent(u.username), decodeURIComponent(u.password)] : ['AUTH', decodeURIComponent(u.password)]);
+  const db = Number((u.pathname || '').slice(1));
+  if (db) pre.push(['SELECT', db]);
+  const all = [...pre, ...commands];
+  return new Promise((resolve, reject) => {
+    const opts = {host: u.hostname, port: Number(u.port || 6379)};
+    const sock = u.protocol === 'rediss:' ? tls.connect({...opts, servername: u.hostname}) : net.connect(opts);
+    let buf = Buffer.alloc(0); const replies = [];
+    const timer = setTimeout(() => { sock.destroy(); reject(new Error('Redis connection timed out')); }, 8000);
+    sock.on(u.protocol === 'rediss:' ? 'secureConnect' : 'connect', () => sock.write(all.map(encode).join('')));
+    sock.on('data', chunk => {
+      buf = Buffer.concat([buf, chunk]);
+      let pos = 0, r;
+      while (replies.length < all.length && (r = parse(buf, pos))) { replies.push(r[0]); pos = r[1]; }
+      buf = buf.subarray(pos);
+      if (replies.length === all.length) {
+        clearTimeout(timer); sock.end();
+        const authErr = replies.slice(0, pre.length).find(x => x && x.error);
+        if (authErr) return reject(new Error('Redis login failed: ' + authErr.error));
+        try { resolve(replies.slice(pre.length).map(x => { if (x && x.error) throw new Error(x.error); return x; })); } catch (e) { reject(e); }
+      }
+    });
+    sock.on('error', e => { clearTimeout(timer); reject(new Error('Redis connection failed: ' + e.message)); });
+  });
+}
+
+async function redis(commands) {
+  const store = findStore();
+  if (!store) throw new Error('not connected');
+  return store.kind === 'rest' ? restPipeline(store, commands) : tcpPipeline(store, commands);
+}
+async function storeCheck() {
+  const store = findStore();
+  if (!store) return {ok: false, kind: null, error: 'No Redis settings found', settings: storeSettingNames()};
+  try { await redis([['PING']]); return {ok: true, kind: store.kind, settings: storeSettingNames()}; }
+  catch (e) { return {ok: false, kind: store.kind, error: e.message, settings: storeSettingNames()}; }
 }
 const hash = flat => { const o = {}; for (let i = 0; i < (flat || []).length; i += 2) o[flat[i]] = Number(flat[i + 1]); return o; };
 
@@ -66,4 +147,4 @@ async function readAnalytics(n) {
   return summarize(perDay, r[r.length - 2], r[r.length - 1].map(s => JSON.parse(s)));
 }
 
-module.exports = {storeReady, requestInfo, appendHistory, logSafe, readHistory, trackEvent, readAnalytics};
+module.exports = {storeReady, storeCheck, requestInfo, appendHistory, logSafe, readHistory, trackEvent, readAnalytics};

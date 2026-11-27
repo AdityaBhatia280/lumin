@@ -62,11 +62,18 @@ function device(ua = '') {
   return br ? `${br} on ${os}` : os;
 }
 const place = e => [e.city, e.region, e.country].filter(Boolean).join(', ') || (mode === 'local' ? 'This computer' : 'Unknown location');
-const setupHelp = what => `<div class="setup"><h3>Connect storage to turn on ${what}</h3>
-  <p>The live site needs a small free database to keep the ${what.toLowerCase()} permanently.</p>
-  <ol><li>In <b>Vercel</b>, open your project → <b>Storage</b> (or <b>Marketplace</b>) → add <b>Upstash for Redis</b> (free plan) and connect it to this project.</li>
-  <li>Vercel adds the connection settings automatically. Then go to <b>Deployments → ⋯ → Redeploy</b>.</li></ol>
-  <p>After that, everything from that moment on is recorded here.</p></div>`;
+function storageStatus() {
+  const st = window.adminSession?.storage;
+  if (!st) return '';
+  const names = st.settings?.length ? st.settings.map(n => `<code>${esc(n)}</code>`).join(', ') : '<b>none</b>';
+  return `<p style="margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--sky);font-size:.9rem"><b>Connection check:</b> ${st.ok ? 'connected ✓' : esc(st.error || 'not working')}<br>Storage settings this deployment can see: ${names}</p>`;
+}
+const setupHelp = (what, err = '') => `<div class="setup"><h3>${what} isn't connected yet</h3>
+  ${err && !/not connected/i.test(err) ? `<p><b>Error:</b> ${esc(err)}</p>` : ''}
+  <p>The live site needs a free Redis database to keep the ${what.toLowerCase()} permanently. Either kind works: <b>Upstash for Redis</b> or Vercel's <b>Redis</b> integration.</p>
+  <ol><li>In <b>Vercel</b> → your project → <b>Storage</b>, make sure the database shows as <b>connected to this project</b> (for Production).</li>
+  <li>Then <b>Deployments → ⋯ → Redeploy</b>. New settings only reach the site after a redeploy.</li></ol>
+  ${storageStatus()}</div>`;
 
 /* ---------- History ---------- */
 const typeLabel = t => ({login: 'Logged in', 'login-failed': 'Failed login', logout: 'Logged out', publish: mode === 'local' ? 'Saved changes' : 'Published', upload: 'Uploaded image', view: 'Opened'}[t] || t);
@@ -84,7 +91,7 @@ async function loadHistory(reset) {
     histEntries = reset ? out.entries : [...histEntries, ...out.entries];
     histTotal = out.total;
     drawHistory();
-  } catch (e) { root.innerHTML = /not connected/i.test(e.message) ? setupHelp('History') : `<p class="empty-note">Couldn't load history: ${esc(e.message)}</p>`; }
+  } catch (e) { root.innerHTML = setupHelp('History', e.message); }
 }
 function drawHistory() {
   const root = document.querySelector('#history-root');
@@ -146,7 +153,7 @@ async function loadAnalytics() {
         <div class="ins-card"><h3>Devices</h3>${rankList(a.devices)}</div>
         <div class="ins-card"><h3>Latest activity</h3>${a.events.length ? `<ul class="feed">${a.events.map(ev => `<li><time>${esc(fmtTime(ev.t).time)}</time><span>${ev.type === 'click' ? 'Click' : 'View'}</span><span>${ev.type === 'click' ? `"${esc(ev.label)}" on ${esc(pageName(ev.path))}` : esc(pageName(ev.path))}${ev.city || ev.country ? ` · ${esc([ev.city, ev.country].filter(Boolean).join(', '))}` : ''}${ev.dev ? ` · ${esc(ev.dev)}` : ''}</span></li>`).join('')}</ul>` : '<p class="empty-note">No visits yet.</p>'}</div>
       </div>`;
-  } catch (e) { root.innerHTML = /not connected/i.test(e.message) ? setupHelp('Analytics') : `<p class="empty-note">Couldn't load analytics: ${esc(e.message)}</p>`; }
+  } catch (e) { root.innerHTML = setupHelp('Analytics', e.message); }
 }
 document.addEventListener('click', e => {
   const d = e.target.closest('[data-days]');
