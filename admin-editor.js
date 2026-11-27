@@ -275,7 +275,7 @@ editor.innerHTML = `<div class="dialog-head"><h2>Edit photo</h2><button class="b
       <p class="ed-msg" role="status"></p>
     </div>
   </div>
-  <div class="ed-foot"><button class="btn" data-ed="cancel">Cancel</button><button class="btn primary" data-ed="save">Save photo</button></div>`;
+  <div class="ed-foot"><button class="btn" data-ed="cancel" id="ed-cancel">Cancel</button><button class="btn" data-ed="asis" id="ed-asis" hidden>Upload without editing</button><button class="btn primary" data-ed="save" id="ed-save">Save photo</button></div>`;
 document.body.append(editor);
 editorStyle.textContent += `
   .ed-fill { margin-top: 10px; font-size: .84rem; line-height: 1.3; align-items: flex-start; }
@@ -406,6 +406,7 @@ editor.addEventListener('click', async e => {
   }
   const act = b.dataset.ed;
   if (act === 'cancel') return editor.close();
+  if (act === 'asis' && ed.pending) { const done = ed.pending; ed.pending = null; editor.close(); return done({action: 'asis'}); }
   if (act === 'rotl' || act === 'rotr') { ed.rot = (ed.rot + (act === 'rotr' ? 90 : 270)) % 360; ed.crop = {x: 0, y: 0, w: 1, h: 1}; ed.aspect = null; drawEditor(); }
   if (act === 'flip') { ed.flip = !ed.flip; ed.crop = {x: 1 - ed.crop.x - ed.crop.w, y: ed.crop.y, w: ed.crop.w, h: ed.crop.h}; drawEditor(); }
   if (act === 'reset') {
@@ -452,6 +453,10 @@ editor.addEventListener('click', async e => {
       }
       const alpha = !!ed.photo.keepAlpha;
       const blob = await canvasBlob(out, alpha ? 'image/png' : 'image/jpeg');
+      if (ed.pending) { // editing a new photo before it's uploaded: hand the result back to the uploader
+        const done = ed.pending; ed.pending = null; b.disabled = false; editor.close();
+        return done({action: 'save', blob});
+      }
       const src = await upload(new File([blob], alpha ? 'edited.png' : 'edited.jpg', {type: alpha ? 'image/png' : 'image/jpeg'}), ed.photo.maxSide || 1800, {trim: false});
       replaceSrc(ed.photo, src);
       changed(); render(); editor.close();
@@ -635,3 +640,32 @@ viewer.addEventListener('keydown', e => {
 });
 // After editing, show the updated photo in the viewer.
 editor.addEventListener('close', () => { if (viewer.open) showViewer(); });
+
+/* ---------- Edit a new photo before it's uploaded ---------- */
+// Resolves {action: 'save', blob} | {action: 'asis'} | {action: 'skip'}.
+function editBeforeUpload(file, opts = {}) {
+  return new Promise(async resolve => {
+    if (/svg|gif/i.test(file.type)) return resolve({action: 'asis'}); // vector/animated images are uploaded as they are
+    const url = URL.createObjectURL(file);
+    try { await loadImage(url); } catch { URL.revokeObjectURL(url); return resolve({action: 'asis'}); } // can't preview (e.g. HEIC): upload normally
+    const target = {src: url, keepAlpha: !!opts.keepAlpha, maxSide: opts.maxSide, shapes: opts.shapes};
+    const finish = r => { URL.revokeObjectURL(url); resetFooter(); resolve(r); };
+    await openEditorFor(target);
+    if (!editor.open) return finish({action: 'asis'});
+    ed.pending = finish;
+    editor.querySelector('#ed-restore').hidden = true;
+    editor.querySelector('#ed-asis').hidden = false;
+    editor.querySelector('#ed-cancel').textContent = "Don't upload";
+    editor.querySelector('#ed-save').textContent = 'Save & upload';
+    editor.querySelector('.dialog-head h2').textContent = opts.title || 'Edit before uploading';
+    edMsg.textContent = opts.note || 'Crop, rotate or adjust, then press Save & upload.';
+  });
+}
+function resetFooter() {
+  editor.querySelector('#ed-asis').hidden = true;
+  editor.querySelector('#ed-cancel').textContent = 'Cancel';
+  editor.querySelector('#ed-save').textContent = 'Save photo';
+  editor.querySelector('.dialog-head h2').textContent = 'Edit photo';
+}
+// Closing the editor any other way (Close button, Esc) while a new photo is waiting means "don't upload".
+editor.addEventListener('close', () => { if (ed?.pending) { const done = ed.pending; ed.pending = null; done({action: 'skip'}); } });

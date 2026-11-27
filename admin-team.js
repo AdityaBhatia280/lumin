@@ -50,10 +50,13 @@ teamInput.addEventListener('change', async () => {
   const file = teamInput.files[0], m = state.team[teamTarget];
   if (!file || !m) return;
   try {
+    const r = await editBeforeUpload(file, {maxSide: 1000, shapes: [{label: 'Team card (square)', aspect: 1}], title: `Edit ${m.name || 'team'} photo before uploading`});
+    if (r.action === 'skip') return;
     setStatus('Uploading photo…', 'saving');
-    const src = await upload(file, 1000, {trim: true});
+    const original = await upload(file, 1000, {trim: r.action !== 'save'});
+    const src = r.action === 'save' ? await upload(new File([r.blob], 'edited.jpg', {type: r.blob.type}), 1000, {trim: false}) : original;
     forgetFile(m.photo);
     if (m.photoOriginal && m.photoOriginal !== m.photo) forgetFile(m.photoOriginal);
-    m.photo = src; m.photoOriginal = null; changed(); render();
+    m.photo = src; m.photoOriginal = src === original ? null : original; changed(); render();
   } catch (err) { setStatus(err.message, 'error'); }
 });

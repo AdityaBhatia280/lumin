@@ -104,10 +104,22 @@ let uploadState = null;
 async function uploadPhotos(files) {
   files = [...files].filter(f => f.type.startsWith('image/') || /\.(heic|heif)$/i.test(f.name));
   if (!files.length) return;
+  const editFirst = files.length <= 3; // a few photos: edit each before it uploads; bulk: upload straight away
   uploadState = {done: 0, total: files.length, errors: []};
   render();
-  for (const file of files) {
+  for (const [n, file] of files.entries()) {
     try {
+      if (editFirst) {
+        const r = await editBeforeUpload(file, {title: files.length > 1 ? `Edit photo ${n + 1} of ${files.length}` : 'Edit before uploading'});
+        if (r.action === 'skip') { uploadState.done++; render(); continue; }
+        if (r.action === 'save') {
+          const original = await upload(file, 1800, {trim: false});
+          const src = await upload(new File([r.blob], 'edited.jpg', {type: r.blob.type}), 1800, {trim: false});
+          state.photos.unshift({id: uid('u'), src, original, alt: '', wall: true});
+          changed(); uploadState.done++; if (tab === 'photos') render();
+          continue;
+        }
+      }
       const original = await upload(file, 1800, {trim: false});
       let src = original;
       if (autoTrimOn()) {
@@ -413,11 +425,14 @@ logoInput.addEventListener('change', async () => {
   const file = logoInput.files[0], p = state.partners.find(x => x.id === logoTarget);
   if (!file || !p) return;
   try {
+    const r = await editBeforeUpload(file, {keepAlpha: true, maxSide: 600, shapes: [], title: 'Edit logo before uploading'});
+    if (r.action === 'skip') return;
     setStatus('Uploading logo…', 'saving');
-    const src = await upload(file, 600);
+    const original = await upload(file, 600);
+    const src = r.action === 'save' ? await upload(new File([r.blob], 'edited.png', {type: r.blob.type}), 600, {trim: false}) : original;
     forgetFile(p.logo);
     if (p.logoOriginal && p.logoOriginal !== p.logo) forgetFile(p.logoOriginal);
-    p.logo = src; p.logoOriginal = null; changed(); render();
+    p.logo = src; p.logoOriginal = src === original ? null : original; changed(); render();
   } catch (e) { setStatus(e.message, 'error'); }
 });
 document.addEventListener('dragover', e => { e.preventDefault(); document.querySelector('#drop')?.classList.add('over'); });
