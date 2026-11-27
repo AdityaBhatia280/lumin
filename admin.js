@@ -190,13 +190,13 @@ const views = {
       const ids = slotList(s.key), pinned = ids.filter(Boolean).length;
       return `<div class="spot-row"><div class="spot-info"><h3>${esc(s.label)}</h3><p>${esc(s.page)} · ${pinned ? `${pinned} of 4 photos picked, the rest are random` : 'All 4 photos are random'}</p></div>
         <div class="spot-slots">${ids.map((id, k) => { const p = photoById(id); return `<div class="spot-slot"><button class="spot-pick" data-action="pick" data-target="spot:${esc(s.key)}#${k}" title="Choose photo ${k + 1}">${p ? `<img src="${esc(view(p.src))}" alt="">` : `<span class="random-tile">Photo ${k + 1}<br>Random</span>`}</button>
-          ${p ? `<button class="spot-clear" data-action="unpin" data-target="spot:${esc(s.key)}#${k}" aria-label="Back to random" title="Back to random">✕</button>` : ''}</div>`; }).join('')}</div></div>`;
+          ${p ? `<button class="spot-clear" data-action="unpin" data-target="spot:${esc(s.key)}#${k}" aria-label="Back to random" title="Back to random">✕</button><button class="spot-edit" data-action="edit-picked" data-id="${p.id}" aria-label="Edit this photo" title="Edit this photo">✎</button>` : ''}</div>`; }).join('')}</div></div>`;
     };
     const row = (label, page, id, target) => {
       const p = photoById(id);
       return `<div class="row">${p ? `<img class="thumb" src="${esc(view(p.src))}" alt="">` : '<span class="random-tile">Random<br>photo</span>'}
         <div><h3>${esc(label)}</h3><p>${esc(page)} · ${p ? 'Pinned to this photo' : 'Shows a random photo each visit'}</p></div>
-        <div class="actions"><button class="btn small primary" data-action="pick" data-target="${esc(target)}">Choose photo</button>${p ? `<button class="btn small" data-action="unpin" data-target="${esc(target)}">Back to random</button>` : ''}</div></div>`;
+        <div class="actions"><button class="btn small primary" data-action="pick" data-target="${esc(target)}">Choose photo</button>${p ? `<button class="btn small" data-action="edit-picked" data-id="${p.id}">✎ Edit photo</button><button class="btn small" data-action="unpin" data-target="${esc(target)}">Back to random</button>` : ''}</div></div>`;
     };
     return `<div class="intro"><div><h2>Photo spots</h2><p>Every place on the site that shows photos. Each spot slowly rotates through <b>4 photos</b>: click a square to pick a photo, or leave it on <b>Random</b> to pull from your library. The homepage moving wall is automatic and uses every photo marked "In moving wall" on the Photos tab.</p></div></div>
       <div class="rows">${spots.map(spotRow).join('')}
@@ -218,7 +218,7 @@ const views = {
             <label class="field wide">Short summary <small>shown on cards</small><textarea data-post="${post.id}" data-field="summary">${esc(post.summary)}</textarea></label>
             <label class="field wide">Post text<textarea class="body" data-post="${post.id}" data-field="body">${esc(post.body)}</textarea></label>
             <div class="field wide">Photo<div class="post-photo-pick">${p ? `<img src="${esc(view(p.src))}" alt="" style="aspect-ratio:1;object-fit:cover;border-radius:10px">` : '<span class="random-tile">Random</span>'}
-              <button class="btn small primary" data-action="pick" data-target="post:${post.id}">Choose photo</button>${p ? `<button class="btn small" data-action="unpin" data-target="post:${post.id}">Back to random</button>` : ''}</div></div>
+              <button class="btn small primary" data-action="pick" data-target="post:${post.id}">Choose photo</button>${p ? `<button class="btn small" data-action="edit-picked" data-id="${p.id}">✎ Edit photo</button><button class="btn small" data-action="unpin" data-target="post:${post.id}">Back to random</button>` : ''}</div></div>
           </div></section>`;
       }).join('') || '<div class="empty">No posts yet.</div>'}`;
   },
@@ -237,7 +237,8 @@ const views = {
           <label class="field wide">Description <small>optional</small><textarea data-partner="${p.id}" data-field="description">${esc(p.description)}</textarea></label>
           <div class="field wide" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
             <button class="btn small primary" data-action="upload-logo" data-id="${p.id}">${p.logo ? 'Replace logo' : 'Upload logo'}</button>
-            ${p.logo ? `<button class="btn small" data-action="remove-logo" data-id="${p.id}">Remove logo</button>` : ''}
+            ${p.logo ? `<button class="btn small" data-action="edit-logo" data-id="${p.id}">✎ Edit logo</button><button class="btn small" data-action="remove-logo" data-id="${p.id}">Remove logo</button>` : ''}
+            ${p.logoOriginal && p.logo !== p.logoOriginal ? `<button class="btn small" data-action="restore-logo" data-id="${p.id}">↺ Restore original</button>` : ''}
             <label class="switch"><input type="checkbox" data-action="toggle-featured" data-id="${p.id}" ${p.featured ? 'checked' : ''} ${!p.featured && featuredCount >= 3 ? 'disabled' : ''}> Featured on homepage ${!p.featured && featuredCount >= 3 ? '<small style="font-weight:400;color:var(--muted)">(3 max, untick one first)</small>' : ''}</label>
           </div></div></section>`).join('')}`;
   },
@@ -364,9 +365,12 @@ document.addEventListener('click', e => {
     state.partners = state.partners.filter(x => x !== p); changed(); render();
   }
   if (action === 'upload-logo') { logoTarget = id; logoInput.value = ''; logoInput.click(); }
+  if (action === 'edit-logo') { const p = state.partners.find(x => x.id === id); if (p) openEditorFor(fieldTarget(p, 'logo', 'logoOriginal', {keepAlpha: true, maxSide: 600})); }
+  if (action === 'restore-logo') { const p = state.partners.find(x => x.id === id); if (p && restoreOriginal(fieldTarget(p, 'logo', 'logoOriginal'))) { changed(); render(); } }
+  if (action === 'edit-picked') openEditor(id);
   if (action === 'remove-logo') {
     const p = state.partners.find(x => x.id === id);
-    forgetFile(p.logo); p.logo = null; changed(); render();
+    forgetFile(p.logo); if (p.logoOriginal && p.logoOriginal !== p.logo) forgetFile(p.logoOriginal); p.logo = null; p.logoOriginal = null; changed(); render();
   }
 });
 document.addEventListener('change', e => {
@@ -412,7 +416,8 @@ logoInput.addEventListener('change', async () => {
     setStatus('Uploading logo…', 'saving');
     const src = await upload(file, 600);
     forgetFile(p.logo);
-    p.logo = src; changed(); render();
+    if (p.logoOriginal && p.logoOriginal !== p.logo) forgetFile(p.logoOriginal);
+    p.logo = src; p.logoOriginal = null; changed(); render();
   } catch (e) { setStatus(e.message, 'error'); }
 });
 document.addEventListener('dragover', e => { e.preventDefault(); document.querySelector('#drop')?.classList.add('over'); });

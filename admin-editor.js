@@ -331,9 +331,17 @@ function setCropPx(box) {
   placeCrop();
 }
 
-async function openEditor(id) {
-  const photo = photoById(id);
-  if (!photo) return;
+// Wraps a field such as a team photo or partner logo so the editor can treat it like a library photo.
+function fieldTarget(obj, srcKey, origKey, opts = {}) {
+  return {
+    get src() { return obj[srcKey]; }, set src(v) { obj[srcKey] = v; },
+    get original() { return obj[origKey]; }, set original(v) { obj[origKey] = v; },
+    ...opts
+  };
+}
+async function openEditor(id) { return openEditorFor(photoById(id)); }
+async function openEditorFor(photo) {
+  if (!photo || !photo.src) return;
   if (/\.(svg|gif)$/i.test(photo.src)) return alert('SVG and GIF images can\'t be edited here.');
   try {
     const img = await loadImage(view(originalOf(photo))); // always edit from the original
@@ -401,8 +409,9 @@ editor.addEventListener('click', async e => {
         x.filter = filterCss();
         x.drawImage(ed.source, box.x, box.y, box.w, box.h, 0, 0, box.w, box.h);
       }
-      const blob = await canvasBlob(out);
-      const src = await upload(new File([blob], 'edited.jpg', {type: 'image/jpeg'}), 1800, {trim: false});
+      const alpha = !!ed.photo.keepAlpha;
+      const blob = await canvasBlob(out, alpha ? 'image/png' : 'image/jpeg');
+      const src = await upload(new File([blob], alpha ? 'edited.png' : 'edited.jpg', {type: alpha ? 'image/png' : 'image/jpeg'}), ed.photo.maxSide || 1800, {trim: false});
       replaceSrc(ed.photo, src);
       changed(); render(); editor.close();
     } catch (err) { edMsg.textContent = 'Could not save: ' + err.message; }

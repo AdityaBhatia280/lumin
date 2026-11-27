@@ -19,9 +19,10 @@ views.team = () => {
         <label class="field">Title<input data-team-field="role" data-i="${i}" value="${esc(m.role || 'Co-Founder')}"></label>
         <div class="field wide" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <button class="btn small primary" data-team="photo" data-i="${i}">${m.photo ? 'Replace photo' : 'Upload photo'}</button>
-          ${m.photo ? `<button class="btn small" data-team="nophoto" data-i="${i}">Remove photo</button>` : ''}</div>
+          ${m.photo ? `<button class="btn small" data-team="edit" data-i="${i}">✎ Edit photo</button><button class="btn small" data-team="nophoto" data-i="${i}">Remove photo</button>` : ''}
+          ${m.photoOriginal && m.photo !== m.photoOriginal ? `<button class="btn small" data-team="restore" data-i="${i}">↺ Restore original</button>` : ''}</div>
       </div></section>`).join('')}
-    <p class="help">The page shows people in a pentagon when there are exactly 5, otherwise in a simple grid.</p>`;
+    <p class="help">People appear in this order, in one row under Our Inspiration. Use ✎ Edit photo to crop, rotate, or auto-frame a face.</p>`;
 };
 
 document.addEventListener('click', e => {
@@ -32,7 +33,9 @@ document.addEventListener('click', e => {
   if (act === 'up' && i > 0) [t[i - 1], t[i]] = [t[i], t[i - 1]];
   if (act === 'down' && i < t.length - 1) [t[i + 1], t[i]] = [t[i], t[i + 1]];
   if (act === 'delete') { if (!confirm(`Remove ${t[i].name || 'this person'} from the team page?`)) return; forgetFile(t[i].photo); t.splice(i, 1); }
-  if (act === 'nophoto') { forgetFile(t[i].photo); t[i].photo = null; }
+  if (act === 'edit') return openEditorFor(fieldTarget(t[i], 'photo', 'photoOriginal', {maxSide: 1000}));
+  if (act === 'restore') { if (!restoreOriginal(fieldTarget(t[i], 'photo', 'photoOriginal'))) return; }
+  if (act === 'nophoto') { forgetFile(t[i].photo); if (t[i].photoOriginal && t[i].photoOriginal !== t[i].photo) forgetFile(t[i].photoOriginal); t[i].photo = null; t[i].photoOriginal = null; }
   if (act === 'photo') { teamTarget = i; teamInput.value = ''; teamInput.click(); return; }
   changed(); render();
 });
@@ -50,6 +53,7 @@ teamInput.addEventListener('change', async () => {
     setStatus('Uploading photo…', 'saving');
     const src = await upload(file, 1000, {trim: true});
     forgetFile(m.photo);
-    m.photo = src; changed(); render();
+    if (m.photoOriginal && m.photoOriginal !== m.photo) forgetFile(m.photoOriginal);
+    m.photo = src; m.photoOriginal = null; changed(); render();
   } catch (err) { setStatus(err.message, 'error'); }
 });
