@@ -684,31 +684,31 @@ window.LUMIN_DATA = {
     {
       "id": "aditya-bhatia",
       "name": "Aditya Bhatia",
-      "role": "Co-Founder",
+      "role": "Co-Founder / Leader",
       "photo": null
     },
     {
       "id": "arnav-varghese",
       "name": "Arnav Varghese",
-      "role": "Co-Founder",
-      "photo": null
+      "role": "Co-Founder / Leader",
+      "photo": "/assets/uploads/mwy9rle5-3fbbee-img-0868-1.jpg"
     },
     {
       "id": "rishik-mandadapu",
       "name": "Rishik Mandadapu",
-      "role": "Co-Founder",
+      "role": "Co-Founder / Leader",
       "photo": null
     },
     {
       "id": "shreyans-pandey",
       "name": "Shreyans Pandey",
-      "role": "Co-Founder",
+      "role": "Co-Founder / Leader",
       "photo": null
     },
     {
       "id": "saikavin-rajarajeswaran",
       "name": "Saikavin Rajarajeswaran",
-      "role": "Co-Founder",
+      "role": "Co-Founder / Leader",
       "photo": null
     }
   ]
