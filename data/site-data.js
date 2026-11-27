@@ -690,19 +690,19 @@ window.LUMIN_DATA = {
       "id": "rishik-mandadapu",
       "name": "Rishik Mandadapu",
       "role": "Co-Founder / Leader",
-      "photo": null
+      "photo": "/assets/uploads/mwya0mfr-49dc9d-screenshot-2026-11-26-at-7-01-38-pm.webp"
     },
     {
       "id": "shreyans-pandey",
       "name": "Shreyans Pandey",
       "role": "Co-Founder / Leader",
-      "photo": null
+      "photo": "/assets/uploads/mwy9z8yb-f2714c-screenshot-2026-11-26-at-7-00-31-pm.webp"
     },
     {
       "id": "saikavin-rajarajeswaran",
       "name": "Saikavin Rajarajeswaran",
       "role": "Co-Founder / Leader",
-      "photo": null
+      "photo": "/assets/uploads/mwya0101-5075d6-screenshot-2026-11-26-at-7-01-06-pm.webp"
     }
   ]
 };
