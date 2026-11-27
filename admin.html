@@ -23,6 +23,7 @@
     .top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 1rem; padding: 12px 24px; background: var(--navy); color: #fff; }
     .top h1 { color: #fff; font-size: 1.2rem; }
     .top-logo { height: 34px; width: auto; }
+    .top .top-home { padding: 0; background: none; border-radius: 0; display: inline-flex; }
     .top h1 { padding-left: 12px; border-left: 1px solid #ffffff40; }
     .status.dirty { color: var(--gold); font-weight: 700; }
     .link-btn { border: 0; background: none; color: #c6d2ea; font-weight: 700; padding: 8px; }
@@ -148,7 +149,7 @@
   </style>
 </head>
 <body class="logged-out">
-  <header class="top"><img class="top-logo" src="/assets/brand/lumin-lockup-white.png" alt="Project Lumin"><h1>Admin</h1><span class="status" id="status" role="status">Loading…</span><button class="btn primary" id="publish" hidden>Publish changes</button><a href="/" target="_blank" rel="noopener">View site ↗</a><button class="link-btn" id="logout" hidden>Log out</button></header>
+  <header class="top"><a href="/" class="top-home" title="Go to the website"><img class="top-logo" src="/assets/brand/lumin-lockup-white.png" alt="Project Lumin home"></a><h1>Admin</h1><span class="status" id="status" role="status">Loading…</span><button class="btn primary" id="publish" hidden>Publish changes</button><a href="/" target="_blank" rel="noopener">View site ↗</a><button class="link-btn" id="logout" hidden>Log out</button></header>
   <nav class="tabs" role="tablist" aria-label="Admin sections">
     <button role="tab" data-tab="photos" aria-selected="true">Photos<span class="count" id="count-photos"></span></button>
     <button role="tab" data-tab="spots" aria-selected="false">Photo spots</button>
