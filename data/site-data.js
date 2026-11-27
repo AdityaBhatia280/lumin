@@ -733,7 +733,8 @@ window.LUMIN_DATA = {
       "id": "aditya-bhatia",
       "name": "Aditya Bhatia",
       "role": "Co-Founder / Leader",
-      "photo": "/assets/uploads/mwyachq8-e32bbb-img-20261015-221136-2.jpg"
+      "photo": "/assets/uploads/mwybqwju-e8d307-edited.jpg",
+      "photoOriginal": "/assets/uploads/mwyachq8-e32bbb-img-20261015-221136-2.jpg"
     },
     {
       "id": "arnav-varghese",
@@ -757,7 +758,8 @@ window.LUMIN_DATA = {
       "id": "saikavin-rajarajeswaran",
       "name": "Saikavin Rajarajeswaran",
       "role": "Co-Founder / Leader",
-      "photo": "/assets/uploads/mwyabdjk-3f7750-screenshot-2026-11-26-at-7-09-51-pm.webp"
+      "photo": "/assets/uploads/mwybr6pa-100d16-edited.jpg",
+      "photoOriginal": "/assets/uploads/mwyabdjk-3f7750-screenshot-2026-11-26-at-7-09-51-pm.webp"
     }
   ]
 };
