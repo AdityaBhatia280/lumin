@@ -19,10 +19,12 @@ const email = data.settings?.email || 'projectluminfrisco@gmail.com';
 const instagram = data.settings?.instagram || '';
 const linkedin = data.settings?.linkedin || '';
 const youtube = data.settings?.youtube || '';
+const tiktok = data.settings?.tiktok || '';
 const donate = data.settings?.donate || '';
 const mail = (subject = '') => 'mailto:' + email + (subject ? '?subject=' + encodeURIComponent(subject) : '');
 const section = (body, cls = '', id = '') => `<section class="section ${cls}"${id ? ` id="${id}"` : ''}><div class="wrap">${body}</div></section>`;
 const heading = (eyebrow, title, lead = '', action = '') => `<div class="section-head" data-reveal><div>${eyebrow ? `<p class="eyebrow">${esc(eyebrow)}</p>` : ''}<h2>${title}</h2>${lead ? `<p class="lead">${esc(lead)}</p>` : ''}</div>${action}</div>`;
+const tiktokIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="dot" d="M16.6 5.8a4.3 4.3 0 0 1-1-2.8h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.8 5.8 0 1 0 4.9 5.7V9.1a7.4 7.4 0 0 0 4.3 1.4V7.4a4.3 4.3 0 0 1-3.3-1.6z"/></svg>';
 const youtubeIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path class="dot" d="M10 9.2v5.6l4.8-2.8z"/></svg>';
 const linkedinIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.5"/><path class="dot" d="M7.2 10h2.2v7H7.2zM8.3 6.6a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM11 10h2.1v1c.4-.7 1.2-1.2 2.4-1.2 2.1 0 2.6 1.4 2.6 3.2v4h-2.2v-3.6c0-.9-.2-1.7-1.2-1.7s-1.5.7-1.5 1.7V17H11z"/></svg>';
 const instagramIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" class="dot"/></svg>';
@@ -299,6 +301,7 @@ function contact() {
       <a class="contact-card" href="${esc(mail())}" data-reveal><span class="contact-icon" aria-hidden="true">✉</span><span class="contact-label">Email</span><strong>${esc(email)}</strong></a>
       ${instagram ? `<a class="contact-card" href="${esc(instagram)}" target="_blank" rel="noopener" data-reveal style="--d:1"><span class="contact-icon">${instagramIcon}</span><span class="contact-label">Instagram</span><strong>Follow us</strong></a>` : ''}
       ${linkedin ? `<a class="contact-card" href="${esc(linkedin)}" target="_blank" rel="noopener" data-reveal style="--d:2"><span class="contact-icon">${linkedinIcon}</span><span class="contact-label">LinkedIn</span><strong>Connect with us</strong></a>` : ''}
+      ${tiktok ? `<a class="contact-card" href="${esc(tiktok)}" target="_blank" rel="noopener" data-reveal style="--d:3"><span class="contact-icon">${tiktokIcon}</span><span class="contact-label">TikTok</span><strong>Watch us on TikTok</strong></a>` : ''}
       ${youtube ? `<a class="contact-card" href="${esc(youtube)}" target="_blank" rel="noopener" data-reveal style="--d:3"><span class="contact-icon">${youtubeIcon}</span><span class="contact-label">YouTube</span><strong>Watch our videos</strong></a>` : ''}
       ${donate ? `<a class="contact-card" href="${esc(donate)}" target="_blank" rel="noopener" data-reveal style="--d:4"><span class="contact-icon" aria-hidden="true">$</span><span class="contact-label">Donate</span><strong>Support our work</strong></a>` : ''}
       <div class="contact-card" data-reveal style="--d:5"><span class="contact-icon" aria-hidden="true">☀</span><span class="contact-label">Based in</span><strong>Frisco, Texas</strong></div>
@@ -328,7 +331,7 @@ addEventListener('scroll', onScroll, {passive: true}); onScroll();
 document.querySelector('#footer').innerHTML = `<div class="wrap"><div class="footer-main">
   <div class="footer-brand"><a class="brand" href="/"><img src="/assets/brand/lumin-lockup.png" alt="Project Lumin home" width="592" height="240" loading="lazy"></a>
     <p>Empowering young people to safely enjoy the outdoors.</p>
-    <div class="footer-contact">${textLink(email, mail())}${instagram ? `<a class="social" href="${esc(instagram)}" target="_blank" rel="noopener" aria-label="Project Lumin on Instagram">${instagramIcon}</a>` : ''}${linkedin ? `<a class="social" href="${esc(linkedin)}" target="_blank" rel="noopener" aria-label="Project Lumin on LinkedIn">${linkedinIcon}</a>` : ''}${youtube ? `<a class="social" href="${esc(youtube)}" target="_blank" rel="noopener" aria-label="Project Lumin on YouTube">${youtubeIcon}</a>` : ''}</div></div>
+    <div class="footer-contact">${textLink(email, mail())}${instagram ? `<a class="social" href="${esc(instagram)}" target="_blank" rel="noopener" aria-label="Project Lumin on Instagram">${instagramIcon}</a>` : ''}${linkedin ? `<a class="social" href="${esc(linkedin)}" target="_blank" rel="noopener" aria-label="Project Lumin on LinkedIn">${linkedinIcon}</a>` : ''}${youtube ? `<a class="social" href="${esc(youtube)}" target="_blank" rel="noopener" aria-label="Project Lumin on YouTube">${youtubeIcon}</a>` : ''}${tiktok ? `<a class="social" href="${esc(tiktok)}" target="_blank" rel="noopener" aria-label="Project Lumin on TikTok">${tiktokIcon}</a>` : ''}</div></div>
   <nav aria-label="Footer navigation">${[['/', 'Home'], ...Object.entries(pages).map(([u, [l]]) => [u, l])].map(([u, l]) => `<a href="${u}">${l}</a>`).join('')}${donate ? `<a href="${esc(donate)}" target="_blank" rel="noopener">Donate</a>` : ''}</nav></div>
   <div class="footer-end"><span>© ${new Date().getFullYear()} Project Lumin</span><span>Frisco, Texas</span></div></div>`;
 

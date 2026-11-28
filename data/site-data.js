@@ -5,7 +5,8 @@ window.LUMIN_DATA = {
     "linkedin": "https://www.linkedin.com/company/projectlumin",
     "youtube": "https://www.youtube.com/@projectlumins",
     "email": "projectluminfrisco@gmail.com",
-    "donate": "https://hcb.hackclub.com/donations/start/project-lumin"
+    "donate": "https://hcb.hackclub.com/donations/start/project-lumin",
+    "tiktok": "https://www.tiktok.com/@project.lumin"
   },
   "photos": [
     {

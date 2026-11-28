@@ -264,6 +264,7 @@ const views = {
         <label class="field">Instagram link <small>e.g. https://instagram.com/yourhandle</small><input type="url" placeholder="https://instagram.com/…" data-setting="instagram" value="${esc(state.settings.instagram)}"></label>
         <label class="field">LinkedIn link <small>e.g. https://www.linkedin.com/company/…</small><input type="url" placeholder="https://www.linkedin.com/company/…" data-setting="linkedin" value="${esc(state.settings.linkedin)}"></label>
         <label class="field">Donation link <small>where the Donate buttons go</small><input type="url" placeholder="https://…" data-setting="donate" value="${esc(state.settings.donate)}"></label>
+        <label class="field">TikTok link <small>e.g. https://www.tiktok.com/@yourhandle</small><input type="url" placeholder="https://www.tiktok.com/@…" data-setting="tiktok" value="${esc(state.settings.tiktok)}"></label>
         <label class="field">YouTube link <small>e.g. https://www.youtube.com/@yourchannel</small><input type="url" placeholder="https://www.youtube.com/@…" data-setting="youtube" value="${esc(state.settings.youtube)}"></label>
       </div></section>
       <p class="help">${mode === 'live'
