@@ -104,6 +104,7 @@ function requestInfo(req) {
   return {
     ip: String(h['x-forwarded-for'] || '').split(',')[0].trim() || h['x-real-ip'] || req.socket?.remoteAddress || '',
     city: dec(h['x-vercel-ip-city']), region: h['x-vercel-ip-country-region'] || '', country: h['x-vercel-ip-country'] || '',
+    postal: h['x-vercel-ip-postal-code'] || '',
     ua: String(h['user-agent'] || '').slice(0, 300)
   };
 }
@@ -134,16 +135,17 @@ async function trackEvent(ev, info) {
     if (ev.ref) inc('ref', ev.ref);
     if (ev.dev) inc('dev', ev.dev);
     if (info.country) inc('ctry', info.country);
+    if (info.city) inc('city', [info.city, info.region, info.country].filter(Boolean).join(', '));
   } else inc('clk', `${ev.label}${ev.href ? ' → ' + ev.href : ''}`);
-  cmds.push(['LPUSH', 'events', JSON.stringify({t: new Date().toISOString(), type: ev.type, path: ev.path, label: ev.label, href: ev.href, dev: ev.dev, ref: ev.ref, city: info.city, country: info.country})], ['LTRIM', 'events', 0, 299]);
+  cmds.push(['LPUSH', 'events', JSON.stringify({t: new Date().toISOString(), type: ev.type, path: ev.path, label: ev.label, href: ev.href, dev: ev.dev, ref: ev.ref, city: info.city, region: info.region, postal: info.postal, country: info.country, device: info.device, visitor: info.visitor, first: ev.first})], ['LTRIM', 'events', 0, 299]);
   await redis(cmds);
 }
 async function readAnalytics(n) {
   const days = dayList(n), cmds = [];
-  for (const d of days) cmds.push(['HGETALL', `pv:${d}`], ['PFCOUNT', `vis:${d}`], ['HGETALL', `clk:${d}`], ['HGETALL', `ref:${d}`], ['HGETALL', `dev:${d}`], ['HGETALL', `ctry:${d}`]);
+  for (const d of days) cmds.push(['HGETALL', `pv:${d}`], ['PFCOUNT', `vis:${d}`], ['HGETALL', `clk:${d}`], ['HGETALL', `ref:${d}`], ['HGETALL', `dev:${d}`], ['HGETALL', `ctry:${d}`], ['HGETALL', `city:${d}`]);
   cmds.push(['PFCOUNT', ...days.map(d => `vis:${d}`)], ['LRANGE', 'events', 0, 59]);
   const r = await redis(cmds);
-  const perDay = days.map((date, i) => { const o = i * 6; return {date, pv: hash(r[o]), visitors: r[o + 1], clk: hash(r[o + 2]), ref: hash(r[o + 3]), dev: hash(r[o + 4]), ctry: hash(r[o + 5])}; });
+  const perDay = days.map((date, i) => { const o = i * 7; return {date, pv: hash(r[o]), visitors: r[o + 1], clk: hash(r[o + 2]), ref: hash(r[o + 3]), dev: hash(r[o + 4]), ctry: hash(r[o + 5]), city: hash(r[o + 6])}; });
   return summarize(perDay, r[r.length - 2], r[r.length - 1].map(s => JSON.parse(s)));
 }
 

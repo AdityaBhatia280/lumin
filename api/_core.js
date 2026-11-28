@@ -65,26 +65,34 @@ const add = (into, obj) => { for (const [k, v] of Object.entries(obj || {})) int
 const top = (obj, n = 12) => Object.entries(obj).sort((a, b) => b[1] - a[1]).slice(0, n);
 // days: [{date, pv:{path:n}, visitors:n, clk:{}, ref:{}, dev:{}, ctry:{}}] oldest → newest
 function summarize(days, uniqueVisitors, events) {
-  const pv = {}, clk = {}, ref = {}, dev = {}, ctry = {};
-  for (const d of days) { add(pv, d.pv); add(clk, d.clk); add(ref, d.ref); add(dev, d.dev); add(ctry, d.ctry); }
+  const pv = {}, clk = {}, ref = {}, dev = {}, ctry = {}, city = {};
+  for (const d of days) { add(pv, d.pv); add(clk, d.clk); add(ref, d.ref); add(dev, d.dev); add(ctry, d.ctry); add(city, d.city); }
   const pageviews = Object.values(pv).reduce((a, b) => a + b, 0);
   const clicks = Object.values(clk).reduce((a, b) => a + b, 0);
   return {
     totals: {visitors: uniqueVisitors, pageviews, clicks, pagesPerVisitor: uniqueVisitors ? +(pageviews / uniqueVisitors).toFixed(1) : 0},
     daily: days.map(d => ({date: d.date, visitors: d.visitors, pageviews: Object.values(d.pv || {}).reduce((a, b) => a + Number(b), 0)})),
-    pages: top(pv), clicks: top(clk, 15), referrers: top(ref), devices: top(dev), countries: top(ctry), events
+    pages: top(pv), clicks: top(clk, 15), referrers: top(ref), devices: top(dev), countries: top(ctry), cities: top(city), events
   };
 }
 const dayList = n => Array.from({length: n}, (_, i) => new Date(Date.now() - (n - 1 - i) * 864e5).toISOString().slice(0, 10));
 
 /* ---------- Cleaning analytics input from the public site ---------- */
 const clean = (v, n) => String(v ?? '').replace(/[\u0000-\u001f]/g, '').slice(0, n);
+// "Safari on iPhone", "Chrome on Windows", ...
+function deviceLabel(ua = '') {
+  const os = /iPhone/.test(ua) ? 'iPhone' : /iPad/.test(ua) ? 'iPad' : /Android/.test(ua) ? 'Android' : /CrOS/.test(ua) ? 'Chromebook' : /Mac OS X/.test(ua) ? 'Mac' : /Windows/.test(ua) ? 'Windows' : /Linux/.test(ua) ? 'Linux' : '';
+  const br = /Edg\//.test(ua) ? 'Edge' : /OPR\//.test(ua) ? 'Opera' : /SamsungBrowser/.test(ua) ? 'Samsung Internet' : /CriOS|Chrome\//.test(ua) ? 'Chrome' : /FxiOS|Firefox\//.test(ua) ? 'Firefox' : /Safari\//.test(ua) ? 'Safari' : '';
+  return [br, os].filter(Boolean).join(' on ');
+}
+// Short, anonymous tag derived from the visitor's random id, so one person's visits can be followed without knowing who they are.
+const visitorTag = vid => crypto.createHash('sha256').update('lumin-visitor:' + vid).digest('hex').slice(0, 4);
 function cleanEvent(body) {
   const type = body.type === 'click' ? 'click' : body.type === 'pageview' ? 'pageview' : null;
   if (!type) return null;
   const path = clean(body.path, 120).startsWith('/') ? clean(body.path, 120) : '/';
   return {type, path, vid: clean(body.vid, 40) || 'anon', ref: clean(body.ref, 80), dev: ['Phone', 'Tablet', 'Desktop'].includes(body.dev) ? body.dev : '',
-    label: clean(body.label, 60), href: clean(body.href, 160)};
+    label: clean(body.label, 60), href: clean(body.href, 160), first: body.first === true};
 }
 
 /* ---------- Application submissions ---------- */
@@ -104,4 +112,4 @@ function cleanApplication(body) {
   return {form, fields};
 }
 
-module.exports = {cleanApplication, diffData, sealEntry, verifyChain, summarize, dayList, cleanEvent};
+module.exports = {deviceLabel, visitorTag, cleanApplication, diffData, sealEntry, verifyChain, summarize, dayList, cleanEvent};

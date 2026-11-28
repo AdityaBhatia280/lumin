@@ -518,7 +518,8 @@ if (location.hash) requestAnimationFrame(() => document.getElementById(location.
 (() => {
   if (navigator.webdriver) return; // skip automated browsers
   let vid = 'anon';
-  try { vid = localStorage.getItem('lumin-vid') || (localStorage.setItem('lumin-vid', Math.random().toString(36).slice(2) + Date.now().toString(36)), localStorage.getItem('lumin-vid')); } catch {}
+  let first = false;
+  try { vid = localStorage.getItem('lumin-vid'); if (!vid) { first = true; vid = Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('lumin-vid', vid); } } catch { vid = 'anon'; }
   const dev = innerWidth < 700 ? 'Phone' : innerWidth < 1100 ? 'Tablet' : 'Desktop';
   let ref = '';
   try { const r = new URL(document.referrer); if (r.host !== location.host) ref = r.host.replace(/^www\./, ''); } catch {}
@@ -526,7 +527,7 @@ if (location.hash) requestAnimationFrame(() => document.getElementById(location.
     const payload = JSON.stringify({...body, vid, path: location.pathname});
     if (!(navigator.sendBeacon && navigator.sendBeacon('/api/track', payload))) fetch('/api/track', {method: 'POST', body: payload, keepalive: true}).catch(() => {});
   };
-  send({type: 'pageview', ref, dev});
+  send({type: 'pageview', ref, dev, first});
   document.addEventListener('click', e => {
     const el = e.target.closest('a, button');
     if (!el) return;

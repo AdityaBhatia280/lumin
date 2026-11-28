@@ -1,6 +1,6 @@
 // Public: the website reports anonymous page views and clicks here. No visitor IPs are stored.
 const {send, readJson} = require('./_lib');
-const {cleanEvent} = require('./_core');
+const {cleanEvent, deviceLabel, visitorTag} = require('./_core');
 const {storeReady, requestInfo, trackEvent} = require('./_store');
 
 module.exports = async (req, res) => {
@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
   if (/bot|crawl|spider|preview|headless/i.test(req.headers['user-agent'] || '')) return send(res, 204, {});
   try {
     const ev = cleanEvent(await readJson(req));
-    if (ev) { const {city, country} = requestInfo(req); await trackEvent(ev, {city, country}); }
+    if (ev) { const {city, region, country, postal, ua} = requestInfo(req); await trackEvent(ev, {city, region, country, postal, device: deviceLabel(ua), visitor: visitorTag(ev.vid)}); }
     send(res, 204, {});
   } catch { send(res, 204, {}); }
 };

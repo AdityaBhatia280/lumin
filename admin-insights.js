@@ -46,7 +46,10 @@ insightStyle.textContent = `
   .rlist .lbl span { position: relative; }
   .rlist b { color: var(--navy); }
   .feed { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; max-height: 420px; overflow: auto; font-size: .86rem; }
-  .feed li { display: grid; grid-template-columns: 90px 70px minmax(0, 1fr); gap: 10px; padding: 6px 4px; border-bottom: 1px solid var(--rule); }
+  .feed li { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 12px; align-items: start; padding: 8px 4px; border-bottom: 1px solid var(--rule); }
+  .feed li small { display: block; color: var(--muted); font-size: .8rem; margin-top: 2px; }
+  .vtag { padding: 2px 8px; border-radius: 100px; background: var(--sky); color: var(--navy); font-weight: 700; font-size: .75rem; white-space: nowrap; }
+  @media (max-width: 700px) { .feed li { grid-template-columns: 1fr; } }
   .feed time { color: var(--muted); }
   .empty-note { color: var(--muted); font-size: .9rem; }
   .setup { padding: 22px; border-radius: 16px; background: #fff; border: 1px solid var(--rule); line-height: 1.6; }
@@ -128,7 +131,7 @@ const rankList = (rows, fmt = x => x) => {
   const max = rows[0][1] || 1;
   return `<ul class="rlist">${rows.map(([k, v]) => `<li><span class="lbl" style="--w:${(v / max * 100).toFixed(1)}%"><span>${esc(fmt(k))}</span></span><b>${v}</b></li>`).join('')}</ul>`;
 };
-const pageName = p => ({'/': 'Home', '/about': 'About', '/blog': 'Blog', '/impact': 'Impact', '/partnerships': 'Partnerships', '/contact': 'Contact'}[p] || p);
+const pageName = p => ({'/': 'Home', '/about': 'About', '/blog': 'Blog', '/impact': 'Impact', '/partnerships': 'Partnerships', '/team': 'Our Team', '/get-involved': 'Get Involved', '/contact': 'Contact'}[p] || (p.startsWith('/apply/') ? 'Application: ' + p.slice(7) : p.startsWith('/blog/') ? 'Blog: ' + p.slice(6).replace(/-/g, ' ') : p));
 async function loadAnalytics() {
   const root = document.querySelector('#analytics-root');
   if (!root) return;
@@ -149,9 +152,15 @@ async function loadAnalytics() {
         <div class="ins-card"><h3>Most viewed pages</h3>${rankList(a.pages, pageName)}</div>
         <div class="ins-card"><h3>Most clicked</h3>${rankList(a.clicks)}</div>
         <div class="ins-card"><h3>Where visitors come from</h3>${rankList(a.referrers.length ? a.referrers : [], r => r)}${a.referrers.length ? '' : '<p class="empty-note">Visits from links on other websites show up here. Direct visits aren\'t listed.</p>'}</div>
+        <div class="ins-card"><h3>Top cities</h3>${rankList(a.cities || [])}</div>
         <div class="ins-card"><h3>Countries</h3>${rankList(a.countries)}</div>
         <div class="ins-card"><h3>Devices</h3>${rankList(a.devices)}</div>
-        <div class="ins-card"><h3>Latest activity</h3>${a.events.length ? `<ul class="feed">${a.events.map(ev => `<li><time>${esc(fmtTime(ev.t).time)}</time><span>${ev.type === 'click' ? 'Click' : 'View'}</span><span>${ev.type === 'click' ? `"${esc(ev.label)}" on ${esc(pageName(ev.path))}` : esc(pageName(ev.path))}${ev.city || ev.country ? ` · ${esc([ev.city, ev.country].filter(Boolean).join(', '))}` : ''}${ev.dev ? ` · ${esc(ev.dev)}` : ''}</span></li>`).join('')}</ul>` : '<p class="empty-note">No visits yet.</p>'}</div>
+        <div class="ins-card wide"><h3>Latest activity</h3>${a.events.length ? `<ul class="feed">${a.events.map(ev => {
+          const place = [ev.city, [ev.region, ev.postal].filter(Boolean).join(' '), ev.country].filter(Boolean).join(', ');
+          const what = ev.type === 'click' ? `Clicked "${esc(ev.label)}" on ${esc(pageName(ev.path))}` : `Viewed ${esc(pageName(ev.path))}${ev.ref ? ` · from ${esc(ev.ref)}` : ''}`;
+          const who = ev.visitor ? `<span class="vtag" title="Anonymous visitor">Visitor ${esc(ev.visitor)}${ev.first ? ' · new' : ''}</span>` : '';
+          return `<li><time>${esc(fmtTime(ev.t).date)} ${esc(fmtTime(ev.t).time)}</time><span>${what}<small>${[place, ev.device || ev.dev].filter(Boolean).map(esc).join(' · ')}</small></span>${who}</li>`;
+        }).join('')}</ul>` : '<p class="empty-note">No visits yet.</p>'}</div>
       </div>`;
   } catch (e) { root.innerHTML = setupHelp('Analytics', e.message); }
 }

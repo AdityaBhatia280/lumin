@@ -14,7 +14,7 @@ const mime = {
 };
 const imageTypes = {'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp', 'image/gif': '.gif', 'image/svg+xml': '.svg'};
 const blocked = /^\/(\.git|\.taste-skill|Microsoft|node_modules|data\/logs)(\/|$)|^\/server\.cjs$|^\/api\//;
-const {diffData, sealEntry, verifyChain, summarize, dayList, cleanEvent, cleanApplication} = require('./api/_core');
+const {diffData, sealEntry, verifyChain, summarize, dayList, cleanEvent, cleanApplication, deviceLabel, visitorTag} = require('./api/_core');
 const appsFile = path.join(root, 'data', 'logs', 'applications.json');
 const readApps = () => { try { return JSON.parse(fs.readFileSync(appsFile, 'utf8')); } catch { return []; } };
 const writeApps = list => { fs.mkdirSync(path.dirname(appsFile), {recursive: true}); fs.writeFileSync(appsFile, JSON.stringify(list, null, 1)); };
@@ -41,7 +41,7 @@ function track(ev, req) {
   const inc = (o, k) => { o[k] = (o[k] || 0) + 1; };
   if (ev.type === 'pageview') { inc(d.pv, ev.path); if (!d.vis.includes(ev.vid)) d.vis.push(ev.vid); if (ev.ref) inc(d.ref, ev.ref); if (ev.dev) inc(d.dev, ev.dev); inc(d.ctry, isLocal(req) ? 'This computer' : 'Local network'); }
   else inc(d.clk, `${ev.label}${ev.href ? ' → ' + ev.href : ''}`);
-  st.events.unshift({t: new Date().toISOString(), type: ev.type, path: ev.path, label: ev.label, href: ev.href, dev: ev.dev, ref: ev.ref, city: '', country: ''});
+  st.events.unshift({t: new Date().toISOString(), type: ev.type, path: ev.path, label: ev.label, href: ev.href, dev: ev.dev, ref: ev.ref, city: '', country: '', device: deviceLabel(req.headers['user-agent'] || ''), visitor: visitorTag(ev.vid), first: ev.first});
   st.events = st.events.slice(0, 300);
   fs.mkdirSync(logDir, {recursive: true});
   fs.writeFileSync(statsFile, JSON.stringify(st));
