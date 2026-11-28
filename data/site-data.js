@@ -1345,7 +1345,8 @@ window.LUMIN_DATA = {
       "name": "Aditya Bhatia",
       "role": "Co-Founder / Leader",
       "photo": "/assets/uploads/mwybry1v-c432a0-edited.jpg",
-      "photoOriginal": "/assets/uploads/mwyachq8-e32bbb-img-20261015-221136-2.jpg"
+      "photoOriginal": "/assets/uploads/mwyachq8-e32bbb-img-20261015-221136-2.jpg",
+      "linkedin": "https://www.linkedin.com/in/adityabhatia-/"
     },
     {
       "id": "arnav-varghese",
