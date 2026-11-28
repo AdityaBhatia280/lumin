@@ -740,3 +740,21 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
 .home-posts .post-meta { gap: .5rem; font-size: .8rem; }
 .home-posts .post-meta time { white-space: nowrap; }
 .home-posts .tag { padding: .2rem .55rem; font-size: .72rem; }
+
+/* Impact: 5 schools per row */
+.school-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(12px, 1.4vw, 20px); }
+.school-card { border-radius: 18px; }
+.school-copy { padding: clamp(12px, 1.2vw, 16px); }
+.school-copy strong { font-size: clamp(.95rem, 1.15vw, 1.15rem); }
+.school-copy span { font-size: .8rem; }
+.school-card img.school-logo { height: clamp(30px, 2.8vw, 44px); top: 12px; left: 12px; }
+.school-sun { width: 110px; right: -30px; top: -30px; }
+@media (max-width: 1100px) { .school-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .school-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .school-grid { grid-template-columns: 1fr; } }
+
+/* Team cards that link to LinkedIn */
+a.member { display: block; color: inherit; text-decoration: none; }
+.member-copy { position: relative; }
+.member-li { position: absolute; top: 12px; right: 12px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; background: #0a66c2; color: #fff; font: 700 .78rem/1 Arial, sans-serif; font-style: normal; }
+a.member:hover .member-copy h3 { color: #0a66c2; }

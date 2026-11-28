@@ -17,6 +17,7 @@ views.team = () => {
       <div class="fields">
         <label class="field">Name<input data-team-field="name" data-i="${i}" value="${esc(m.name)}"></label>
         <label class="field">Title<input data-team-field="role" data-i="${i}" value="${esc(m.role || 'Co-Founder')}"></label>
+        <label class="field wide">LinkedIn link <small>optional · clicking their card opens it</small><input type="url" placeholder="https://www.linkedin.com/in/…" data-team-field="linkedin" data-i="${i}" value="${esc(m.linkedin || '')}"></label>
         <div class="field wide" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <button class="btn small primary" data-team="photo" data-i="${i}">${m.photo ? 'Replace photo' : 'Upload photo'}</button>
           ${m.photo ? `<button class="btn small" data-team="edit" data-i="${i}">✎ Edit photo</button><button class="btn small" data-team="nophoto" data-i="${i}">Remove photo</button>` : ''}

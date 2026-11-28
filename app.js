@@ -275,10 +275,11 @@ function about() {
 const team = (data.team || []).filter(m => m.name);
 function memberCard(m, i) {
   const initialsOf = n => n.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
-  return `<article class="member m${i + 1}" data-reveal style="--d:${i}">
+  const tag = m.linkedin ? `a href="${esc(m.linkedin)}" target="_blank" rel="noopener" aria-label="${esc(m.name)} on LinkedIn"` : 'article';
+  return `<${tag} class="member m${i + 1}${m.linkedin ? ' has-link' : ''}" data-reveal style="--d:${i}">
     <div class="member-photo">${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}" loading="lazy" decoding="async">` : `<span class="member-initials" aria-hidden="true">${esc(initialsOf(m.name))}</span>`}</div>
-    <div class="member-copy"><h3>${(() => { const parts = String(m.name).trim().split(" ").filter(Boolean); const first = parts.shift() || ""; return `<span class="first">${esc(first)}</span><span class="last">${esc(parts.join(" "))}</span>`; })()}</h3><span>${esc(m.role || 'Co-Founder')}</span></div>
-  </article>`;
+    <div class="member-copy"><h3>${(() => { const parts = String(m.name).trim().split(" ").filter(Boolean); const first = parts.shift() || ""; return `<span class="first">${esc(first)}</span><span class="last">${esc(parts.join(" "))}</span>`; })()}</h3><span>${esc(m.role || 'Co-Founder')}</span>${m.linkedin ? '<i class="member-li" aria-hidden="true">in</i>' : ''}</div>
+  </${m.linkedin ? 'a' : 'article'}>`;
 }
 function teamPage() {
   const story = content.teamStory;
@@ -461,9 +462,9 @@ if (mapFrame) {
 const schoolGrid = document.querySelector('.school-grid');
 if (schoolGrid) {
   const cards = [...schoolGrid.children];
-  const show = all => cards.forEach((li, i) => { li.hidden = !all && i >= 24; });
+  const show = all => cards.forEach((li, i) => { li.hidden = !all && i >= 25; });
   show(false);
-  if (cards.length > 24) {
+  if (cards.length > 25) {
     schoolGrid.insertAdjacentHTML('afterend', `<div class="directory-more"><button type="button" class="button secondary">Show all ${cards.length} ${arrow}</button></div>`);
     const more = schoolGrid.nextElementSibling;
     more.querySelector('button').addEventListener('click', () => { show(true); more.hidden = true; });
