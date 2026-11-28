@@ -198,7 +198,7 @@ function home() {
 function blog() {
   return `<section class="page-intro compact"><div class="wrap"><div class="intro-copy" data-enter><h1>News & stories</h1>
     <p class="lead">What Project Lumin is building, where we are going, and who we are working with.</p></div></div></section>` +
-    section(blogPosts.length ? `<div class="post-grid" data-paged="12">${blogPosts.map(postCard).join('')}</div>` : comingSoon(), 'blog-section');
+    section(blogPosts.length ? `<div class="post-grid home-posts" data-paged="15">${blogPosts.map(postCard).join('')}</div>` : comingSoon(), 'blog-section');
 }
 
 function blogPost(post) {
