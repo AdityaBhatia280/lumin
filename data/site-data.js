@@ -597,10 +597,11 @@ window.LUMIN_DATA = {
     {
       "id": "bridge-the-gap",
       "name": "Bridge the Gap",
-      "url": "",
-      "logo": null,
+      "url": "https://bridgethegaprobotics.com/",
+      "logo": "/assets/partners/bridge-the-gap.png",
       "featured": false,
-      "description": ""
+      "description": "",
+      "logoOriginal": null
     },
     {
       "id": "charities2love",
@@ -613,10 +614,11 @@ window.LUMIN_DATA = {
     {
       "id": "classroom-central",
       "name": "Classroom Central",
-      "url": "",
-      "logo": null,
+      "url": "https://classroomcentral.org/",
+      "logo": "/assets/partners/classroom-central.png",
       "featured": false,
-      "description": ""
+      "description": "",
+      "logoOriginal": null
     },
     {
       "id": "cross",
@@ -685,10 +687,11 @@ window.LUMIN_DATA = {
     {
       "id": "project-pulmonary",
       "name": "Project Pulmonary",
-      "url": "",
-      "logo": null,
+      "url": "https://projectpulmonary.com/",
+      "logo": "/assets/partners/project-pulmonary.png",
       "featured": false,
-      "description": ""
+      "description": "",
+      "logoOriginal": null
     },
     {
       "id": "radicubs-robotics",
