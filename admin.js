@@ -150,7 +150,7 @@ function deletePhoto(id) {
     const arr = slotList(key).map(x => x === id ? null : x);
     if (arr.some(Boolean)) state.slots[key] = arr; else delete state.slots[key];
   }
-  for (const post of state.posts) if (post.photo === id) post.photo = null;
+  for (const post of state.posts) { if (post.photo === id) post.photo = null; if (post.gallery) post.gallery = post.gallery.filter(g => g.photo !== id); }
   forgetFile(p.src);
   if (p.original && p.original !== p.src) forgetFile(p.original);
   changed();
@@ -160,7 +160,7 @@ function deletePhoto(id) {
 const slotList = key => { const v = state.slots[key]; const arr = Array.isArray(v) ? v.slice(0, 4) : v ? [v] : []; while (arr.length < 4) arr.push(null); return arr; };
 function usage(id) {
   const out = spots.filter(s => slotList(s.key).includes(id)).map(s => s.label);
-  state.posts.filter(p => p.photo === id).forEach(p => out.push('Blog: ' + p.title));
+  state.posts.filter(p => p.photo === id || (p.gallery || []).some(g => g.photo === id)).forEach(p => out.push('Blog: ' + p.title));
   return out;
 }
 
@@ -231,6 +231,9 @@ const views = {
             <label class="field wide">Post text<textarea class="body" data-post="${post.id}" data-field="body">${esc(post.body)}</textarea></label>
             <div class="field wide">Photo<div class="post-photo-pick">${p ? `<img src="${esc(view(p.src))}" alt="" style="aspect-ratio:1;object-fit:cover;border-radius:10px">` : '<span class="random-tile">Random</span>'}
               <button class="btn small primary" data-action="pick" data-target="post:${post.id}">Choose photo</button>${p ? `<button class="btn small" data-action="edit-picked" data-id="${p.id}">✎ Edit photo</button><button class="btn small" data-action="unpin" data-target="post:${post.id}">Back to random</button>` : ''}</div></div>
+            <div class="field wide">More photos <small>shown under the article, with optional captions</small>
+              <div class="gallery-edit">${(post.gallery || []).map((g, gi) => { const gp = photoById(g.photo); return gp ? `<div class="gallery-item"><img src="${esc(view(gp.src))}" alt=""><input data-gallery-caption="${post.id}" data-gi="${gi}" placeholder="Caption (optional)" value="${esc(g.caption)}"><div class="gallery-actions"><button class="btn small" data-action="edit-picked" data-id="${gp.id}">✎</button><button class="btn small" data-action="gallery-move" data-post="${post.id}" data-gi="${gi}" data-dir="-1" ${gi === 0 ? 'disabled' : ''}>↑</button><button class="btn small danger" data-action="gallery-remove" data-post="${post.id}" data-gi="${gi}">✕</button></div></div>` : ''; }).join('')}
+                <button class="btn small primary" data-action="pick" data-target="gallery:${post.id}">+ Add photo</button></div></div>
           </div></section>`;
       }).join('') || '<div class="empty">No posts yet.</div>'}`;
   },
@@ -289,6 +292,7 @@ function openPicker(target) {
 function currentPick(target) {
   const [kind, key] = target.split(/:(.*)/);
   if (kind === 'spot') { const [k, i] = key.split('#'); return slotList(k)[Number(i) || 0]; }
+  if (kind === 'gallery') return null;
   return state.posts.find(p => p.id === key)?.photo;
 }
 function setPick(target, id) {
@@ -298,6 +302,7 @@ function setPick(target, id) {
     const arr = slotList(k); arr[Number(i) || 0] = id || null;
     if (arr.some(Boolean)) state.slots[k] = arr; else delete state.slots[k];
   }
+  else if (kind === 'gallery') { const post = state.posts.find(p => p.id === key); if (post && id) (post.gallery ||= []).push({photo: id, caption: ''}); }
   else { const post = state.posts.find(p => p.id === key); if (post) post.photo = id || null; }
   changed(); render();
 }
@@ -380,6 +385,14 @@ document.addEventListener('click', e => {
   if (action === 'edit-logo') { const p = state.partners.find(x => x.id === id); if (p) openEditorFor(fieldTarget(p, 'logo', 'logoOriginal', {keepAlpha: true, maxSide: 600, shapes: []})); }
   if (action === 'restore-logo') { const p = state.partners.find(x => x.id === id); if (p && restoreOriginal(fieldTarget(p, 'logo', 'logoOriginal'))) { changed(); render(); } }
   if (action === 'edit-picked') openEditor(id);
+  if (action === 'gallery-remove' || action === 'gallery-move') {
+    const post = state.posts.find(p => p.id === el.dataset.post), gi = Number(el.dataset.gi);
+    if (post?.gallery) {
+      if (action === 'gallery-remove') post.gallery.splice(gi, 1);
+      else if (gi > 0) [post.gallery[gi - 1], post.gallery[gi]] = [post.gallery[gi], post.gallery[gi - 1]];
+      changed(); render();
+    }
+  }
   if (action === 'remove-logo') {
     const p = state.partners.find(x => x.id === id);
     forgetFile(p.logo); if (p.logoOriginal && p.logoOriginal !== p.logo) forgetFile(p.logoOriginal); p.logo = null; p.logoOriginal = null; changed(); render();
@@ -499,3 +512,11 @@ async function start() {
   }
 }
 start();
+
+// Gallery captions
+document.addEventListener('input', e => {
+  const id = e.target.dataset.galleryCaption;
+  if (!id || !state) return;
+  const post = state.posts.find(p => p.id === id);
+  if (post?.gallery?.[Number(e.target.dataset.gi)]) { post.gallery[Number(e.target.dataset.gi)].caption = e.target.value; changed(); }
+});

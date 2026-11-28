@@ -713,3 +713,19 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
 .team-row .member-photo, .team-row .member-photo { aspect-ratio: 1; height: auto; max-height: none; }
 .post-hero img, .post-hero .photo-empty { aspect-ratio: 3 / 2; max-height: none; }
 @media (max-width: 860px) { .team-intro .intro-photo .cycler { width: 100%; } .team-row { max-width: none; } }
+
+/* ---------- Blog post gallery ---------- */
+.post-gallery { max-width: 1000px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 2vw, 20px); margin-block: 8px clamp(40px, 6vw, 70px); }
+.post-gallery.one { grid-template-columns: minmax(0, 640px); justify-content: center; }
+.post-gallery figure { margin: 0; }
+.post-gallery .gallery-open { display: block; width: 100%; padding: 0; border: 0; border-radius: 18px; overflow: hidden; background: var(--sand); cursor: zoom-in; }
+.post-gallery img { aspect-ratio: 4 / 3; object-fit: cover; transition: scale .5s var(--ease); }
+.post-gallery .gallery-open:hover img { scale: 1.04; }
+.post-gallery figcaption { margin-top: .5rem; color: var(--muted); font-size: .92rem; }
+@media (max-width: 600px) { .post-gallery { grid-template-columns: 1fr; } }
+.lightbox { max-width: min(94vw, 1200px); max-height: 92vh; padding: 0; border: 0; border-radius: 16px; background: #0d2150; color: #fff; overflow: hidden; }
+.lightbox::backdrop { background: #0d2150cc; }
+.lightbox img { display: block; max-width: 100%; max-height: 82vh; width: auto; margin: 0 auto; object-fit: contain; }
+.lightbox p { margin: 0; padding: 10px 16px 14px; font-size: .95rem; color: #d8e1f3; }
+.lightbox p:empty { display: none; }
+.lightbox-close { position: absolute; top: 8px; right: 8px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: #ffffffe6; color: var(--navy); font-size: 1.5rem; line-height: 1; cursor: pointer; }

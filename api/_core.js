@@ -40,7 +40,7 @@ function diffData(before, after) {
   };
   listDiff('Partner', x => x.name, ['name', 'url', 'description', 'logo', 'featured'], before.partners, after.partners);
   listDiff('Team member', x => x.name, ['name', 'role', 'photo'], before.team, after.team);
-  listDiff('Blog post', x => x.title, ['title', 'tag', 'date', 'summary', 'body', 'photo'], before.posts, after.posts);
+  listDiff('Blog post', x => x.title, ['title', 'tag', 'date', 'summary', 'body', 'photo', 'gallery'], before.posts, after.posts);
   return out.length ? out.slice(0, 150) : ['No visible changes'];
 }
 

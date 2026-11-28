@@ -35,7 +35,7 @@ function shuffle(list) {
 }
 const photos = (data.photos || []).filter(p => p && p.src);
 const photoById = new Map(photos.map(p => [p.id, p]));
-const pinnedIds = new Set([...Object.values(data.slots || {}).flat(), ...(data.posts || []).map(p => p.photo)].filter(id => photoById.has(id)));
+const pinnedIds = new Set([...Object.values(data.slots || {}).flat(), ...(data.posts || []).flatMap(p => [p.photo, ...(p.gallery || []).map(g => g.photo)])].filter(id => photoById.has(id)));
 let pool = shuffle(photos.filter(p => !pinnedIds.has(p.id)));
 if (!pool.length) pool = shuffle(photos);
 let poolIndex = 0;
@@ -197,7 +197,7 @@ function home() {
 function blog() {
   return `<section class="page-intro compact"><div class="wrap"><div class="intro-copy" data-enter><h1>News & stories</h1>
     <p class="lead">What Project Lumin is building, where we are going, and who we are working with.</p></div></div></section>` +
-    section(blogPosts.length ? `<div class="post-grid">${blogPosts.map(postCard).join('')}</div>` : comingSoon(), 'blog-section');
+    section(blogPosts.length ? `<div class="post-grid" data-paged="12">${blogPosts.map(postCard).join('')}</div>` : comingSoon(), 'blog-section');
 }
 
 function blogPost(post) {
@@ -211,6 +211,10 @@ function blogPost(post) {
     </div>
     <div class="wrap post-hero" data-enter style="--d:1">${img(postPhoto(post), '', true)}</div>
     <div class="wrap post-wrap post-body">${String(post.body || '').split(/\n\s*\n/).filter(Boolean).map(par => `<p>${esc(par)}</p>`).join('')}</div>
+    ${(() => {
+      const shots = (post.gallery || []).map(g => ({p: photoById.get(g.photo), caption: g.caption || ''})).filter(g => g.p);
+      return shots.length ? `<div class="wrap post-gallery${shots.length === 1 ? ' one' : ''}">${shots.map((g, i) => `<figure data-reveal style="--d:${i}"><button type="button" class="gallery-open" data-full="${esc(g.p.src)}" data-caption="${esc(g.caption)}" aria-label="View photo larger"><img src="${esc(g.p.src)}" alt="${esc(g.caption || g.p.alt || '')}" loading="lazy" decoding="async"></button>${g.caption ? `<figcaption>${esc(g.caption)}</figcaption>` : ''}</figure>`).join('')}</div>` : '';
+    })()}
   </article>` + (more.length ? section(heading('Keep reading', 'More from the blog') + `<div class="post-grid">${more.map(postCard).join('')}</div>`, 'blog-section') : '');
 }
 
@@ -491,3 +495,26 @@ if (location.hash) requestAnimationFrame(() => document.getElementById(location.
     send({type: 'click', label, href: (el.getAttribute('href') || '').slice(0, 160)});
   }, {capture: true});
 })();
+
+/* ---------- Blog: show 12 posts at a time ---------- */
+document.querySelectorAll('[data-paged]').forEach(grid => {
+  const size = Number(grid.dataset.paged), cards = [...grid.children];
+  if (cards.length <= size) return;
+  let shown = size;
+  const apply = () => cards.forEach((c, i) => { c.hidden = i >= shown; if (!c.hidden) c.classList.add('revealed'); });
+  grid.insertAdjacentHTML('afterend', '<div class="directory-more"><button type="button" class="button secondary">Show more posts</button></div>');
+  const more = grid.nextElementSibling;
+  more.querySelector('button').addEventListener('click', () => { shown += size; apply(); if (shown >= cards.length) more.hidden = true; });
+  apply();
+});
+
+/* ---------- Blog gallery: click a photo to see it larger ---------- */
+if (document.querySelector('.gallery-open')) {
+  document.body.insertAdjacentHTML('beforeend', '<dialog class="lightbox" aria-label="Photo"><button type="button" class="lightbox-close" aria-label="Close">×</button><img alt=""><p></p></dialog>');
+  const box = document.querySelector('.lightbox');
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.gallery-open');
+    if (b) { box.querySelector('img').src = b.dataset.full; box.querySelector('img').alt = b.dataset.caption; box.querySelector('p').textContent = b.dataset.caption; box.showModal(); }
+    if (e.target.closest('.lightbox-close') || e.target === box) box.close();
+  });
+}
