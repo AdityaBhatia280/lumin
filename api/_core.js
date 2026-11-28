@@ -87,4 +87,21 @@ function cleanEvent(body) {
     label: clean(body.label, 60), href: clean(body.href, 160)};
 }
 
-module.exports = {diffData, sealEntry, verifyChain, summarize, dayList, cleanEvent};
+/* ---------- Application submissions ---------- */
+function cleanApplication(body) {
+  const form = String(body.form || '');
+  if (!/^[a-z0-9-]{2,30}$/.test(form)) return {error: 'Unknown application'};
+  if (body.hp) return {spam: true};                      // hidden field filled in: a bot
+  if (Number(body.ms) < 2500) return {spam: true};      // submitted faster than a person can type
+  const fields = {};
+  for (const [k, v] of Object.entries(body.fields || {}).slice(0, 30)) {
+    if (!/^[a-zA-Z0-9_-]{1,40}$/.test(k)) continue;
+    const val = String(v ?? '').replace(/[\u0000-\u0008\u000b-\u001f]/g, '').trim().slice(0, 3000);
+    if (val) fields[k] = val;
+  }
+  if (!fields.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email)) return {error: 'Please enter a valid email address.'};
+  if (!fields.name) return {error: 'Please enter your name.'};
+  return {form, fields};
+}
+
+module.exports = {cleanApplication, diffData, sealEntry, verifyChain, summarize, dayList, cleanEvent};

@@ -14,3 +14,5 @@
 /partnerships        /index.html    200
 /contact             /index.html    200
 /team               /index.html    200
+/get-involved       /index.html    200
+/apply/*            /index.html    200

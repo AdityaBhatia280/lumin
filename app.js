@@ -248,7 +248,7 @@ function impact() {
         <div class="chart-card" data-reveal><h3>Top countries</h3><ul class="bars">${countryCounts.slice(0, 8).map(([c, n]) => `<li><span>${esc(c)}</span><b style="--w:${(n / maxCountry * 100).toFixed(1)}%"></b><em>${n}</em></li>`).join('')}</ul></div>
         <div class="chart-card" data-reveal style="--d:1"><h3>Who is in the network</h3><ul class="bars types">${typeCounts.map(([t, n]) => `<li><span>${esc(t)}</span><b class="${typeClass(t)}" style="--w:${(n / typeCounts[0][1] * 100).toFixed(1)}%"></b><em>${n}</em></li>`).join('')}</ul></div>
       </div>`, 'map-section', 'map') +
-    section(heading('', 'Schools & communities.', 'Every school and community in our network.') +
+    section(heading('', 'Schools & communities.', 'Every school and community in our network.', button('Add your school', '/apply/network', 'secondary')) +
       `<ul class="school-grid">${network.slice().sort((a, b) => a.name.localeCompare(b.name)).map((e, i) => `<li class="school-card${e.photo ? '' : ' no-photo tone-' + (i % 3)}">
         ${e.photo ? `<img src="${esc(e.photo)}" alt="" loading="lazy" decoding="async">` : '<span class="school-sun" aria-hidden="true"></span><img class="school-logo" src="/assets/brand/lumin-lockup-white.png" alt="" loading="lazy">'}
         <div class="school-copy"><strong>${esc(e.name)}</strong>${e.location || e.geography ? `<span>${esc(e.location || e.geography)}</span>` : ''}</div></li>`).join('')}</ul>`, 'directory-section', 'chapters');
@@ -257,7 +257,7 @@ function impact() {
 /* ---------- Partnerships ---------- */
 function partnershipsPage() {
   return pageIntro('Partnerships', 'Stronger <span class="hl">together.</span>', 'We work with organizations of every size to bring sun safety to more young people, from global student networks to local nonprofits.', 'partners-hero',
-    `<div class="actions">${button('Become a partner', mail('Partnering with Project Lumin'))}</div>`) +
+    `<div class="actions">${button('Become a partner', '/apply/partner')}</div>`) +
     section(heading('', 'Our Partners') + `<div class="ptile-grid">${sortedPartners.map((p, i) => `<div class="ptile-cell" data-reveal style="--d:${i % 6}">${partnerTile(p, i)}</div>`).join('')}</div>`, 'partner-section');
 }
 
@@ -294,9 +294,42 @@ function teamPage() {
     </div></section>`;
 }
 
+/* ---------- Get Involved + application forms ---------- */
+const appForms = content.applications || [];
+function getInvolved() {
+  return `<section class="page-intro compact"><div class="wrap"><div class="intro-copy" data-enter><h1>Get Involved</h1>
+      <p class="lead">There are lots of ways to join the movement. Pick the one that fits you and fill out a short application. We read every one.</p></div></div></section>
+    <section class="section apply-section"><div class="wrap"><div class="apply-grid">${appForms.map((f, i) => `<a class="apply-card" href="/apply/${esc(f.id)}" data-reveal style="--d:${i % 3}">
+      <span class="apply-icon" aria-hidden="true">${esc(f.icon || '☀️')}</span><h3>${esc(f.title)}</h3><p>${esc(f.short)}</p><span class="card-link">Apply ${arrow}</span></a>`).join('')}</div>
+      <p class="apply-note">Questions first? Email us at ${textLink(email, mail())}</p></div></section>`;
+}
+function fieldHtml(f) {
+  const id = 'f-' + f.name, req = f.required ? ' required' : '', star = f.required ? ' <b aria-hidden="true">*</b>' : '';
+  const label = `<label for="${id}">${esc(f.label)}${star}</label>`;
+  if (f.type === 'textarea') return `<div class="form-field wide">${label}<textarea id="${id}" name="${esc(f.name)}" rows="4" maxlength="3000"${req}></textarea></div>`;
+  if (f.type === 'select') return `<div class="form-field">${label}<select id="${id}" name="${esc(f.name)}"${req}><option value="">Choose one</option>${f.options.map(o => `<option>${esc(o)}</option>`).join('')}</select></div>`;
+  return `<div class="form-field">${label}<input id="${id}" name="${esc(f.name)}" type="${esc(f.type || 'text')}" maxlength="300"${req}${f.type === 'email' ? ' autocomplete="email"' : f.name === 'name' ? ' autocomplete="name"' : f.type === 'tel' ? ' autocomplete="tel"' : ''}></div>`;
+}
+function applyPage(id) {
+  const f = appForms.find(x => x.id === id);
+  if (!f) return `<section class="page-intro compact"><div class="wrap"><h1>Application not found</h1>${button('See all ways to get involved', '/get-involved')}</div></section>`;
+  document.title = `${f.title} | Project Lumin`;
+  return `<section class="page-intro compact apply-intro"><div class="wrap"><div class="intro-copy" data-enter><a class="back-link" href="/get-involved">← All applications</a><h1>${esc(f.title)}</h1><p class="lead">${esc(f.intro)}</p></div></div></section>
+    <section class="section apply-form-section"><div class="wrap">
+      <form class="apply-form" data-form="${esc(f.id)}" novalidate>
+        <div class="form-grid">${f.fields.map(fieldHtml).join('')}</div>
+        <div class="hp" aria-hidden="true"><label>Leave this empty<input name="website_url" tabindex="-1" autocomplete="off"></label></div>
+        <label class="form-consent"><input type="checkbox" name="consent" required> I agree that Project Lumin may contact me about this application. <b aria-hidden="true">*</b></label>
+        <p class="form-error" role="alert"></p>
+        <div class="form-actions"><button class="button primary" type="submit">Submit application ${arrow}</button><span class="form-hint"><b>*</b> required</span></div>
+      </form>
+      <div class="apply-done" hidden><span class="apply-icon" aria-hidden="true">🎉</span><h2>Thank you!</h2><p class="lead">We received your application and will get back to you by email soon.</p>${button('Back to Get Involved', '/get-involved', 'secondary')}</div>
+    </div></section>`;
+}
+
 /* ---------- Contact ---------- */
 function contact() {
-  return pageIntro('Contact', 'Let’s make sun safety <span class="hl">a habit.</span>', 'Reach out about partnerships, events, starting a chapter, or anything else.', 'contact-hero') +
+  return pageIntro('Contact', 'Let’s make sun safety <span class="hl">a habit.</span>', 'Reach out about partnerships, events, joining our network, or anything else.', 'contact-hero') +
     section(`<div class="contact-grid">
       <a class="contact-card" href="${esc(mail())}" data-reveal><span class="contact-icon" aria-hidden="true">✉</span><span class="contact-label">Email</span><strong>${esc(email)}</strong></a>
       ${instagram ? `<a class="contact-card" href="${esc(instagram)}" target="_blank" rel="noopener" data-reveal style="--d:1"><span class="contact-icon">${instagramIcon}</span><span class="contact-label">Instagram</span><strong>Follow us</strong></a>` : ''}
@@ -309,9 +342,10 @@ function contact() {
 }
 
 /* ---------- Render ---------- */
-const pages = {'/about': ['About', about], '/blog': ['Blog', blog], '/impact': ['Impact', impact], '/partnerships': ['Partnerships', partnershipsPage], '/team': ['Our Team', teamPage], '/contact': ['Contact', contact]};
-const currentPage = route.startsWith('/blog/') ? '/blog' : route;
+const pages = {'/get-involved': ['Get Involved', getInvolved], '/about': ['About', about], '/blog': ['Blog', blog], '/impact': ['Impact', impact], '/partnerships': ['Partnerships', partnershipsPage], '/team': ['Our Team', teamPage], '/contact': ['Contact', contact]};
+const currentPage = route.startsWith('/blog/') ? '/blog' : route.startsWith('/apply/') ? '/get-involved' : route;
 if (route.startsWith('/blog/')) main.innerHTML = blogPost(blogPosts.find(p => p.id === route.split('/')[2]));
+else if (route.startsWith('/apply/')) main.innerHTML = applyPage(route.split('/')[2]);
 else if (pages[route]) { main.innerHTML = pages[route][1](); document.title = `${pages[route][0]} | Project Lumin`; }
 else main.innerHTML = home();
 document.body.dataset.page = currentPage === '/' ? 'home' : currentPage.slice(1);
@@ -523,3 +557,36 @@ if (document.querySelector('.gallery-open')) {
     if (e.target.closest('.lightbox-close') || e.target === box) box.close();
   });
 }
+
+/* ---------- Application forms: send to /api/apply ---------- */
+document.querySelectorAll('.apply-form').forEach(form => {
+  const started = Date.now();
+  const err = form.querySelector('.form-error');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    err.textContent = '';
+    form.querySelectorAll('.invalid').forEach(x => x.classList.remove('invalid'));
+    const bad = [...form.querySelectorAll('input, select, textarea')].filter(x => !x.checkValidity());
+    if (bad.length) {
+      bad.forEach(x => (x.closest('.form-field') || x.closest('.form-consent'))?.classList.add('invalid'));
+      err.textContent = bad.some(x => x.type === 'email' && x.value) ? 'Please check your email address.' : 'Please fill in the required fields.';
+      bad[0].focus();
+      return;
+    }
+    const fd = new FormData(form), fields = {};
+    for (const [k, v] of fd.entries()) if (k !== 'website_url' && k !== 'consent' && String(v).trim()) fields[k] = String(v).trim();
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.firstChild.textContent = 'Sending… ';
+    try {
+      const res = await fetch('/api/apply', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({form: form.dataset.form, fields, hp: fd.get('website_url') || '', ms: Date.now() - started})});
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(out.error || 'Something went wrong.');
+      form.hidden = true;
+      const done = form.parentElement.querySelector('.apply-done');
+      done.hidden = false; done.scrollIntoView({block: 'center'});
+    } catch (x) {
+      err.innerHTML = esc(x.message) + ' You can also email us at ' + textLink(email, mail());
+      btn.disabled = false; btn.firstChild.textContent = 'Submit application ';
+    }
+  });
+});

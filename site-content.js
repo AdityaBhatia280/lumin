@@ -51,6 +51,89 @@ window.LUMEN_CONTENT = {
       'We saw kids spend whole summers outside with no sunscreen and no idea how strong the sun was, and no one was teaching them in a way they cared about. Nothing like Project Lumin existed, so we built it to redefine the standard of sun safety.'
     ]
   },
+  // Application forms on the Get Involved page. Submissions appear in the admin under "Applications".
+  // Field types: text, email, tel, url, number, date, textarea, select (needs options).
+  applications: [
+    {
+      id: 'network', title: 'Add Your School or Community to Our Network', icon: '🌎',
+      short: 'Join our network of schools and communities and get sun-safety resources for your students.',
+      intro: 'Schools and communities in our network receive sun-safety resources, invitations to events, and the chance to work with Project Lumin. Tell us about yours.',
+      fields: [
+        {name: 'school', label: 'School or community name', type: 'text', required: true},
+        {name: 'kind', label: 'Type', type: 'select', required: true, options: ['School', 'College or university', 'Community group', 'Summer camp', 'Youth program', 'Other']},
+        {name: 'location', label: 'City and state (or country)', type: 'text', required: true},
+        {name: 'name', label: 'Your name', type: 'text', required: true},
+        {name: 'email', label: 'Email', type: 'email', required: true},
+        {name: 'role', label: 'Your role', type: 'text', required: true},
+        {name: 'size', label: 'About how many students or members?', type: 'select', options: ['Under 50', '50 to 200', '200 to 1,000', 'Over 1,000']},
+        {name: 'photo', label: 'Link to a photo of your school or community (optional)', type: 'url'},
+        {name: 'notes', label: 'Anything else we should know?', type: 'textarea'}
+      ]
+    },
+    {
+      id: 'partner', title: 'Partner With Us', icon: '🤝',
+      short: 'Organizations, businesses and nonprofits: co-host events, sponsor supplies or share resources.',
+      intro: 'We partner with organizations of every size, from youth sports leagues and health organizations to nonprofits and school districts. Tell us about your organization and how you would like to work together.',
+      fields: [
+        {name: 'organization', label: 'Organization name', type: 'text', required: true},
+        {name: 'website', label: 'Website', type: 'url'},
+        {name: 'name', label: 'Contact name', type: 'text', required: true},
+        {name: 'email', label: 'Email', type: 'email', required: true},
+        {name: 'phone', label: 'Phone', type: 'tel'},
+        {name: 'orgType', label: 'Type of organization', type: 'select', required: true, options: ['Nonprofit', 'School or district', 'Youth sports league', 'Healthcare or dermatology', 'Business', 'Student organization', 'Other']},
+        {name: 'how', label: 'How would you like to partner?', type: 'select', required: true, options: ['Co-host an event', 'Sponsor sunscreen or supplies', 'Share resources or expertise', 'Cross-promote each other', 'Something else']},
+        {name: 'details', label: 'Tell us more', type: 'textarea', required: true}
+      ]
+    },
+    {
+      id: 'ambassador', title: 'Become an Ambassador', icon: '⭐',
+      short: 'Represent Project Lumin online and at school, and lead peer-to-peer sun-safety education.',
+      intro: 'Ambassadors represent Project Lumin, spread awareness on campus and online, and help lead sun-safety education among their peers.',
+      fields: [
+        {name: 'name', label: 'Your full name', type: 'text', required: true},
+        {name: 'email', label: 'Email', type: 'email', required: true},
+        {name: 'phone', label: 'Phone', type: 'tel'},
+        {name: 'school', label: 'School', type: 'text', required: true},
+        {name: 'grade', label: 'Grade', type: 'select', required: true, options: ['6th', '7th', '8th', '9th', '10th', '11th', '12th', 'College']},
+        {name: 'location', label: 'City and state (or country)', type: 'text', required: true},
+        {name: 'social', label: 'Social media handle (optional)', type: 'text'},
+        {name: 'why', label: 'Why do you want to be a Project Lumin ambassador?', type: 'textarea', required: true},
+        {name: 'ideas', label: 'What would you do as an ambassador?', type: 'textarea'},
+        {name: 'time', label: 'How much time could you give each month?', type: 'select', options: ['1 to 2 hours', '3 to 5 hours', '6 to 10 hours', 'More than 10 hours']}
+      ]
+    },
+    {
+      id: 'volunteer', title: 'Volunteer at an Event', icon: '🙋',
+      short: 'Help at outreach booths, service days, kit-building sessions, or with design and social media.',
+      intro: 'Volunteers make every Project Lumin event happen. Sign up and we will let you know about upcoming outreach booths, service days and work sessions.',
+      fields: [
+        {name: 'name', label: 'Your full name', type: 'text', required: true},
+        {name: 'email', label: 'Email', type: 'email', required: true},
+        {name: 'phone', label: 'Phone', type: 'tel'},
+        {name: 'school', label: 'School (if you are a student)', type: 'text'},
+        {name: 'grade', label: 'Grade', type: 'select', options: ['6th', '7th', '8th', '9th', '10th', '11th', '12th', 'College', 'Not a student']},
+        {name: 'interest', label: 'What would you like to help with?', type: 'select', required: true, options: ['Outreach booths', 'Donation and service days', 'Making kits', 'Design and social media', 'Anything that is needed']},
+        {name: 'availability', label: 'When are you usually available?', type: 'textarea'},
+        {name: 'hours', label: 'Do you need volunteer hours verified?', type: 'select', options: ['Yes', 'No']}
+      ]
+    },
+    {
+      id: 'visit', title: 'Request a Visit or Booth', icon: '☀️',
+      short: 'Invite Project Lumin to your classroom, camp, sports event or community event.',
+      intro: 'We bring sun-safety presentations, hands-on activities, free sunscreen and UV wristbands to schools, camps, sports events and community gatherings.',
+      fields: [
+        {name: 'name', label: 'Contact name', type: 'text', required: true},
+        {name: 'email', label: 'Email', type: 'email', required: true},
+        {name: 'phone', label: 'Phone', type: 'tel'},
+        {name: 'organization', label: 'School, organization or event name', type: 'text', required: true},
+        {name: 'kind', label: 'What kind of visit?', type: 'select', required: true, options: ['Classroom presentation', 'Summer camp', 'Sports event', 'Community event or festival', 'Other']},
+        {name: 'date', label: 'Preferred date', type: 'date'},
+        {name: 'location', label: 'Location (city and venue)', type: 'text', required: true},
+        {name: 'audience', label: 'Expected number of people', type: 'select', options: ['Under 25', '25 to 100', '100 to 500', 'Over 500']},
+        {name: 'details', label: 'What are you hoping for?', type: 'textarea', required: true}
+      ]
+    }
+  ],
   photoSpots: [
     { key: 'focus-digital', label: 'Home: Focus area 1 (Digital)', page: 'Home' },
     { key: 'focus-community', label: 'Home: Focus area 2 (Community)', page: 'Home' },

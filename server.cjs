@@ -14,7 +14,10 @@ const mime = {
 };
 const imageTypes = {'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp', 'image/gif': '.gif', 'image/svg+xml': '.svg'};
 const blocked = /^\/(\.git|\.taste-skill|Microsoft|node_modules|data\/logs)(\/|$)|^\/server\.cjs$|^\/api\//;
-const {diffData, sealEntry, verifyChain, summarize, dayList, cleanEvent} = require('./api/_core');
+const {diffData, sealEntry, verifyChain, summarize, dayList, cleanEvent, cleanApplication} = require('./api/_core');
+const appsFile = path.join(root, 'data', 'logs', 'applications.json');
+const readApps = () => { try { return JSON.parse(fs.readFileSync(appsFile, 'utf8')); } catch { return []; } };
+const writeApps = list => { fs.mkdirSync(path.dirname(appsFile), {recursive: true}); fs.writeFileSync(appsFile, JSON.stringify(list, null, 1)); };
 
 /* ---------- Local history + analytics, kept in data/logs (never uploaded to GitHub) ---------- */
 const logDir = path.join(root, 'data', 'logs');
@@ -77,6 +80,18 @@ async function api(req, res, route) {
     try { const ev = cleanEvent(JSON.parse((await readBody(req, 4000)).toString('utf8') || '{}')); if (ev) track(ev, req); } catch {}
     return res.writeHead(204).end();
   }
+  // Public application forms (local copy of /api/apply)
+  if (route === '/api/apply') {
+    try {
+      const c = cleanApplication(JSON.parse((await readBody(req, 60000)).toString('utf8') || '{}'));
+      if (c.spam) return json(res, 200, {ok: true});
+      if (c.error) return json(res, 400, {error: c.error});
+      const app = {id: Date.now().toString(36) + crypto.randomBytes(3).toString('hex'), form: c.form, fields: c.fields, status: 'new', note: '', submittedAt: new Date().toISOString(), city: '', region: '', country: ''};
+      writeApps([app, ...readApps()]);
+      appendHistory({type: 'application', who: c.fields.name, what: c.form, ...localInfo(req)});
+      return json(res, 200, {ok: true});
+    } catch (e) { return json(res, 400, {error: e.message}); }
+  }
   if (!isLocal(req)) return json(res, 403, {error: 'The admin panel only works on the computer running the server.'});
   // Same protocol as the live admin in /api, but saves straight to this folder and needs no password.
   try {
@@ -90,6 +105,18 @@ async function api(req, res, route) {
       const {what} = JSON.parse((await readBody(req, 4000)).toString('utf8') || '{}');
       appendHistory({type: 'view', who, what: String(what || '').slice(0, 60), ...localInfo(req)});
       return json(res, 200, {ok: true});
+    }
+    if (route === '/api/applications' && req.method === 'GET') return json(res, 200, {applications: readApps()});
+    if (route === '/api/applications' && req.method === 'POST') {
+      const {id, status, note} = JSON.parse((await readBody(req, 20000)).toString('utf8') || '{}');
+      const list = readApps(), app = list.find(x => x.id === id);
+      if (!app) throw new Error('Application not found');
+      if (status !== undefined) app.status = status;
+      if (note !== undefined) app.note = String(note).slice(0, 3000);
+      app.updatedBy = who; app.updatedAt = new Date().toISOString();
+      writeApps(list);
+      appendHistory({type: 'application-update', who, what: `${app.form} · ${app.fields.name || ''}${status ? ' → ' + status : ' · note edited'}`, ...localInfo(req)});
+      return json(res, 200, {application: app});
     }
     if (route === '/api/analytics') {
       const n = [7, 30, 90].includes(Number(new URL(req.url, 'http://x').searchParams.get('days'))) ? Number(new URL(req.url, 'http://x').searchParams.get('days')) : 7;

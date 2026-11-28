@@ -147,4 +147,22 @@ async function readAnalytics(n) {
   return summarize(perDay, r[r.length - 2], r[r.length - 1].map(s => JSON.parse(s)));
 }
 
-module.exports = {storeReady, storeCheck, requestInfo, appendHistory, logSafe, readHistory, trackEvent, readAnalytics};
+/* ---------- Applications ---------- */
+async function saveApplication(app) { await redis([['SET', 'app:' + app.id, JSON.stringify(app)], ['LPUSH', 'apps', app.id]]); }
+async function listApplications() {
+  const [ids] = await redis([['LRANGE', 'apps', 0, 1999]]);
+  if (!ids || !ids.length) return [];
+  const vals = await redis(ids.map(id => ['GET', 'app:' + id]));
+  return vals.filter(Boolean).map(v => JSON.parse(v));
+}
+async function updateApplication(id, patch) {
+  const [v] = await redis([['GET', 'app:' + id]]);
+  if (!v) throw new Error('Application not found');
+  const app = {...JSON.parse(v), ...patch};
+  await redis([['SET', 'app:' + id, JSON.stringify(app)]]);
+  return app;
+}
+// true while under the limit (e.g. 8 submissions per hour per IP)
+async function underLimit(key, max, seconds) { const [n] = await redis([['INCR', key], ['EXPIRE', key, seconds]]); return Number(n) <= max; }
+
+module.exports = {saveApplication, listApplications, updateApplication, underLimit, storeReady, storeCheck, requestInfo, appendHistory, logSafe, readHistory, trackEvent, readAnalytics};

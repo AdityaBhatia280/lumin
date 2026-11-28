@@ -76,7 +76,7 @@ const setupHelp = (what, err = '') => `<div class="setup"><h3>${what} isn't conn
   ${storageStatus()}</div>`;
 
 /* ---------- History ---------- */
-const typeLabel = t => ({login: 'Logged in', 'login-failed': 'Failed login', logout: 'Logged out', publish: mode === 'local' ? 'Saved changes' : 'Published', upload: 'Uploaded image', view: 'Opened'}[t] || t);
+const typeLabel = t => ({login: 'Logged in', 'login-failed': 'Failed login', logout: 'Logged out', publish: mode === 'local' ? 'Saved changes' : 'Published', upload: 'Uploaded image', view: 'Opened', application: 'New application', 'application-update': 'Updated application'}[t] || t);
 let histFilter = 'all', histEntries = [], histTotal = 0;
 views.history = () => {
   queueMicrotask(() => loadHistory(true));
@@ -96,12 +96,12 @@ async function loadHistory(reset) {
 function drawHistory() {
   const root = document.querySelector('#history-root');
   if (!root) return;
-  const groups = {all: () => true, logins: e => /login|logout/.test(e.type), changes: e => e.type === 'publish', uploads: e => e.type === 'upload', views: e => e.type === 'view', failed: e => e.type === 'login-failed'};
+  const groups = {all: () => true, logins: e => /login|logout/.test(e.type), changes: e => e.type === 'publish', uploads: e => e.type === 'upload', apps: e => /^application/.test(e.type), views: e => e.type === 'view', failed: e => e.type === 'login-failed'};
   const shown = histEntries.filter(groups[histFilter]);
   const intact = histEntries.every(e => e.ok);
   root.innerHTML = `<div class="ins-bar"><span class="note">${histTotal} entries recorded</span>
       <span class="seal ${intact ? 'ok' : 'bad'}">${intact ? '✓ History intact' : '⚠ Tampering detected'}</span></div>
-    <div class="ins-bar">${[['all', 'Everything'], ['logins', 'Logins'], ['failed', 'Failed logins'], ['changes', 'Changes'], ['uploads', 'Uploads'], ['views', 'Sections opened']].map(([k, l]) => `<button class="chip-btn" data-hfilter="${k}" aria-pressed="${histFilter === k}">${l}</button>`).join('')}</div>
+    <div class="ins-bar">${[['all', 'Everything'], ['logins', 'Logins'], ['failed', 'Failed logins'], ['changes', 'Changes'], ['uploads', 'Uploads'], ['apps', 'Applications'], ['views', 'Sections opened']].map(([k, l]) => `<button class="chip-btn" data-hfilter="${k}" aria-pressed="${histFilter === k}">${l}</button>`).join('')}</div>
     <div class="hist">${shown.map(e => { const t = fmtTime(e.t); return `<article class="hist-item${e.ok ? '' : ' tampered'}">
       <div class="hist-time"><b>${esc(t.time)}</b>${esc(t.date)}</div>
       <div><div class="hist-head"><span class="tag-type t-${esc(e.type)}">${esc(typeLabel(e.type))}</span><strong>${esc(e.who || 'Unknown')}</strong>${e.what ? `<span>· ${esc(e.what)}</span>` : ''}${e.file ? `<span>· ${esc(e.original || e.file)}</span>` : ''}${e.ok ? '' : '<span class="tag-type t-login-failed">Altered</span>'}</div>

@@ -38,7 +38,7 @@
   ],
   "rewrites": [
     {
-      "source": "/(about|blog|impact|partnerships|team|contact)",
+      "source": "/(about|blog|impact|partnerships|team|contact|get-involved)",
       "destination": "/index.html"
     },
     {
@@ -48,6 +48,10 @@
     {
       "source": "/admin",
       "destination": "/admin.html"
+    },
+    {
+      "source": "/apply/:slug",
+      "destination": "/index.html"
     }
   ],
   "headers": [
