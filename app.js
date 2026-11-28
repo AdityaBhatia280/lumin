@@ -77,7 +77,8 @@ function featuredCards() {
   </article>`).join('')}</div>`;
 }
 
-const blogPosts = (data.posts || []).filter(p => p.title);
+// Newest first; undated posts go last.
+const blogPosts = (data.posts || []).filter(p => p.title).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 const formatDate = d => { if (!d) return ''; const t = new Date(d + 'T12:00:00'); return isNaN(t) ? d : t.toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'}); };
 function postCard(post, i = 0) {
   return `<article class="post-card" data-reveal style="--d:${i % 3}">
@@ -186,7 +187,7 @@ function home() {
     }).join('')}</div>`, 'focus-section', 'focus')}
 
   ${section(blogPosts.length
-    ? heading('', 'Our Blog', '', button('All posts', '/blog', 'secondary')) + `<div class="post-grid">${blogPosts.slice(0, 3).map(postCard).join('')}</div>`
+    ? heading('', 'Our Blog', '', button('All posts', '/blog', 'secondary')) + `<div class="post-grid home-posts">${blogPosts.slice(0, 5).map(postCard).join('')}</div>`
     : heading('', 'Our Blog') + comingSoon(), 'blog-section', 'blog')}
 
   ${section(heading('', 'Our Dedicated Partners') + partnerRow() +

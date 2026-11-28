@@ -733,38 +733,29 @@ window.LUMIN_DATA = {
   ],
   "posts": [
     {
-      "id": "meet-project-lumin",
-      "title": "Meet Project Lumin: Who We Are",
-      "date": "2026-07-08",
-      "tag": "Introduction",
-      "photo": "u-mwx8o6ckl7i2",
-      "summary": "A student-led initiative helping young people enjoy the outdoors safely by turning sun protection into an everyday habit.",
-      "body": "Project Lumin is a student-led public health initiative based in Frisco, Texas. Our mission is simple: empower young people to safely enjoy the outdoors by turning UV awareness and sun protection into a natural, lifelong habit.\n\nMost skin damage from the sun builds up quietly, starting in childhood. Instead of telling kids to stay inside, we want to make sun safety easy, interactive, and part of everyday life for children, students, youth athletes, parents, educators, and summer camps.\n\nOur work focuses on three goals. First, sun safety at your fingertips: easy-to-use tools, short videos, and daily reminders that make protecting your skin simple to understand. Second, showing up where kids play: we bring free sunscreen, color-changing UV wristbands, and hands-on lessons to parks, schools, camps, and sports events. Third, a movement led by students: chapters and partner organizations that carry Project Lumin into their own schools and cities.\n\nWe are proud to work alongside more than 20 partner organizations and a network of schools and communities around the world, and we are just getting started.\n\nFollow along here on our blog for event recaps, new tools, and stories from our chapters. If you want to bring Project Lumin to your school or community, reach out through our Contact page. We would love to work with you."
-    },
-    {
       "id": "a-day-at-the-park-with-project-lumin",
       "title": "A Day at the Park With Project Lumin",
-      "date": "",
+      "date": "2026-11-24",
       "tag": "Outreach",
       "photo": "u-mwx8o3xzt51r",
       "gallery": [],
-      "summary": "Our student team set up a Project Lumin table at the park and made sun safety part of a day outside.",
-      "body": "Some of our favorite conversations happen at the park. For this outreach stop, our student team set up a Project Lumin table right next to the playground, under the shade, where families were already spending their afternoon.\n\nWe were not there to tell anyone to go inside. We were there to make protecting your skin feel as normal as bringing a water bottle: putting on sunscreen before heading out, taking shade breaks, and knowing when the sun is strongest.\n\nDays like this remind us why we started Project Lumin. The best place to talk about sun safety is wherever people are already enjoying the sun."
+      "summary": "Our latest outreach event brought families, sunscreen, and plenty of sun-safety conversations to a local park.",
+      "body": "Our latest outreach event took us to a local park, where we set up our Project Lumin table right next to the playground, under the shade.\n\nFamilies came by all afternoon. Kids tried on UV wristbands and loved watching them change color in the sun, while parents picked up sunscreen and our brochure and asked our members about the best ways to keep their kids protected. We talked about reapplying sunscreen, taking shade breaks, and why sun safety matters even as the weather cools down.\n\nEvents like this one are exactly why we started Project Lumin. We are not here to tell anyone to stay inside. We are here to help families enjoy the outdoors safely, and every conversation at the park brings us one step closer."
     },
     {
       "id": "a-sun-safety-stop-on-a-day-outdoors",
       "title": "A Sun-Safety Stop on a Day Outdoors",
-      "date": "",
+      "date": "2026-11-21",
       "tag": "Outreach",
       "photo": "u-mwx8o4k8pi6f",
       "gallery": [],
-      "summary": "Another park visit, and why we bring sun-safety conversations to the places people already spend time outside.",
-      "body": "On this park visit, we set up our table at the edge of an open field and held up our banner so people passing by could see what we were about.\n\nWe bring sun-safety conversations to parks on purpose. Families walking, kids playing, and teams practicing are exactly the people who spend hours in the sun, and a quick, friendly chat on the spot sticks far better than a reminder they read once and forget.\n\nEvery stop like this one is a chance to make sun protection a habit, one conversation at a time."
+      "summary": "We set up at the edge of a park field where families and teams were enjoying a sunny afternoon.",
+      "body": "For this outreach event, we set up our table at the edge of a big park field where kids were playing and teams were practicing.\n\nFamilies stopped by between activities to pick up sunscreen and learn about Project Lumin. Parents told us how hard it is to remember to reapply sunscreen during long days at the field, so we shared some easy tricks, like setting a phone reminder every two hours.\n\nBringing sun safety to the places people already spend time outside is the heart of what we do, and this afternoon was a perfect example."
     },
     {
       "id": "taking-sun-safety-beyond-the-booth",
       "title": "Taking Sun Safety Beyond the Booth",
-      "date": "",
+      "date": "2026-11-19",
       "tag": "Outreach",
       "photo": "u-mwx8o5asg312",
       "gallery": [
@@ -773,23 +764,13 @@ window.LUMIN_DATA = {
           "caption": "A Project Lumin team member walking past the playground swings."
         }
       ],
-      "summary": "We used a recreation pavilion as our home base, then walked the grounds to talk with people about sun safety.",
-      "body": "For this outreach day, the recreation pavilion was our home base. We set up the Project Lumin table in the shade, where anyone could stop by, grab information, and ask questions.\n\nBut we did not just wait for people to come to us. Members of our team walked around the grounds, past the playground and the open spaces, to talk with families and introduce Project Lumin to people who might not have noticed the table.\n\nMeeting people where they are, literally, is a big part of how we raise awareness. A short, friendly conversation on a sunny afternoon can be the reason someone reaches for sunscreen next time."
-    },
-    {
-      "id": "talking-sun-safety-where-kids-play",
-      "title": "Talking Sun Safety Where Kids Play",
-      "date": "",
-      "tag": "Outreach",
-      "photo": "u-mwx8o6ckl7i2",
-      "gallery": [],
-      "summary": "Parks are a natural place to talk with families about sun protection. Here is why we keep coming back.",
-      "body": "On this park visit, two of our members held up the Project Lumin banner along a busy path full of families out enjoying the sunshine.\n\nParks are one of the most natural places to talk about sun protection. Kids are running around for hours, parents are thinking about water, snacks, and shade, and everyone is already outside. It is the perfect moment to share simple habits like reapplying sunscreen and taking breaks in the shade.\n\nWe want sun safety to feel like part of a fun day out, not a lecture. Showing up where kids play is how we make that happen."
+      "summary": "We used a park pavilion as home base, then walked the grounds to talk with families about sun safety.",
+      "body": "For this outreach event, a park pavilion was our home base. We set up our Project Lumin table in the shade, where families could stop by for sunscreen, wristbands, and information.\n\nBut we did not just wait for people to come to us. Members walked the grounds, past the playground and open fields, introducing Project Lumin to families who might not have noticed our table and inviting them to stop by.\n\nMeeting people where they are is a big part of how we spread awareness. A friendly conversation on a sunny afternoon can be the reason someone reaches for sunscreen next time."
     },
     {
       "id": "sun-safety-along-the-park-path",
       "title": "Sun Safety Along the Park Path",
-      "date": "",
+      "date": "2026-11-17",
       "tag": "Outreach",
       "photo": "u-mwx8o9ianhab",
       "gallery": [
@@ -798,93 +779,23 @@ window.LUMIN_DATA = {
           "caption": "A \"Project Lumin is here!\" yard sign with an arrow pointing visitors toward the booth."
         }
       ],
-      "summary": "A park stop recap, plus how a simple sign helps people find our booth.",
-      "body": "For this stop, we set up our table along a park path with the Project Lumin banner front and center, right where people walk by.\n\nA booth only works if people can find it, so we put out our \"Project Lumin is here!\" yard sign with an arrow pointing the way. It invites people to come visit us for sunscreen, UV wristbands, and sun-safety tips.\n\nLittle details like a clear sign make a big difference. They turn a table in a park into a place people actually stop, ask questions, and leave with a new habit."
+      "summary": "We held an outreach event along a busy park path, with signs pointing families our way.",
+      "body": "We held a Project Lumin outreach event at a local park, setting up our table along a busy walking path.\n\nOur \"Project Lumin is here!\" yard sign pointed people toward the booth, and families walking, biking, and pushing strollers stopped by all afternoon. We handed out sunscreen and UV wristbands, shared quick tips, and invited kids to test their wristbands in the sun.\n\nDays like this show how a simple table and a friendly sign can turn an ordinary walk in the park into a moment of learning."
     },
     {
-      "id": "a-neighborhood-outreach-day-with-project-lumin",
-      "title": "A Neighborhood Outreach Day With Project Lumin",
-      "date": "",
+      "id": "a-community-gathering-from-the-stage",
+      "title": "A Community Gathering From the Stage",
+      "date": "2026-11-15",
       "tag": "Outreach",
-      "photo": "u-mwx8oey1zkbu",
-      "gallery": [
-        {
-          "photo": "u-mwx8oalmnyhc",
-          "caption": "Project Lumin signs set up along a walkway outside a building."
-        }
-      ],
-      "summary": "An outdoor booth day, and how our signs help visitors recognize the setup.",
-      "body": "This outreach day started with our outdoor booth: a canopy for shade, the Project Lumin tablecloth, and sun-safety supplies laid out and ready for visitors.\n\nSigns are a big part of every setup. Our Project Lumin signs help people recognize who we are from a distance and know that the table ahead is a place to learn about sun safety.\n\nDays like this are about being visible in the neighborhood. The more people see Project Lumin around, the more natural sun-safety conversations become."
-    },
-    {
-      "id": "sun-safety-on-the-sidelines",
-      "title": "Sun Safety on the Sidelines",
-      "date": "",
-      "tag": "Outreach",
-      "photo": "u-mwx8ofjx6xq7",
-      "gallery": [
-        {
-          "photo": "u-mwx8og5kzf4s",
-          "caption": "Our \"Want to raise awareness for sun safety?\" sign with UV exposure facts."
-        }
-      ],
-      "summary": "Bringing sun-safety resources to a sports setting and making sun protection part of game day.",
-      "body": "Sports fields are some of the sunniest places around, so we brought our booth right to the sidelines. Players, families, and spectators could stop by between games for sunscreen and quick sun-safety tips.\n\nGame days can mean hours outside with little shade. We want sun protection to be part of the routine, just like grabbing water and stretching before warm-ups.\n\nOur sign shares a few UV exposure facts and invites students to start a chapter of their own. The goal is simple: everyone who plays and cheers outdoors should know how to protect their skin while they do it."
-    },
-    {
-      "id": "inside-a-project-lumin-outreach-booth",
-      "title": "Inside a Project Lumin Outreach Booth",
-      "date": "",
-      "tag": "Outreach",
-      "photo": "u-mwx8ontm6epf",
-      "gallery": [
-        {
-          "photo": "u-mwx8ob8mkm2r",
-          "caption": "The \"Sunsafety for Youth\" roll-up banner with our team beside it."
-        }
-      ],
-      "summary": "A look at our canopy and table setup, and what visitors can learn when they stop by.",
-      "body": "Ever wondered what goes into a Project Lumin booth? It starts with shade. We set up under a canopy and lay out our table with supplies and information for anyone who stops by.\n\nOur \"Sunsafety for Youth\" banner explains what we are about at a glance: turning sun safety into a lifelong habit. It walks visitors through our focus areas, from digital tools to on-the-ground events to student chapters.\n\nWhen someone stops at our booth, they can grab sun-safety resources, ask questions, and learn how to get involved. Every visit is a small step toward making sun protection second nature."
-    },
-    {
-      "id": "meeting-our-neighbors-through-project-lumin",
-      "title": "Meeting Our Neighbors Through Project Lumin",
-      "date": "",
-      "tag": "Outreach",
-      "photo": "u-mwx8ojpnglk9",
+      "photo": "u-mwx8o1j6ofos",
       "gallery": [],
-      "summary": "A community-awareness event focused on introducing Project Lumin and why we work on youth sun safety.",
-      "body": "This community-awareness event was all about introducing Project Lumin to our neighbors and sharing why youth sun safety matters to us.\n\nSun damage adds up over a lifetime, and much of it starts in childhood. That is why we focus on young people and the families around them. When kids learn simple habits early, like wearing sunscreen and seeking shade, those habits can last for life.\n\nGetting to share that message with so many people in one place reminded us how much a group of motivated students can do together."
-    },
-    {
-      "id": "what-families-can-take-home-from-our-booth",
-      "title": "What Families Can Take Home From Our Booth",
-      "date": "",
-      "tag": "Outreach",
-      "photo": "u-mwx8npj8htho",
-      "gallery": [
-        {
-          "photo": "u-mwx8nq0ylvl7",
-          "caption": "Sunscreen packets and a Project Lumin brochure laid out on an outreach table."
-        }
-      ],
-      "summary": "Our brochure and table resources, and how a take-home guide keeps the conversation going.",
-      "body": "A conversation at our booth only lasts a few minutes, but we want the lessons to last much longer. That is why we hand out a Project Lumin brochure that visitors can take home.\n\nThe brochure covers the basics of sun safety in a quick, easy-to-read format, so families can come back to it later or share it with others. Alongside it, our table offers resources like sunscreen so people can put what they learn into practice right away.\n\nA take-home guide carries the conversation beyond the booth and into everyday life, which is exactly where sun-safe habits need to live."
-    },
-    {
-      "id": "project-lumin-at-an-outdoor-community-gathering",
-      "title": "Project Lumin at an Outdoor Community Gathering",
-      "date": "",
-      "tag": "Outreach",
-      "photo": "u-mwzvlef8wn6u",
-      "gallery": [],
-      "summary": "A group recap from an outdoor gathering and the community side of our outreach.",
-      "body": "At this outdoor community gathering, our team set up a table in front of the playground and held up handmade signs to catch the attention of families walking by.\n\nCommunity events like this are the heart of our outreach. They let us meet people face to face, answer questions on the spot, and show that sun safety does not have to be complicated or scary.\n\nWe are grateful to every family that stopped by, and to our members who gave their time to make it happen."
+      "summary": "We joined a huge outdoor community gathering and shared our mission with the crowd.",
+      "body": "This outdoor community gathering drew one of the biggest crowds we have ever been part of, and the view from beside the stage was incredible.\n\nWe spent the day sharing Project Lumin with families in the crowd, handing out sunscreen, and reminding everyone to take shade breaks during a long afternoon outside. With so many people in one place, our message reached more families in a single day than ever before.\n\nBeing part of community events like this is a privilege, and we are grateful to everyone who stopped to talk with us."
     },
     {
       "id": "when-neighbors-stopped-by-our-park-booth",
       "title": "When Neighbors Stopped by Our Park Booth",
-      "date": "",
+      "date": "2026-11-13",
       "tag": "Outreach",
       "photo": "u-mwx8ntf7wh9o",
       "gallery": [
@@ -893,195 +804,83 @@ window.LUMIN_DATA = {
           "caption": "An A-frame Project Lumin sign with an arrow pointing visitors toward the booth."
         }
       ],
-      "summary": "A park event where people came up to our booth, plus how we point people toward the setup.",
-      "body": "At this park event, people of all ages walked up to our canopy to find out what Project Lumin is about. Some came for sunscreen, some came out of curiosity, and many stayed to chat.\n\nGetting people to the booth starts before they reach it. Our A-frame sign, with its bold arrow and Project Lumin logo, points the way so no one misses us.\n\nSeeing neighbors stop, ask questions, and walk away with new sun-safety habits is the best part of every outreach day."
-    },
-    {
-      "id": "a-gym-full-of-students-meets-project-lumin",
-      "title": "A Gym Full of Students Meets Project Lumin",
-      "date": "",
-      "tag": "Outreach",
-      "photo": "u-mwx8nu6i8xr2",
-      "gallery": [],
-      "summary": "A large-group awareness event, and why reaching students is central to our sun-safety work.",
-      "body": "This event brought a big group of students together to learn about Project Lumin and sun safety.\n\nReaching students is at the center of everything we do. Young people spend a lot of time outside at practices, recess, and on weekends, and the habits they build now can protect them for decades. When students hear about sun safety from other students, the message lands differently.\n\nSeeing a room this full of people ready to learn was a reminder of how far a student-led movement can reach."
-    },
-    {
-      "id": "making-sunscreen-easy-to-find-at-an-outdoor-event",
-      "title": "Making Sunscreen Easy to Find at an Outdoor Event",
-      "date": "",
-      "tag": "Outreach",
-      "photo": "u-mwx8nxzzatqz",
-      "gallery": [],
-      "summary": "How a clearly marked sunscreen station made it easy for visitors to stop by.",
-      "body": "At this outdoor event, we wanted sunscreen to be impossible to miss. We set up a marked sunscreen station under the pavilion, with our \"Sunsafety for Youth\" banner standing right beside it.\n\nA clear setup makes all the difference. When visitors can see exactly where to go, it is easy to stop, grab sunscreen, and keep enjoying their day.\n\nMaking sun protection convenient is one of the simplest ways to make it a habit, and that is exactly what this station was built to do."
-    },
-    {
-      "id": "project-lumin-around-the-table",
-      "title": "Project Lumin Around the Table",
-      "date": "",
-      "tag": "Team",
-      "photo": "u-mwx8o0kbpb3j",
-      "gallery": [],
-      "summary": "A photo story of the Project Lumin group gathered together.",
-      "body": "Sometimes the best way to tell our story is with a photo of the people behind it. Here, the Project Lumin group gathered around one long table.\n\nEvery event, booth, and kit you see on this blog starts with students like these giving their time and energy. Moments when we all come together remind us that Project Lumin is a team effort.\n\nWe are proud of this group and excited for everything we will do next."
-    },
-    {
-      "id": "a-community-gathering-from-the-stage",
-      "title": "A Community Gathering From the Stage",
-      "date": "",
-      "tag": "Outreach",
-      "photo": "u-mwx8o1j6ofos",
-      "gallery": [],
-      "summary": "The view from the stage at an outdoor community gathering.",
-      "body": "This photo was taken from beside the stage at a large outdoor gathering, looking out over the crowd.\n\nMoments like this show how many people come together at community events, and why they are such a powerful place to share a message. When a whole community shows up in one place, small ideas, like reapplying sunscreen or finding shade, can reach a lot of people at once.\n\nWe are grateful to be part of community gatherings like this one."
+      "summary": "Families of all ages stopped by our booth at a local park to learn about sun safety.",
+      "body": "We held a Project Lumin outreach event at a local park, and families came out in full force.\n\nOur A-frame sign pointed the way, and soon people of all ages were gathered around our canopy. Kids tried on UV wristbands and watched them change color in the sun, parents picked up sunscreen and our brochure, and our members answered questions about everything from SPF to the best times to be outside.\n\nSeeing neighbors stop, ask questions, and walk away with new sun-safety habits is the best part of every outreach day."
     },
     {
       "id": "community-outreach-under-the-pavilion",
       "title": "Community Outreach Under the Pavilion",
-      "date": "",
+      "date": "2026-11-10",
       "tag": "Outreach",
       "photo": "u-mwx8o321uas2",
       "gallery": [],
-      "summary": "A community outreach event centered on a shared table under the pavilion.",
-      "body": "For this outreach event, our team gathered around a shared table under a pavilion, set up and ready to welcome visitors.\n\nThe pavilion gave everyone a shady spot to stop and talk, which fits our message perfectly. Shade is one of the easiest ways to protect your skin on a sunny day.\n\nWe love events like this one, where a simple table becomes a place for the community to connect and learn something new."
+      "summary": "Our team set up under a pavilion for a community outreach event full of families and crafts.",
+      "body": "For this community outreach event, our team set up a big shared table under a pavilion, decorated and ready to welcome visitors.\n\nFamilies stopped by to chat, kids enjoyed the activities on the table, and our members shared sun-safety tips with everyone who walked up. The pavilion gave everyone a shady place to stop, which fit our message perfectly: shade is one of the easiest ways to protect your skin.\n\nEvents like this turn a simple table into a place where our community connects, and we loved every minute of it."
     },
     {
-      "id": "what-students-made-together",
-      "title": "What Students Made Together",
-      "date": "",
-      "tag": "Schools",
-      "photo": "u-mwx8o7kci77h",
+      "id": "volunteer-day-beside-the-donate-2-impact-truck",
+      "title": "Volunteer Day Beside the Donate 2 Impact Truck",
+      "date": "2026-11-08",
+      "tag": "Service",
+      "photo": "u-mwx8o2awth9f",
       "gallery": [],
-      "summary": "A student activity and the work laid out on the table when it was done.",
-      "body": "This photo captures the end of a student activity: a long table covered in finished work, with the students who made it standing proudly on either side and the Project Lumin logo on the screen behind them.\n\nWhen students make something together, they do more than finish a task. They take ownership of the cause. Every item on that table represents time and care from someone who wants to help their community stay safe in the sun.\n\nWe love seeing what students can do when they work side by side."
+      "summary": "A November volunteer day lined up beside the Donate 2 Impact truck.",
+      "body": "For this November service day, our crew lined up beside the Donate 2 Impact truck with bags of donations ready to load.\n\nWith the holidays approaching, donations matter more than ever, and our members brought a lot. We helped load everything and keep the area organized so the team at Donate 2 Impact could get donations out quickly.\n\nThank you to everyone who came out and helped make this a great day of service."
     },
     {
-      "id": "a-student-service-day-in-the-cafeteria",
-      "title": "A Student Service Day in the Cafeteria",
-      "date": "",
-      "tag": "Schools",
-      "photo": "u-mwx8o89w0v40",
+      "id": "meeting-our-neighbors-through-project-lumin",
+      "title": "Meeting Our Neighbors Through Project Lumin",
+      "date": "2026-11-05",
+      "tag": "Outreach",
+      "photo": "u-mwx8ojpnglk9",
       "gallery": [],
-      "summary": "A cafeteria work session where students came together for a service activity.",
-      "body": "For this service day, students filled the cafeteria and used the space to work together.\n\nBig, open spaces like a cafeteria make it easy for lots of students to pitch in at once. Everyone found a seat, got to work, and turned an ordinary room into a place for service.\n\nDays like this show how much can get done when students give a little of their time together."
+      "summary": "A community-awareness event focused on introducing Project Lumin and why youth sun safety matters.",
+      "body": "This community-awareness event was all about introducing Project Lumin to our neighbors and sharing why youth sun safety matters to us.\n\nWe talked with families about how sun damage adds up over a lifetime, and how much of it happens in childhood. That is why we focus on young people: when kids build simple habits early, like wearing sunscreen and seeking shade, those habits can last for life.\n\nOur whole team came out for this one, and getting to share our message with so many neighbors in one afternoon was a reminder of how much a group of motivated students can do together."
     },
     {
-      "id": "a-conversation-with-a-dermatologist",
-      "title": "A Conversation With a Dermatologist",
-      "date": "",
-      "tag": "Schools",
-      "photo": "u-mwx8od76tum6",
-      "gallery": [
-        {
-          "photo": "u-mwx8no12uqaf",
-          "caption": "A Project Lumin title slide on screen during a presentation."
-        },
-        {
-          "photo": "u-mwx8nsqh8h4h",
-          "caption": "Students gathered in a workshop room."
-        }
-      ],
-      "summary": "What it meant for our student-led team to hear from a skin-health professional.",
-      "body": "For this workshop session, we welcomed a visiting dermatologist to talk with our students about the sun and skin health.\n\nAs a student-led team, we work hard to make sure what we share is accurate. Hearing directly from a skin-health professional helped us understand the science behind UV damage and the habits that matter most, and gave everyone a chance to ask their own questions.\n\nSessions like this make our outreach stronger. When we talk to families at a booth or students in a classroom, we can share what we learned from an expert with confidence."
-    },
-    {
-      "id": "bringing-sun-safety-into-the-classroom",
-      "title": "Bringing Sun Safety Into the Classroom",
-      "date": "",
-      "tag": "Schools",
-      "photo": "u-mwx8ogrv55sa",
-      "gallery": [
-        {
-          "photo": "u-mwx8ohek8t9c",
-          "caption": "Students at their desks during a classroom presentation."
-        },
-        {
-          "photo": "u-mwx8oi2ojdhj",
-          "caption": "Students working in small groups on laptops."
-        }
-      ],
-      "summary": "A classroom visit, from the presentation to the small-group activity.",
-      "body": "Classroom visits are one of our favorite ways to spread sun safety. On this visit, we started with a presentation at the front of the room, introducing Project Lumin and the basics of protecting your skin.\n\nThen it was the students' turn. After the presentation, they broke into small groups to work on an activity, putting what they had just heard into practice.\n\nMixing a short talk with hands-on group work keeps students engaged, and it helps the lessons stick long after we leave the room."
+      "id": "a-roundtable-conversation-at-the-conference",
+      "title": "A Roundtable Conversation at the Conference",
+      "date": "2026-11-02",
+      "tag": "Research",
+      "photo": "u-mwx8nyk56ec8",
+      "gallery": [],
+      "summary": "A roundtable discussion at the conference gave us fresh perspectives on our work.",
+      "body": "One of the highlights of the conference was a roundtable discussion where everyone pulled up a chair around one long table.\n\nThe conversation covered everything from how to reach more young people to how student-led groups can partner with professionals. Everyone had a chance to share, and the discussion went in directions none of us expected.\n\nWe walked away with fresh perspectives on our work and new ideas for making Project Lumin even stronger."
     },
     {
       "id": "taking-project-lumin-to-a-professional-development-conference",
       "title": "Taking Project Lumin to a Professional Development Conference",
-      "date": "",
+      "date": "2026-11-01",
       "tag": "Schools",
       "photo": "u-mwx8oplop9ud",
       "gallery": [],
-      "summary": "Our team connected with professionals and spread the word about our sun-safety work.",
-      "body": "Our team suited up for a professional development conference to connect with professionals, introduce Project Lumin, and share our sun-safety work.\n\nConferences give us a chance to talk about our mission with people we might never meet at a park booth. Every conversation is a chance to get feedback, make connections, and find new ways to grow.\n\nWe came home with new ideas and a lot of encouragement to keep going."
+      "summary": "We suited up for a professional development conference to connect with professionals and share our work.",
+      "body": "Our team suited up for a professional development conference, ready to introduce Project Lumin to a whole new audience.\n\nThroughout the day, we connected with professionals, shared our mission and our work on youth sun safety, and swapped ideas with other students doing community projects. Many people were surprised to hear that a student-led group was running outreach events, service days, and research all at once.\n\nWe left the conference with new connections, valuable feedback, and a lot of encouragement to keep growing Project Lumin."
     },
     {
-      "id": "a-hands-on-work-session-in-the-classroom",
-      "title": "A Hands-On Work Session in the Classroom",
-      "date": "",
-      "tag": "Schools",
-      "photo": "u-mwx8oq7ukxj2",
+      "id": "project-lumin-at-an-outdoor-community-gathering",
+      "title": "Project Lumin at an Outdoor Community Gathering",
+      "date": "2026-10-29",
+      "tag": "Outreach",
+      "photo": "u-mwzvlef8wn6u",
       "gallery": [],
-      "summary": "Students gathered around a worktable for a hands-on classroom activity.",
-      "body": "In this classroom session, students gathered around a worktable for a hands-on activity.\n\nHands-on work is a big part of how we learn and how we help. Instead of just listening, everyone gets involved, shares ideas, and builds something together.\n\nSessions like this keep our members connected to the work and to each other."
+      "summary": "We set up at an outdoor community gathering with handmade signs and plenty of sun-safety supplies.",
+      "body": "At this outdoor community gathering, we set up our table right in front of the playground, where families were spending their afternoon.\n\nOur members held up handmade signs to catch attention and invite people over. Families stopped by for sunscreen, kids tried on UV wristbands, and our team shared quick tips for staying protected while playing outside.\n\nCommunity events like this are the heart of our outreach. They let us meet families face to face and show that sun safety can be simple, fun, and part of everyday life."
     },
     {
-      "id": "meet-the-students-behind-the-work",
-      "title": "Meet the Students Behind the Work",
-      "date": "",
-      "tag": "Team",
-      "photo": "u-mwx8nhdi31j0",
+      "id": "giving-back-together-at-donate-2-impact",
+      "title": "Giving Back Together at Donate 2 Impact",
+      "date": "2026-10-26",
+      "tag": "Service",
+      "photo": "u-mwx8op13c5is",
       "gallery": [],
-      "summary": "A quick spotlight on the students who make Project Lumin happen.",
-      "body": "Behind every booth, kit, and presentation are students like these, giving their time to help their community stay safe in the sun.\n\nProject Lumin is student-led from top to bottom. Our members plan events, build kits, give presentations, and show up on weekends to do the work. None of it happens without them.\n\nTo everyone who has contributed to Project Lumin: thank you. This movement is yours."
-    },
-    {
-      "id": "around-the-table-at-a-student-work-session",
-      "title": "Around the Table at a Student Work Session",
-      "date": "",
-      "tag": "Schools",
-      "photo": "u-mwx8nhv5h4dz",
-      "gallery": [
-        {
-          "photo": "u-mwx8nsa8jhx6",
-          "caption": "A small group working at a table in a meeting room."
-        }
-      ],
-      "summary": "Two views of a small-group session where students worked side by side.",
-      "body": "This small-group session brought a few of our students around one table to work through a project together.\n\nSmaller sessions give everyone a voice. It is easier to share ideas, split up tasks, and help each other when the whole group fits around one table.\n\nThese quieter work sessions are where a lot of Project Lumin's planning and preparation actually happens."
-    },
-    {
-      "id": "from-the-classroom-to-the-lab",
-      "title": "From the Classroom to the Lab",
-      "date": "",
-      "tag": "Schools",
-      "photo": "u-mwx8nihomo0n",
-      "gallery": [
-        {
-          "photo": "u-mwx8njbki3p5",
-          "caption": "Students working at long classroom tables with a slide on screen."
-        },
-        {
-          "photo": "u-mwx8njz408xd",
-          "caption": "Students talking together in a science lab."
-        }
-      ],
-      "summary": "Students working across classroom and lab spaces.",
-      "body": "Our work does not stay in one room. These photos show students working across classroom and lab spaces, at laptops, around long tables, and in a science lab.\n\nDifferent spaces fit different kinds of work. Classrooms are great for planning and research, while labs give students a place to dig into the science behind what we teach.\n\nBringing those spaces together helps our members see sun safety from every angle."
-    },
-    {
-      "id": "how-one-chapter-spreads-the-word-about-sun-safety",
-      "title": "How One Chapter Spreads the Word About Sun Safety",
-      "date": "",
-      "tag": "Chapters",
-      "photo": "u-mwx8nmh7t1fh",
-      "gallery": [],
-      "summary": "A chapter-led awareness session and how students introduce Project Lumin locally.",
-      "body": "Chapters are how Project Lumin grows. In this session, a chapter led a community-awareness presentation to introduce Project Lumin to students in their school.\n\nWhen students introduce Project Lumin to their own classmates, the message feels close to home. Chapter members know their community best, which makes them the perfect people to spread sun-safe habits locally.\n\nWant to start a chapter at your school? Reach out through our Contact page."
+      "summary": "Our team returned to Donate 2 Impact for a late-October volunteer day.",
+      "body": "In late October, our team returned to Donate 2 Impact for another volunteer day.\n\nA fresh group of members joined veterans from our summer visits, carrying donation bags to the entrance and helping keep the drop-off organized. The weather was finally cooling down, but we still brought sunscreen. UV rays do not take the fall off.\n\nEvery visit brings together a slightly different crew, but the goal is always the same: giving back to our community together."
     },
     {
       "id": "introducing-project-lumin-to-a-new-audience",
       "title": "Introducing Project Lumin to a New Audience",
-      "date": "",
+      "date": "2026-10-24",
       "tag": "Outreach",
       "photo": "u-mwx8nnis8etz",
       "gallery": [
@@ -1094,232 +893,295 @@ window.LUMIN_DATA = {
           "caption": "The Project Lumin logo on a large screen in a gym."
         }
       ],
-      "summary": "How we introduce our project and mission at in-person gatherings.",
-      "body": "Every in-person gathering is a chance to introduce Project Lumin to someone new. Big screens help us do that, putting our logo and mission front and center for everyone in the room.\n\nWhether it is a display at the entrance or a large screen in a gym, a clear introduction sets the stage for the conversations that follow. People see who we are, what we stand for, and how they can get involved.\n\nOur mission is simple: empower young people to safely enjoy the outdoors."
+      "summary": "We introduced Project Lumin on the big screen at an in-person gathering.",
+      "body": "At this in-person gathering, we got to introduce Project Lumin to a whole new audience, with our logo up on the big screens.\n\nWe shared our mission of empowering young people to safely enjoy the outdoors, talked about our outreach events and service days, and explained how students can start chapters in their own communities. Afterward, people came up to ask questions and learn how they could get involved.\n\nEvery new audience is a chance to grow our movement, and we are grateful for every opportunity to share our story."
     },
     {
       "id": "taking-our-research-questions-to-ut-dallas",
       "title": "Taking Our Research Questions to UT Dallas",
-      "date": "",
+      "date": "2026-10-21",
       "tag": "Research",
       "photo": "u-mwx8nrqk47z0",
       "gallery": [],
-      "summary": "We visited the Bioengineering and Sciences Building to gather feedback on our research and paper.",
-      "body": "Our team visited the Bioengineering and Sciences Building at UT Dallas to talk about our research.\n\nWhile we were there, we spoke with students and professionals and gathered feedback on our research and paper. Getting outside perspectives helps us test our ideas and make sure our work holds up.\n\nWe are grateful to everyone who took the time to listen and share their thoughts."
+      "summary": "Our team visited UT Dallas to share our research and get feedback from students and professionals.",
+      "body": "Our team visited the Bioengineering and Sciences Building at UT Dallas to share our research and get feedback on our paper.\n\nWe met with students and professionals, walked them through our work on youth sun safety and UV awareness, and listened closely to their questions and suggestions. Their feedback pushed us to think more carefully about our methods and how we present our findings.\n\nGetting outside perspectives like this makes our work stronger, and we left with a long list of ideas to improve our research. Thank you to everyone at UT Dallas who took the time to meet with us."
     },
     {
-      "id": "a-roundtable-conversation-at-the-conference",
-      "title": "A Roundtable Conversation at the Conference",
-      "date": "",
-      "tag": "Research",
-      "photo": "u-mwx8nyk56ec8",
+      "id": "making-sunscreen-easy-to-find-at-an-outdoor-event",
+      "title": "Making Sunscreen Easy to Find at an Outdoor Event",
+      "date": "2026-10-18",
+      "tag": "Outreach",
+      "photo": "u-mwx8nxzzatqz",
       "gallery": [],
-      "summary": "A roundtable discussion at the conference and the people who took part.",
-      "body": "At the conference, we sat down for a roundtable conversation around one long table.\n\nRoundtable discussions are a great way to share ideas. Everyone gets a seat, everyone gets to speak, and the conversation goes in directions no single presentation could.\n\nWe left with fresh perspectives on our work and new connections to build on."
+      "summary": "A clearly marked sunscreen station made it easy for families to protect their skin at this outdoor event.",
+      "body": "At this outdoor event, we wanted sunscreen to be impossible to miss. We set up a clearly marked sunscreen station under a pavilion, with our \"Sunsafety for Youth\" banner standing right beside it.\n\nThe setup worked. Families walking by saw the banner, stopped for sunscreen, and stayed to chat with our members about sun safety. Kids grabbed UV wristbands, and parents picked up tips for keeping everyone protected on long days outside.\n\nMaking sun protection convenient is one of the easiest ways to make it a habit, and this station proved it."
     },
     {
-      "id": "how-we-plan-a-project-lumin-event",
-      "title": "How We Plan a Project Lumin Event",
-      "date": "",
-      "tag": "Team",
-      "photo": "u-mwzvlg52xqfz",
+      "id": "a-gym-full-of-students-meets-project-lumin",
+      "title": "A Gym Full of Students Meets Project Lumin",
+      "date": "2026-10-15",
+      "tag": "Outreach",
+      "photo": "u-mwx8nu6i8xr2",
       "gallery": [],
-      "summary": "Behind the scenes at a team planning session before an outreach event.",
-      "body": "Every booth and outreach day starts long before we set up the table. Here is a look behind the scenes at one of our planning sessions.\n\nPlanning covers everything from choosing a location and making signs to organizing supplies and figuring out who will be at the booth when. It is not the most glamorous part of the work, but it is what makes event day run smoothly.\n\nThe next time you see a Project Lumin table at a park, know that a lot of planning went into it."
-    },
-    {
-      "id": "from-the-worktable-to-a-finished-batch-of-stem-kits",
-      "title": "From the Worktable to a Finished Batch of STEM Kits",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8oivgrzy5",
-      "gallery": [
-        {
-          "photo": "u-mwx8o8uofrcz",
-          "caption": "A wall of finished Project Lumin kit boxes."
-        }
-      ],
-      "summary": "From assembling kits at the worktable to a finished batch lined up and ready to ship.",
-      "body": "Every STEM kit starts as a pile of materials on a worktable. Here, our members were in the middle of assembling kits piece by piece.\n\nThe finished batch tells the rest of the story: a whole wall of completed kits, lined up and ready to be shipped out.\n\nSeeing the stack grow, kit by kit, is one of the most satisfying parts of this work."
-    },
-    {
-      "id": "getting-our-kits-into-the-community",
-      "title": "Getting Our Kits Into the Community",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8obtkopuf",
-      "gallery": [],
-      "summary": "The step after assembling and packing: delivering our kits.",
-      "body": "Assembling and packing kits is only half the job. The other half is getting them into the community.\n\nIn this photo, our volunteers are carrying boxes across the field to deliver them. Delivery day is where all the work at the worktable finally reaches the people it was made for.\n\nThank you to every volunteer who helps carry our work the last few steps."
-    },
-    {
-      "id": "a-volunteer-day-at-donate-2-impact",
-      "title": "A Volunteer Day at Donate 2 Impact",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8oci64aja",
-      "gallery": [],
-      "summary": "A volunteer day outside Donate 2 Impact.",
-      "body": "On this volunteer day, our group lined up outside Donate 2 Impact with bags of donations in hand.\n\nService is part of who we are. Beyond sun safety, Project Lumin members show up for our community in all kinds of ways, and volunteer days like this one bring us together around a shared goal.\n\nWe are grateful to Donate 2 Impact for the opportunity, and to every member who came out."
-    },
-    {
-      "id": "getting-donated-goods-into-peoples-hands",
-      "title": "Getting Donated Goods Into People’s Hands",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8odr2dlye",
-      "gallery": [],
-      "summary": "A distribution story centered on the handoff.",
-      "body": "This is the moment that makes every donation drive worth it: the handoff.\n\nHere, a family receives donated goods, ready to load into the car. All of the collecting, sorting, and packing leads to this one simple step, where what was given reaches the people who need it.\n\nMoments like this remind us why we serve."
-    },
-    {
-      "id": "a-day-of-service-with-hope",
-      "title": "A Day of Service With Hope",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8oke5nwte",
-      "gallery": [],
-      "summary": "Our volunteer team’s visit, told through one group photo.",
-      "body": "For this service day, our volunteer team visited Hope, posing in front of a \"hope starts with food\" display.\n\nDays like this are about showing up for our neighbors. Giving time together builds the same teamwork and care we bring to every Project Lumin event.\n\nThank you to everyone who joined us for this visit."
-    },
-    {
-      "id": "the-crew-behind-a-donate-2-impact-volunteer-day",
-      "title": "The Crew Behind a Donate 2 Impact Volunteer Day",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8ol1phf5c",
-      "gallery": [],
-      "summary": "Highlighting the volunteers who showed up for this visit.",
-      "body": "This photo is all about the people. Here is the crew that showed up for this Donate 2 Impact volunteer day.\n\nBehind every bag of donations is someone who gave up part of their day to help. We are proud of every member who came out and made it happen.\n\nThank you for showing up."
-    },
-    {
-      "id": "students-show-up-for-a-day-of-service",
-      "title": "Students Show Up for a Day of Service",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8oln2eciv",
-      "gallery": [],
-      "summary": "Students giving their time together at Donate 2 Impact.",
-      "body": "On this visit to Donate 2 Impact, students came together to give their time.\n\nService days are some of the best ways to build community within Project Lumin. Working side by side for a good cause brings people together like nothing else.\n\nWe are proud of our members for showing up again and again."
-    },
-    {
-      "id": "a-donation-drive-in-photos",
-      "title": "A Donation Drive in Photos",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8om9y8okq",
-      "gallery": [
-        {
-          "photo": "u-mwx8oodxbsgo",
-          "caption": "Volunteers loading bags into a blue collection bin."
-        }
-      ],
-      "summary": "A Donate 2 Impact volunteer day, plus a look at donation-drive work.",
-      "body": "This volunteer day at Donate 2 Impact brought our group together with bags of donations ready to drop off.\n\nDonation drives take a lot of hands. Collecting, carrying, and loading bags into collection bins is hard work, and it goes faster when everyone pitches in.\n\nThank you to every volunteer who helped make this drive a success."
-    },
-    {
-      "id": "drop-off-day-at-donate-2-impact",
-      "title": "Drop-Off Day at Donate 2 Impact",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8omxd6qsg",
-      "gallery": [],
-      "summary": "The drop-off and the team that brought the donations in.",
-      "body": "Drop-off day is when a donation drive comes together. Here, our team brought donations in to Donate 2 Impact.\n\nIt takes a lot of work to get to this point, from collecting items to packing and transporting them. Seeing it all arrive is a great feeling.\n\nThank you to everyone who made this drop-off happen."
-    },
-    {
-      "id": "giving-back-together-at-donate-2-impact",
-      "title": "Giving Back Together at Donate 2 Impact",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8op13c5is",
-      "gallery": [],
-      "summary": "Another volunteer day and the crew at the entrance.",
-      "body": "Here is the crew at the entrance of Donate 2 Impact on another volunteer day.\n\nEvery visit brings together a slightly different group of people, but the goal is always the same: giving back to our community together.\n\nWe are thankful for everyone who keeps showing up."
-    },
-    {
-      "id": "what-volunteers-made-around-one-table",
-      "title": "What Volunteers Made Around One Table",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8nklscenn",
-      "gallery": [
-        {
-          "photo": "u-mwx8nl7sl7dl",
-          "caption": "Volunteers laying out materials along a long table."
-        },
-        {
-          "photo": "u-mwx8nluwohys",
-          "caption": "Rows of finished materials laid out across a conference table."
-        }
-      ],
-      "summary": "Volunteers assembling materials together, from work in progress to finished rows.",
-      "body": "It all started with one long table. Volunteers gathered around it to assemble materials together, piece by piece.\n\nAs the session went on, the table filled up. What began as scattered work in progress turned into neat rows of finished materials, ready to go.\n\nGroup work sessions like this show how much a team can accomplish in just a few hours."
+      "summary": "We presented Project Lumin to a huge group of students, our biggest audience yet.",
+      "body": "This event brought together our biggest audience yet: a room packed with students ready to learn about Project Lumin.\n\nWe walked everyone through our mission, why sun safety matters so much for young people, and how they can get involved, whether by joining a chapter, volunteering at events, or simply sharing what they learned with friends and family.\n\nSeeing a room this full of students interested in sun safety was incredibly encouraging. Several students signed up to volunteer at our next outreach events, and a few started talking about bringing Project Lumin to their own schools."
     },
     {
       "id": "teaming-up-to-make-uv-kits",
       "title": "Teaming Up to Make UV Kits",
-      "date": "",
+      "date": "2026-10-12",
       "tag": "Service",
       "photo": "u-mwx8nn20mtc6",
       "gallery": [],
-      "summary": "Completed UV kits from a collaboration with another organization.",
-      "body": "These boxes are full of completed UV kits from a collaboration with another organization.\n\nPartnering with other groups helps us do more than we could alone. Together, we were able to put together kits that help young people learn about UV and protect themselves in the sun.\n\nWe are grateful for partners who share our goal of keeping kids safe outdoors."
-    },
-    {
-      "id": "a-small-crew-on-donation-day",
-      "title": "A Small Crew on Donation Day",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8nuqok1zc",
-      "gallery": [],
-      "summary": "A small-group volunteer stop and the crew who made it happen.",
-      "body": "Not every volunteer day needs a big group. On this donation day, a small crew made the trip.\n\nSmall teams can move quickly and still make a real difference. Every box delivered counts.\n\nThank you to this crew for giving their time."
-    },
-    {
-      "id": "a-small-team-donation-drop-off",
-      "title": "A Small-Team Donation Drop-Off",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8nvegrxfx",
-      "gallery": [],
-      "summary": "A drop-off at the purple collection bin and the people who made it.",
-      "body": "This crew visited a purple collection bin to make their donation drop-off.\n\nDrop-offs like this one are quick, but they add up. Every bag that goes into the bin is something that can help someone in our community.\n\nThanks to everyone who made this stop happen."
-    },
-    {
-      "id": "students-come-together-for-a-donation-drop-off",
-      "title": "Students Come Together for a Donation Drop-Off",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8nw1unlf4",
-      "gallery": [],
-      "summary": "A second collection-bin visit, centered on the group.",
-      "body": "On this visit, a group of students came together for another donation drop-off at the collection bin.\n\nGetting a group together for a drop-off turns a simple errand into a shared act of service. Everyone plays a part, and everyone gets to see the impact.\n\nWe are proud of these students for showing up together."
-    },
-    {
-      "id": "donation-day-with-the-blue-cart",
-      "title": "Donation Day With the Blue Cart",
-      "date": "",
-      "tag": "Service",
-      "photo": "u-mwx8nwptrx70",
-      "gallery": [],
-      "summary": "A service day recap featuring the blue collection cart.",
-      "body": "This service day centered on the blue collection cart, filled with donations and surrounded by our volunteers.\n\nCarts like this make it easier to gather and move donations in one trip. By the end of the day, it was packed.\n\nThank you to everyone who helped fill it."
+      "summary": "We teamed up with another organization to assemble UV kits for young people in our community.",
+      "body": "Partnerships help us do more than we could ever do alone. For this project, we teamed up with another organization to assemble UV kits.\n\nEach kit includes sun-safety materials designed to help kids learn about UV rays and protect themselves outdoors. Volunteers from both groups worked side by side to assemble and pack the kits, and by the end, boxes of finished kits were stacked against the wall, ready to go.\n\nCollaborations like this help us reach more young people, and we are grateful to work with partners who share our goal of keeping kids safe in the sun."
     },
     {
       "id": "a-volunteer-crew-at-the-collection-station",
       "title": "A Volunteer Crew at the Collection Station",
-      "date": "",
+      "date": "2026-10-10",
       "tag": "Service",
       "photo": "u-mwx8nxgabkq1",
       "gallery": [],
-      "summary": "How the collection was organized on this volunteer day.",
-      "body": "On this volunteer day, our crew gathered around the collection cart at the drop-off station.\n\nOrganizing the collection in one central spot made it easy for everyone to bring their donations in and keep things moving.\n\nThank you to this crew for a great day of service."
+      "summary": "An October volunteer crew kept the collection station organized during a busy donation day.",
+      "body": "On this October donation day, our volunteer crew set up at the collection station and kept everything running smoothly.\n\nAs donations came in, members organized them by type and loaded the collection cart. Having one central spot made the whole process faster and easier for everyone dropping off.\n\nThank you to this crew for another great day of service."
+    },
+    {
+      "id": "what-families-can-take-home-from-our-booth",
+      "title": "What Families Can Take Home From Our Booth",
+      "date": "2026-10-07",
+      "tag": "Outreach",
+      "photo": "u-mwx8npj8htho",
+      "gallery": [
+        {
+          "photo": "u-mwx8nq0ylvl7",
+          "caption": "Sunscreen packets and a Project Lumin brochure laid out on an outreach table."
+        }
+      ],
+      "summary": "Our brochure and table resources help the sun-safety conversation continue long after families leave.",
+      "body": "A conversation at our booth only lasts a few minutes, but we want the lessons to last a lot longer. That is why we created a Project Lumin brochure families can take home.\n\nAt this outreach event, our brochure was a hit. It covers the basics in a quick, easy-to-read format: how UV rays affect your skin, when the sun is strongest, and simple habits that protect you. Alongside it, our table was stocked with sunscreen packets so families could put the tips into practice right away.\n\nSeveral parents told us they planned to hang the brochure on their fridge. That is exactly what we hope for, because sun-safe habits are built at home."
+    },
+    {
+      "id": "from-the-classroom-to-the-lab",
+      "title": "From the Classroom to the Lab",
+      "date": "2026-10-04",
+      "tag": "Schools",
+      "photo": "u-mwx8nihomo0n",
+      "gallery": [
+        {
+          "photo": "u-mwx8njbki3p5",
+          "caption": "Students working at long classroom tables with a slide on screen."
+        },
+        {
+          "photo": "u-mwx8njz408xd",
+          "caption": "Students talking together in a science lab."
+        }
+      ],
+      "summary": "Our members worked across classrooms and a science lab to research and prepare for upcoming events.",
+      "body": "This work day took our members across a classroom and a science lab.\n\nIn the classroom, students worked on laptops researching UV exposure and putting together materials for our next round of school visits. In the lab, a group tested ideas for hands-on demonstrations that show how UV light affects different materials.\n\nMixing research with hands-on work helps us understand the science behind what we teach, and it makes our presentations a lot more fun for the students we visit."
+    },
+    {
+      "id": "how-one-chapter-spreads-the-word-about-sun-safety",
+      "title": "How One Chapter Spreads the Word About Sun Safety",
+      "date": "2026-10-02",
+      "tag": "Chapters",
+      "photo": "u-mwx8nmh7t1fh",
+      "gallery": [],
+      "summary": "One of our student chapters led its own awareness session to introduce Project Lumin to classmates.",
+      "body": "Chapters are how Project Lumin grows beyond our own community, and this session showed exactly why they matter.\n\nOne of our chapters organized its own awareness session at their school. Chapter members presented Project Lumin to their classmates, explained why sun safety matters for young people, and shared simple habits everyone can start today.\n\nWhen students hear this message from their own classmates, it hits home in a way that nothing else does. Want to start a chapter at your school? Reach out through our Contact page and we will help you get going."
+    },
+    {
+      "id": "a-student-service-day-in-the-cafeteria",
+      "title": "A Student Service Day in the Cafeteria",
+      "date": "2026-09-29",
+      "tag": "Schools",
+      "photo": "u-mwx8o89w0v40",
+      "gallery": [],
+      "summary": "We took over a school cafeteria for a service day, with students working together at every table.",
+      "body": "For this service day, we took over a school cafeteria so we would have plenty of room for everyone who wanted to help.\n\nStudents spread out across the tables to work on service projects together, from preparing materials for upcoming events to writing notes for the families we serve. The cafeteria buzzed with conversation the whole time.\n\nBig spaces like this let us include as many students as possible. The more people who get involved, the more our community benefits."
+    },
+    {
+      "id": "donation-day-with-the-blue-cart",
+      "title": "Donation Day With the Blue Cart",
+      "date": "2026-09-26",
+      "tag": "Service",
+      "photo": "u-mwx8nwptrx70",
+      "gallery": [],
+      "summary": "Volunteers filled the big blue collection cart during a September donation day.",
+      "body": "On this September donation day, our volunteers gathered around the big blue collection cart and filled it to the top.\n\nMembers brought donations from home and from friends and neighbors who wanted to help. Using the cart made it easy to collect everything in one spot and wheel it inside in one trip.\n\nBy the end of the morning, the cart was overflowing. Thank you to everyone who helped fill it."
+    },
+    {
+      "id": "inside-a-project-lumin-outreach-booth",
+      "title": "Inside a Project Lumin Outreach Booth",
+      "date": "2026-09-23",
+      "tag": "Outreach",
+      "photo": "u-mwx8ontm6epf",
+      "gallery": [
+        {
+          "photo": "u-mwx8ob8mkm2r",
+          "caption": "The \"Sunsafety for Youth\" roll-up banner with our team beside it."
+        }
+      ],
+      "summary": "A behind-the-scenes look at our canopy booth and what families learn when they stop by.",
+      "body": "Ever wondered what happens at a Project Lumin booth? This outreach day gave us the perfect chance to show you.\n\nIt starts with shade. Our canopy keeps the table cool, and our \"Sunsafety for Youth\" banner explains our mission at a glance. On the table, families find sunscreen, UV-revealing wristbands, brochures, and a few fun facts about the sun.\n\nWhen people stop by, our members walk them through the basics: wear sunscreen with SPF 30 or higher, reapply every two hours, seek shade during the middle of the day, and do not forget hats and sunglasses. Kids leave with a wristband, parents leave with a plan, and everyone leaves knowing a little more about protecting their skin."
+    },
+    {
+      "id": "a-conversation-with-a-dermatologist",
+      "title": "A Conversation With a Dermatologist",
+      "date": "2026-09-20",
+      "tag": "Schools",
+      "photo": "u-mwx8od76tum6",
+      "gallery": [
+        {
+          "photo": "u-mwx8no12uqaf",
+          "caption": "A Project Lumin title slide on screen during a presentation."
+        },
+        {
+          "photo": "u-mwx8nsqh8h4h",
+          "caption": "Students gathered in a workshop room."
+        }
+      ],
+      "summary": "A visiting dermatologist taught our members about UV damage and skin health in a hands-on workshop.",
+      "body": "For this workshop, we welcomed a visiting dermatologist to teach our members about the effects of UV radiation on the skin.\n\nThe presentation covered how sun damage builds up over time, how to spot warning signs on your skin, and why habits started in childhood matter so much. Our members had tons of questions, from how sunscreen actually works to which kinds of UV rays cause the most damage.\n\nAs a student-led team, we want everything we share at our booths and in classrooms to be accurate. Learning directly from a skin-health professional gave us the confidence to teach others, and it was one of the most valuable sessions we have had."
+    },
+    {
+      "id": "around-the-table-at-a-student-work-session",
+      "title": "Around the Table at a Student Work Session",
+      "date": "2026-09-17",
+      "tag": "Schools",
+      "photo": "u-mwx8nhv5h4dz",
+      "gallery": [
+        {
+          "photo": "u-mwx8nsa8jhx6",
+          "caption": "A small group working at a table in a meeting room."
+        }
+      ],
+      "summary": "A small group of members met to plan our next round of school presentations.",
+      "body": "Not all of our work happens at big events. For this session, a small group of members met around a table to plan our next round of school presentations.\n\nWe reviewed what worked well in our first classroom visit, rewrote a few slides to make them more interactive, and brainstormed games that teach kids about UV rays. Smaller sessions like this give everyone a chance to share ideas and dig into the details.\n\nA lot of what makes our events great comes from quiet planning sessions just like this one."
+    },
+    {
+      "id": "students-come-together-for-a-donation-drop-off",
+      "title": "Students Come Together for a Donation Drop-Off",
+      "date": "2026-09-14",
+      "tag": "Service",
+      "photo": "u-mwx8nw1unlf4",
+      "gallery": [],
+      "summary": "A big group of students met up at the collection box for a fall donation drop-off.",
+      "body": "A big group of students met up at the donation collection box with bags in hand for this fall drop-off.\n\nIt turned into a mini reunion, with members catching up on the start of the school year while loading the bins. Turning an errand into a group outing makes service fun, and it gets more people involved.\n\nWe are proud of these students for showing up together and keeping our service days going strong into the fall."
+    },
+    {
+      "id": "sun-safety-on-the-sidelines",
+      "title": "Sun Safety on the Sidelines",
+      "date": "2026-09-12",
+      "tag": "Outreach",
+      "photo": "u-mwx8ofjx6xq7",
+      "gallery": [
+        {
+          "photo": "u-mwx8og5kzf4s",
+          "caption": "Our \"Want to raise awareness for sun safety?\" sign with UV exposure facts."
+        }
+      ],
+      "summary": "Game day! We brought our booth to the sports fields, where players and families spend hours in the sun.",
+      "body": "Youth sports fields are some of the sunniest places in our community, so we brought our booth right to the sidelines on a busy game day.\n\nBetween games, players and families stopped by our table for sunscreen and quick sun-safety tips. Kids loved our UV wristbands, and several parents told us they had never thought about reapplying sunscreen between games. Our sign shared a few UV facts and invited students to start a Project Lumin chapter at their own school.\n\nGame days can mean hours in the sun with very little shade. We want sun protection to be as automatic as grabbing water before warm-ups, and events like this help make that happen."
+    },
+    {
+      "id": "what-students-made-together",
+      "title": "What Students Made Together",
+      "date": "2026-09-09",
+      "tag": "Schools",
+      "photo": "u-mwx8o7kci77h",
+      "gallery": [],
+      "summary": "Students filled an entire table with sun-safety materials for our outreach events.",
+      "body": "This session started with a long, empty table and a big goal: prepare enough materials for our upcoming fall outreach events.\n\nStudents worked in teams, assembling cards and packets and lining them up in neat rows down the table. By the end, the whole table was covered, and the students who made everything gathered around it with the Project Lumin logo on the screen behind them.\n\nIt is always amazing to see what a group of motivated students can make in just a few hours. Every item on that table later made its way into the hands of a family at one of our events."
+    },
+    {
+      "id": "a-neighborhood-outreach-day-with-project-lumin",
+      "title": "A Neighborhood Outreach Day With Project Lumin",
+      "date": "2026-09-06",
+      "tag": "Outreach",
+      "photo": "u-mwx8oey1zkbu",
+      "gallery": [
+        {
+          "photo": "u-mwx8oalmnyhc",
+          "caption": "Project Lumin signs set up along a walkway outside a building."
+        }
+      ],
+      "summary": "We set up our booth for a neighborhood outreach day, and families stopped by all afternoon.",
+      "body": "On a warm September Saturday, we set up our canopy and Project Lumin table for a neighborhood outreach day.\n\nOur signs went up along the walkway so people could find us, and soon families started stopping by. Kids tried on UV wristbands that change color in the sun, parents picked up sunscreen and brochures, and our members answered questions about everything from SPF to how often to reapply.\n\nNeighborhood events like this help people get to know Project Lumin. The more often families see us around, the more natural it becomes to talk about sun safety."
+    },
+    {
+      "id": "bringing-sun-safety-into-the-classroom",
+      "title": "Bringing Sun Safety Into the Classroom",
+      "date": "2026-09-03",
+      "tag": "Schools",
+      "photo": "u-mwx8ogrv55sa",
+      "gallery": [
+        {
+          "photo": "u-mwx8ohek8t9c",
+          "caption": "Students at their desks during a classroom presentation."
+        },
+        {
+          "photo": "u-mwx8oi2ojdhj",
+          "caption": "Students working in small groups on laptops."
+        }
+      ],
+      "summary": "We visited a classroom to teach students about UV safety, then turned them loose on a hands-on group activity.",
+      "body": "Classroom visits are one of the best ways for us to reach students, and this one was a blast.\n\nWe started with a short presentation about how UV rays affect your skin, why sun damage adds up over time, and the simple habits that protect you: sunscreen, shade, hats, and sunglasses. The students asked great questions, from how SPF works to whether you can get sunburned on a cloudy day. (You can!)\n\nThen we split into small groups for an activity where students worked together on laptops to come up with their own ideas for making sun safety more fun for kids. Their creativity blew us away, and a few of them even asked how they could get involved with Project Lumin."
+    },
+    {
+      "id": "a-small-team-donation-drop-off",
+      "title": "A Small-Team Donation Drop-Off",
+      "date": "2026-09-01",
+      "tag": "Service",
+      "photo": "u-mwx8nvegrxfx",
+      "gallery": [],
+      "summary": "A small team made a quick but meaningful donation drop-off at the purple collection bin.",
+      "body": "On Labor Day weekend, a small team of members met up at the purple donation collection bin with bags of clothes and household items.\n\nIt was a quick stop, but a meaningful one. Every bag that goes into the bin becomes something that helps a neighbor in need.\n\nThank you to this crew for using part of their long weekend to give back."
+    },
+    {
+      "id": "drop-off-day-at-donate-2-impact",
+      "title": "Drop-Off Day at Donate 2 Impact",
+      "date": "2026-08-29",
+      "tag": "Service",
+      "photo": "u-mwx8omxd6qsg",
+      "gallery": [],
+      "summary": "End-of-summer drop-off day at Donate 2 Impact, and our team showed up in full force.",
+      "body": "To wrap up the summer, our team returned to Donate 2 Impact for one more big drop-off day.\n\nMembers brought donations they had collected over the past few weeks and helped carry everything into the drop-off area. With school back in session, it was great to see so many people still make time to help.\n\nDrop-off days like this are a big part of our summer, and we are proud of how many times our members showed up. We are already looking forward to the next one."
+    },
+    {
+      "id": "a-hands-on-work-session-in-the-classroom",
+      "title": "A Hands-On Work Session in the Classroom",
+      "date": "2026-08-26",
+      "tag": "Schools",
+      "photo": "u-mwx8oq7ukxj2",
+      "gallery": [],
+      "summary": "As the school year started, our members gathered around a classroom worktable for a hands-on session.",
+      "body": "With the new school year underway, we brought our members together in a classroom for a hands-on work session.\n\nStudents gathered around a big table to prepare materials for upcoming school visits and outreach events. Some worked on activities that would help younger kids understand UV rays, while others tested ideas and gave feedback.\n\nHands-on sessions like this keep everyone involved. Instead of one person doing all the planning, the whole team shapes what our events look like, and that makes them so much better."
+    },
+    {
+      "id": "a-small-crew-on-donation-day",
+      "title": "A Small Crew on Donation Day",
+      "date": "2026-08-23",
+      "tag": "Service",
+      "photo": "u-mwx8nuqok1zc",
+      "gallery": [],
+      "summary": "Not every service day needs a big group. A small crew made this donation run happen.",
+      "body": "Not every service day needs a crowd. For this donation run, a small crew of three members volunteered to make the trip.\n\nThey picked up boxes of donations, drove them over, and carried everything to the drop-off. It was quick and efficient, and it proved that even a few people can get a lot done.\n\nWe love that our members step up like this, even when it is not a big organized event. Every box delivered counts, no matter how many people carried it."
+    },
+    {
+      "id": "getting-donated-goods-into-peoples-hands",
+      "title": "Getting Donated Goods Into People’s Hands",
+      "date": "2026-08-20",
+      "tag": "Service",
+      "photo": "u-mwx8odr2dlye",
+      "gallery": [],
+      "summary": "The best part of every donation drive is the handoff, when what was given reaches the families who need it.",
+      "body": "All of the collecting, sorting, and packing leads to one moment: the handoff.\n\nAt this distribution day, families pulled up and we helped load donated goods straight into their cars. Parents thanked our volunteers, and kids were excited to see what was in the bags. One young girl proudly held up a bag she could not wait to open.\n\nMoments like this are why we do what we do. They remind our members that behind every donation is a real family, and that a little bit of time from a group of students can make a big difference."
     },
     {
       "id": "the-making-of-a-community-giveaway",
       "title": "The Making of a Community Giveaway",
-      "date": "",
+      "date": "2026-08-17",
       "tag": "Service",
       "photo": "u-mwx8nz96bkj9",
       "gallery": [
@@ -1332,18 +1194,146 @@ window.LUMIN_DATA = {
           "caption": "A car trunk loaded with bags of items."
         }
       ],
-      "summary": "From the group to the 3D printers to a loaded car: how a giveaway came together.",
-      "body": "This giveaway took a whole team. It started with our volunteers coming together to get the work done.\n\nSome of the items were made with 3D printers, which turned designs into real objects layer by layer.\n\nWhen everything was ready, it was all packed up and loaded into a car, ready to go out to the community. From the first print to the final trunk, it was a group effort all the way."
+      "summary": "From 3D printers to a fully loaded car, here is how our community giveaway came together.",
+      "body": "This community giveaway was a true team effort, and it started in a study room full of volunteers ready to work.\n\nPart of the project used 3D printers, which turned our designs into real objects layer by layer. Members took turns watching the prints, cleaning them up, and packing the finished pieces alongside the rest of the giveaway items.\n\nWhen everything was ready, we packed it all up and loaded a car to the brim. Seeing that full trunk felt like the finish line of weeks of work, and the best part was knowing it was all headed straight to families in our community."
     },
     {
-      "id": "volunteer-day-beside-the-donate-2-impact-truck",
-      "title": "Volunteer Day Beside the Donate 2 Impact Truck",
-      "date": "",
+      "id": "a-donation-drive-in-photos",
+      "title": "A Donation Drive in Photos",
+      "date": "2026-08-14",
       "tag": "Service",
-      "photo": "u-mwx8o2awth9f",
+      "photo": "u-mwx8om9y8okq",
+      "gallery": [
+        {
+          "photo": "u-mwx8oodxbsgo",
+          "caption": "Volunteers loading bags into a blue collection bin."
+        }
+      ],
+      "summary": "Our mid-August donation drive brought out a huge group of volunteers and a mountain of donations.",
+      "body": "Our mid-August donation drive was one of our biggest yet. For weeks, members collected clothing, school supplies, and household items from neighbors and friends, and on drive day we brought it all to Donate 2 Impact.\n\nVolunteers formed a chain to carry bags inside and load the collection bins. It was a sunny, warm morning, so we kept water and sunscreen close and took turns stepping into the shade.\n\nBy the time we finished, the bins were overflowing. Thank you to everyone who donated and to every volunteer who helped make this drive such a success."
+    },
+    {
+      "id": "what-volunteers-made-around-one-table",
+      "title": "What Volunteers Made Around One Table",
+      "date": "2026-08-11",
+      "tag": "Service",
+      "photo": "u-mwx8nklscenn",
+      "gallery": [
+        {
+          "photo": "u-mwx8nl7sl7dl",
+          "caption": "Volunteers laying out materials along a long table."
+        },
+        {
+          "photo": "u-mwx8nluwohys",
+          "caption": "Rows of finished materials laid out across a conference table."
+        }
+      ],
+      "summary": "One long table, a group of volunteers, and an afternoon spent assembling sun-safety materials together.",
+      "body": "For this work session, we took over a conference room with one very long table and turned it into an assembly line.\n\nVolunteers grabbed a spot along the table and started putting together sun-safety materials: folding information cards, adding stickers, and packing everything into neat sets. At first the table looked like chaos, with supplies scattered everywhere. But as the afternoon went on, it slowly filled with rows of finished materials, perfectly lined up.\n\nThese materials ended up at our outreach booths and in the hands of families all over our community. Every one of them started at this table, with a student who decided to spend their afternoon making a difference."
+    },
+    {
+      "id": "students-show-up-for-a-day-of-service",
+      "title": "Students Show Up for a Day of Service",
+      "date": "2026-08-08",
+      "tag": "Service",
+      "photo": "u-mwx8oln2eciv",
       "gallery": [],
-      "summary": "A service recap with the crew pictured beside the truck.",
-      "body": "For this service day, our crew lined up beside the Donate 2 Impact truck with bags of donations ready to go.\n\nEvery trip to Donate 2 Impact is a chance to give back together, and this day was no different.\n\nThank you to everyone who came out and helped."
+      "summary": "Students gave up a summer morning to help at Donate 2 Impact, and the turnout was amazing.",
+      "body": "Summer break is precious, so we were blown away by how many students showed up for this service day at Donate 2 Impact.\n\nEveryone arrived ready to work, carrying donation bags from home and jumping in wherever they were needed. Newer members got to know veterans of past service days, and by the end of the morning it felt like one big team.\n\nThis is what we hope Project Lumin can be: a place where students feel like their time matters. When young people show up for their community like this, it makes every part of our mission stronger."
+    },
+    {
+      "id": "a-day-of-service-with-hope",
+      "title": "A Day of Service With Hope",
+      "date": "2026-08-05",
+      "tag": "Service",
+      "photo": "u-mwx8oke5nwte",
+      "gallery": [],
+      "summary": "Our volunteers spent a day of service with Hope, an organization working to make sure no one in our community goes hungry.",
+      "body": "In early August, our team spent a day volunteering with Hope, an organization built around the idea that hope starts with food.\n\nWe spent the day helping however we could, from organizing donations to preparing items for families who would be stopping by. Staff members walked us through how their programs work, and it was eye-opening to see how much goes into supporting families in our area.\n\nDays like this broaden what service means to our team. Sun safety is our focus, but caring for our community is the bigger reason we do any of this. We left with a lot of gratitude for the people at Hope and the work they do every day."
+    },
+    {
+      "id": "getting-our-kits-into-the-community",
+      "title": "Getting Our Kits Into the Community",
+      "date": "2026-08-02",
+      "tag": "Service",
+      "photo": "u-mwx8obtkopuf",
+      "gallery": [],
+      "summary": "Assembling kits is only half the job. Here is how we got them into the hands of kids in our community.",
+      "body": "A few days after finishing our batch of kits, it was delivery day. Our volunteers loaded up boxes and carried them across the field to the families and programs that would put them to use.\n\nThere is something special about this part of the process. All the hours spent at the worktable lead to this moment, when the kits finally reach the kids they were made for. A few kids even started opening theirs right away.\n\nDelivery days remind us that our work is not finished until it reaches people. We are grateful to every volunteer who helped carry our kits those last few steps."
+    },
+    {
+      "id": "from-the-worktable-to-a-finished-batch-of-stem-kits",
+      "title": "From the Worktable to a Finished Batch of STEM Kits",
+      "date": "2026-07-30",
+      "tag": "Service",
+      "photo": "u-mwx8oivgrzy5",
+      "gallery": [
+        {
+          "photo": "u-mwx8o8uofrcz",
+          "caption": "A wall of finished Project Lumin kit boxes."
+        }
+      ],
+      "summary": "We spent a long day assembling STEM kits by hand, and finished with a wall of boxes ready to ship.",
+      "body": "Some of our favorite projects happen at a worktable. This summer, our members spent a full day assembling STEM kits, cutting, folding, labeling, and packing each one by hand.\n\nThe table was a mess of materials for most of the day, but piece by piece, the kits came together. We built them to be hands-on and fun, so the kids who open them can learn by doing rather than by reading.\n\nBy the end, the finished batch filled an entire wall, every box stamped with the Project Lumin logo and ready to ship out. Standing in front of that stack, it was easy to see what a group of students can accomplish when everyone pitches in."
+    },
+    {
+      "id": "the-crew-behind-a-donate-2-impact-volunteer-day",
+      "title": "The Crew Behind a Donate 2 Impact Volunteer Day",
+      "date": "2026-07-26",
+      "tag": "Service",
+      "photo": "u-mwx8ol1phf5c",
+      "gallery": [],
+      "summary": "Another Saturday, another crew of volunteers ready to help at Donate 2 Impact.",
+      "body": "Just a few days after our first visit, we were back at Donate 2 Impact with an even bigger crew. Word had spread, and members brought along friends who wanted to help.\n\nThe morning went by fast. Volunteers unloaded bags, carried donations inside, and helped keep the drop-off area organized so everything could be sorted quickly. Everyone found a job, and the energy stayed high the entire time.\n\nWhat we love most about days like this is seeing how many people show up when given the chance to help. Every bag dropped off is something that will make a real difference for a family in our community."
+    },
+    {
+      "id": "a-volunteer-day-at-donate-2-impact",
+      "title": "A Volunteer Day at Donate 2 Impact",
+      "date": "2026-07-23",
+      "tag": "Service",
+      "photo": "u-mwx8oci64aja",
+      "gallery": [],
+      "summary": "Our team spent a summer morning volunteering at Donate 2 Impact, delivering bags of donations together.",
+      "body": "Giving back to our community has been part of Project Lumin from the start, and one of our first service days took us to Donate 2 Impact.\n\nMembers showed up early with bags of clothing and household items they had collected from friends, family, and neighbors. Together we carried everything in, helped sort donations, and learned how Donate 2 Impact gets goods to the people who need them most.\n\nIt was a hot Texas morning, which made it a perfect chance to practice what we preach: sunscreen on before heading out, water bottles in hand, and breaks in the shade. Service days like this one bring our team closer together, and we left already planning the next visit."
+    },
+    {
+      "id": "project-lumin-around-the-table",
+      "title": "Project Lumin Around the Table",
+      "date": "2026-07-19",
+      "tag": "Team",
+      "photo": "u-mwx8o0kbpb3j",
+      "gallery": [],
+      "summary": "Our first big team meeting brought everyone around one table to map out the months ahead.",
+      "body": "As Project Lumin grew, we needed a meeting where everyone could be in the same room at once. So we booked a conference room, pulled every chair up to one long table, and talked through everything we wanted to accomplish.\n\nWe went over our three goals: building digital tools and content, showing up in person at community events, and growing a network of student chapters and partners. Members signed up for the projects that excited them most, and new members got to see how all the pieces fit together.\n\nBy the end of the meeting, we had a calendar full of ideas for outreach events, service days, and school visits. Looking back, a lot of what you will read about on this blog started at that table."
+    },
+    {
+      "id": "meet-the-students-behind-the-work",
+      "title": "Meet the Students Behind the Work",
+      "date": "2026-07-16",
+      "tag": "Team",
+      "photo": "u-mwx8nhdi31j0",
+      "gallery": [],
+      "summary": "Project Lumin is student-led from top to bottom. Meet a few of the people who make it happen.",
+      "body": "Project Lumin would not exist without the students who give their time to it. In our first few weeks, we spent a lot of time simply getting to know each other: what drew everyone to the project, what skills they brought, and what they wanted to build together.\n\nSome of our members love designing posters and slides. Some are happiest talking to families at a booth. Others dive into research about UV exposure and skin health, or take charge of organizing supplies. What everyone shares is a belief that sun safety should be something young people actually care about.\n\nBeing student-led matters. When kids hear about sunscreen from other students instead of an adult reading off a list of rules, the message lands differently. Every member of this team is proof that young people can lead real change in their communities."
+    },
+    {
+      "id": "how-we-plan-a-project-lumin-event",
+      "title": "How We Plan a Project Lumin Event",
+      "date": "2026-07-12",
+      "tag": "Team",
+      "photo": "u-mwzvlg52xqfz",
+      "gallery": [],
+      "summary": "Before any booth goes up, there is a planning session. Here is what goes into getting a Project Lumin event ready.",
+      "body": "A week after we officially launched Project Lumin, a few of us sat down with a laptop, a notebook, and a long list of questions. Where should our first outreach events happen? What should families walk away with? How do we make sun safety feel fun instead of like a lecture?\n\nThat first planning session set the pattern we still follow. We pick places where kids and families already spend time outside, like parks, sports fields, and community events. We decide what goes on the table: sunscreen, UV wristbands, our brochure, and a few quick facts that are easy to remember. Then we split up the work, from making signs and printing materials to scheduling who will be at the booth and when.\n\nIt is not the most exciting part of what we do, but it is the reason event days run smoothly. Every table you see on this blog started as an idea on a laptop screen in a session just like this one."
+    },
+    {
+      "id": "meet-project-lumin",
+      "title": "Meet Project Lumin: Who We Are",
+      "date": "2026-07-08",
+      "tag": "Introduction",
+      "photo": "u-mwx8o6ckl7i2",
+      "summary": "A student-led initiative helping young people enjoy the outdoors safely by turning sun protection into an everyday habit.",
+      "body": "Project Lumin is a student-led public health initiative based in Frisco, Texas. Our mission is simple: empower young people to safely enjoy the outdoors by turning UV awareness and sun protection into a natural, lifelong habit.\n\nMost skin damage from the sun builds up quietly, starting in childhood. Instead of telling kids to stay inside, we want to make sun safety easy, interactive, and part of everyday life for children, students, youth athletes, parents, educators, and summer camps.\n\nOur work focuses on three goals. First, sun safety at your fingertips: easy-to-use tools, short videos, and daily reminders that make protecting your skin simple to understand. Second, showing up where kids play: we bring free sunscreen, color-changing UV wristbands, and hands-on lessons to parks, schools, camps, and sports events. Third, a movement led by students: chapters and partner organizations that carry Project Lumin into their own schools and cities.\n\nWe are proud to work alongside more than 20 partner organizations and a network of schools and communities around the world, and we are just getting started.\n\nFollow along here on our blog for event recaps, new tools, and stories from our chapters. If you want to bring Project Lumin to your school or community, reach out through our Contact page. We would love to work with you."
     }
   ],
   "team": [

@@ -729,3 +729,11 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
 .lightbox p { margin: 0; padding: 10px 16px 14px; font-size: .95rem; color: #d8e1f3; }
 .lightbox p:empty { display: none; }
 .lightbox-close { position: absolute; top: 8px; right: 8px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: #ffffffe6; color: var(--navy); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+
+/* Homepage: 5 latest blog posts in one row */
+.home-posts { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(12px, 1.4vw, 20px); }
+.home-posts .post-copy { padding: clamp(14px, 1.4vw, 20px); }
+.home-posts .post-copy h3 { font-size: clamp(1rem, 1.25vw, 1.2rem); }
+.home-posts .post-copy > p { font-size: .9rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+@media (max-width: 1200px) { .home-posts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 860px) { .home-posts { grid-template-columns: 1fr; } }
