@@ -106,7 +106,7 @@ async function api(req, res, route) {
       appendHistory({type: 'view', who, what: String(what || '').slice(0, 60), ...localInfo(req)});
       return json(res, 200, {ok: true});
     }
-    if (route === '/api/applications' && req.method === 'GET') return json(res, 200, {applications: readApps()});
+    if (route === '/api/applications' && req.method === 'GET') return json(res, 200, {applications: readApps(), alerts: {on: false, local: true, to: []}});
     if (route === '/api/applications' && req.method === 'POST') {
       const {id, status, note} = JSON.parse((await readBody(req, 20000)).toString('utf8') || '{}');
       const list = readApps(), app = list.find(x => x.id === id);

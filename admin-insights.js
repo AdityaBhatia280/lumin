@@ -76,7 +76,7 @@ const setupHelp = (what, err = '') => `<div class="setup"><h3>${what} isn't conn
   ${storageStatus()}</div>`;
 
 /* ---------- History ---------- */
-const typeLabel = t => ({login: 'Logged in', 'login-failed': 'Failed login', logout: 'Logged out', publish: mode === 'local' ? 'Saved changes' : 'Published', upload: 'Uploaded image', view: 'Opened', application: 'New application', 'application-update': 'Updated application'}[t] || t);
+const typeLabel = t => ({login: 'Logged in', 'login-failed': 'Failed login', logout: 'Logged out', publish: mode === 'local' ? 'Saved changes' : 'Published', upload: 'Uploaded image', view: 'Opened', application: 'New application', 'application-update': 'Updated application', 'email-test': 'Test email'}[t] || t);
 let histFilter = 'all', histEntries = [], histTotal = 0;
 views.history = () => {
   queueMicrotask(() => loadHistory(true));
