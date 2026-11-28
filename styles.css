@@ -737,3 +737,6 @@ a.ptile:hover { transform: translateY(-6px) scale(1.03); border-color: var(--gol
 .home-posts .post-copy > p { font-size: .9rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 @media (max-width: 1200px) { .home-posts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 860px) { .home-posts { grid-template-columns: 1fr; } }
+.home-posts .post-meta { gap: .5rem; font-size: .8rem; }
+.home-posts .post-meta time { white-space: nowrap; }
+.home-posts .tag { padding: .2rem .55rem; font-size: .72rem; }
